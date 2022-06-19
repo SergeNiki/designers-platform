@@ -1,0 +1,24 @@
+.menu_wrap {
+    background-color: #C8FFE8;
+    grid-area: menu;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    /* z-index: 100; */
+}
+
+.menu_item {
+    color: black;
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.activeMenu {
+    cursor: default;
+    border-bottom: 5px solid #5EBD9B;
+}

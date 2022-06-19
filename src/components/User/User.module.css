@@ -1,0 +1,48 @@
+.user_wrap {
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgb(230, 230, 230);
+    transition: all 0.3s;
+}
+
+.user_wrap:hover {
+    background-color: rgb(224, 235, 235);
+} 
+
+.user_info {
+    color: black;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.user_info img {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    object-fit:cover;
+    margin: 0;
+    margin-right: 15px;
+}
+
+.follow_wrap button {
+    margin-bottom: 10px;
+    width: 110px;
+    font-size: 16px;
+    position: relative;
+    top: 0;
+    height: 30px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 3px 2px rgb(168, 168, 168);
+    transition: all 0.2s;
+}
+
+.follow_wrap button:hover {
+    color: #fff;
+    box-shadow: 0 1px 1px rgb(168, 168, 168);
+    top: 3px;
+}

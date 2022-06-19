@@ -1,0 +1,17 @@
+.preview_wrap {
+    overflow: hidden;
+    border-radius: 5px;
+    aspect-ratio: 1/1;
+}
+
+.preview_wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit:cover;
+    transform: scale(1);
+    transition: all 0.5s;
+}
+
+.preview_wrap img:hover {
+    transform: scale(1.03);
+}

@@ -1,0 +1,23 @@
+.profile_wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: 45px 1fr;
+  grid-template-columns: minmax(270px, 330px) 1fr;
+  grid-gap: 10px;
+  grid-template-areas:
+    "info menu"
+    "info posts";
+}
+
+@media (max-width: 425px) {
+  .profile_wrap {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 45px 1fr;
+    grid-template-areas:
+      "info"
+      "menu"
+      "posts";
+  }
+}
