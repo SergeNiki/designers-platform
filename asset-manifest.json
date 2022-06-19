@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/designers-platform/static/css/main.44f31fec.css",
+    "main.js": "/designers-platform/static/js/main.0922f23f.js",
+    "index.html": "/designers-platform/index.html",
+    "main.44f31fec.css.map": "/designers-platform/static/css/main.44f31fec.css.map",
+    "main.0922f23f.js.map": "/designers-platform/static/js/main.0922f23f.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.44f31fec.css",
+    "static/js/main.0922f23f.js"
+  ]
+}
