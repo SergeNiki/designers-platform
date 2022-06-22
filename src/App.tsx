@@ -14,7 +14,7 @@ type AppProps = {
   // is_auth: boolean;
   isProcessLogin: boolean;
   initializeApp(): void;
-}
+};
 
 function App(props: AppProps) {
   useEffect(() => {
@@ -25,13 +25,13 @@ function App(props: AppProps) {
   // if (!props.isInitialized) {
   //   return <h1 style={{"position": "absolute", "top": "50%", "left": "50%"}} >LOADING...</h1>;
   // }
-  
+
   return (
     <div className="App">
       {props.isProcessLogin && <Login />}
       <BrowserRouter>
         <Header />
-        <Navigation/>
+        <Navigation />
         <Routes>
           <Route path="/" element={<Navigate to={"/main"} />} />
           <Route path="/profile" element={<Profile />}>
@@ -46,7 +46,7 @@ function App(props: AppProps) {
 let mapStateToProps = (state: StateType) => ({
   isInitialized: state.appInitialized.isInitialized,
   // is_auth: state.auth.is_auth,
-  isProcessLogin: state.auth.isProcessLogin
+  isProcessLogin: state.auth.isProcessLogin,
 });
 
 export default connect(mapStateToProps, { initializeApp })(App);

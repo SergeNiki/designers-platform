@@ -1,6 +1,5 @@
-FROM node AS dev
-
-WORKDIR '/app'
+FROM node AS development
+WORKDIR /app
 
 COPY package*.json .
 RUN npm install

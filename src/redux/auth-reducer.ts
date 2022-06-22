@@ -82,7 +82,7 @@ export const getAuthUserData = (): AsyncThunkType => {
 };
 
 export const toggleLoginTC = (): ThunkType => {
-  return (dispatch: Dispatch<ActionsAuthType>) => {
+  return (dispatch) => {
     dispatch(toggleIsProcessLogin());
   };
 };

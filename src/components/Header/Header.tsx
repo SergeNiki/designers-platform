@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import classes from "./Header.module.css";
 import { toggleLoginTC, logout } from "./../../redux/auth-reducer";
+import { getAuthUserData } from "./../../redux/auth-reducer"
 import { StateType } from "../../types/state";
 import HeaderPopup from "./PopupMenu/HeaderPopup";
 
@@ -9,13 +10,20 @@ type HeaderProps = {
   is_auth: boolean;
   username: string | null;
   avatar: string | null;
+  avatarFromProfile: string;
   display_name: string | null;
   toggleLoginTC(): void;
   logout(): void;
+  getAuthUserData(): void;
 }
 
 const Header = (props: HeaderProps) => {
-  const handleLogin = () => {
+
+  React.useEffect(() => {
+    props.getAuthUserData()
+  }, [props.avatarFromProfile])
+
+  const toggleLogin = () => {
     props.toggleLoginTC();
   };
 
@@ -34,7 +42,7 @@ const Header = (props: HeaderProps) => {
             {props.avatar && <img src={props.avatar} alt="" />}
           </div>
         ) : (
-          <div className={classes.login} onClick={handleLogin}>
+          <div className={classes.login} onClick={toggleLogin}>
             LOGIN
           </div>
         )}
@@ -48,7 +56,8 @@ let mapStateToProps = (state: StateType) => ({
   is_auth: state.auth.isAuth,
   username: state.auth.username,
   avatar: state.auth.avatar,
+  avatarFromProfile: state.profilePage.avatar,
   display_name: state.auth.display_name
 });
 
-export default connect(mapStateToProps, { toggleLoginTC, logout })(Header);
+export default connect(mapStateToProps, { toggleLoginTC, logout, getAuthUserData })(Header);

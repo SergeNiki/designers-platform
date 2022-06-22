@@ -17,10 +17,18 @@ export type SocialLinksType = {
   id: number;
   link: string;
 }
+export type ImageFileType = {
+  lastModified: number
+  lastModifiedDate: Date
+  name: string
+  size: number
+  type: string
+  webkitRelativePath: string
+}
 
 
 //Profile Actions 
-export type ActionsProfileType = ActionSetDataType | ActionIsFollowedType | ActionToggleIsFetching
+export type ActionsProfileType = ActionSetDataType | ActionIsFollowedType | ActionToggleIsFetching | ActionUpdateUserAvatar
 export type ActionSetDataType = {
   type: "profile/SET_USER_PROFILE";
   profileData: ProfileDataResponse;
@@ -32,6 +40,10 @@ export type ActionIsFollowedType = {
 export type ActionToggleIsFetching = {
   type: "profile/TOGGLE_IS_FETCHING"
   isFetching: boolean
+}
+export type ActionUpdateUserAvatar = {
+  type: "profile/UPDATE_USER_AVATAR"
+  avatar: string
 }
 
 

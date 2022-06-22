@@ -2,11 +2,12 @@ version: '3.8'
 
 services:
   app: 
-    container_name: flow-art
+    container_name: designers-platform
     image: designers-platform
     build: 
-      target: dev
+      context: .
+      target: development
     volumes:
-      - ./src:/app/srs
+      - ./src:/app/srс
     ports:
       - 80:3000
