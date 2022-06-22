@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/designers-platform/static/css/main.44f31fec.css",
-    "main.js": "/designers-platform/static/js/main.0922f23f.js",
+    "main.css": "/designers-platform/static/css/main.1b4f9ccc.css",
+    "main.js": "/designers-platform/static/js/main.ec41540a.js",
     "index.html": "/designers-platform/index.html",
-    "main.44f31fec.css.map": "/designers-platform/static/css/main.44f31fec.css.map",
-    "main.0922f23f.js.map": "/designers-platform/static/js/main.0922f23f.js.map"
+    "main.1b4f9ccc.css.map": "/designers-platform/static/css/main.1b4f9ccc.css.map",
+    "main.ec41540a.js.map": "/designers-platform/static/js/main.ec41540a.js.map"
   },
   "entrypoints": [
-    "static/css/main.44f31fec.css",
-    "static/js/main.0922f23f.js"
+    "static/css/main.1b4f9ccc.css",
+    "static/js/main.ec41540a.js"
   ]
 }
