@@ -7,7 +7,7 @@ import { StateType } from "../../types/state";
 import HeaderPopup from "./PopupMenu/HeaderPopup";
 
 type HeaderProps = {
-  is_auth: boolean;
+  isAuth: boolean;
   username: string | null;
   avatar: string | null;
   avatarFromProfile: string;
@@ -20,7 +20,9 @@ type HeaderProps = {
 const Header = (props: HeaderProps) => {
 
   React.useEffect(() => {
-    props.getAuthUserData()
+    if(props.isAuth) {
+      props.getAuthUserData()
+    }
   }, [props.avatarFromProfile])
 
   const toggleLogin = () => {
@@ -37,7 +39,7 @@ const Header = (props: HeaderProps) => {
     <header>
       <div className={classes.header_wrap}>
         <h1>FLOW OF ART</h1>
-        {props.is_auth ? (
+        {props.isAuth ? (
           <div onClick={openPopupMenu} className={classes.avatar}>
             {props.avatar && <img src={props.avatar} alt="" />}
           </div>
@@ -53,7 +55,7 @@ const Header = (props: HeaderProps) => {
 };
 
 let mapStateToProps = (state: StateType) => ({
-  is_auth: state.auth.isAuth,
+  isAuth: state.auth.isAuth,
   username: state.auth.username,
   avatar: state.auth.avatar,
   avatarFromProfile: state.profilePage.avatar,
