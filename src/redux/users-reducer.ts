@@ -12,9 +12,82 @@ const CLEAR_STATE = "users/CLEAR_STATE";
 
 let initialState: IUsersState = {
     count: 0,
-    next: '',
-    previos: '',
-    users: [],
+    next: null,
+    previos: null,
+    users: [
+        {
+            id: 0,
+            username: "Goga",
+            display_name: 'Gosha',
+            followers_count: 100,
+            avatar: "",
+            is_followed: true
+        },
+        {
+            id: 0,
+            username: "Goga",
+            display_name: 'Gosha',
+            followers_count: 100,
+            avatar: "",
+            is_followed: true
+        },
+        {
+            id: 0,
+            username: "Goga",
+            display_name: 'Gosha',
+            followers_count: 100,
+            avatar: "",
+            is_followed: true
+        },
+        {
+            id: 0,
+            username: "Goga",
+            display_name: 'Gosha',
+            followers_count: 100,
+            avatar: "",
+            is_followed: true
+        },
+        {
+            id: 0,
+            username: "Goga",
+            display_name: 'Gosha',
+            followers_count: 100,
+            avatar: "",
+            is_followed: true
+        },
+        {
+            id: 0,
+            username: "Goga",
+            display_name: 'Gosha',
+            followers_count: 100,
+            avatar: "",
+            is_followed: true
+        },
+        {
+            id: 0,
+            username: "Goga",
+            display_name: 'Gosha',
+            followers_count: 100,
+            avatar: "",
+            is_followed: true
+        },
+        {
+            id: 0,
+            username: "Goga",
+            display_name: 'Gosha',
+            followers_count: 100,
+            avatar: "",
+            is_followed: true
+        },
+        {
+            id: 0,
+            username: "Goga",
+            display_name: 'Gosha',
+            followers_count: 100,
+            avatar: "",
+            is_followed: true
+        }
+    ],
     usresOnPageCount: 10,
     isFetching: false,
     followingsInProgress: [],
@@ -24,19 +97,17 @@ const usersReducer = (state = initialState, action: ActionsUsers): IUsersState =
     switch (action.type) {
         case SET_USERS_LIST:
             return {
-                ...state, ...action.payload
+                ...state, next: action.payload.next, previos: action.payload.previos, users: [...state.users, ...action.payload.users]
             }
         case SET_FOLLOWERS_LIST:
             return {
-                ...state, ...action.payload
+                ...state, next: action.payload.next, previos: action.payload.previos, users: [...state.users, ...action.payload.users]
             }
         case SET_FOLLOWING_LIST:
             return {
-                ...state, ...action.payload
+                ...state, next: action.payload.next, previos: action.payload.previos, users: [...state.users, ...action.payload.users]
             }
         case SET_IS_FOLLOWED:
-            console.log(state.followingsInProgress);
-            
             return {
                 ...state,
                 users: state.users.map((user) => {
@@ -111,11 +182,11 @@ export const getUsersList = (count: number, page: number) => {
     }
 }
 
-export const getFollowersList = (user_id: number) => {
+export const getFollowersList = (user_id: number, next: string | null) => {
     return async (dispatch:any) => {
         dispatch(toggleIsFetching(true))
         try {
-            const response = await UsersService.getFollowers(user_id);
+            const response = await UsersService.getFollowers(user_id, next);
             dispatch(toggleIsFetching(false))
             dispatch(setFollowers(response.data))
         } catch (error) {
@@ -124,11 +195,11 @@ export const getFollowersList = (user_id: number) => {
     }
 }
 
-export const getFollowingList = (user_id: number) => {
+export const getFollowingList = (user_id: number, next: string | null) => {
     return async (dispatch:any) => {
         dispatch(toggleIsFetching(true))
         try {
-            const response = await UsersService.getFollowing(user_id);
+            const response = await UsersService.getFollowing(user_id, next);
             dispatch(toggleIsFetching(false))
             dispatch(setFollowing(response.data))
         } catch (error) {

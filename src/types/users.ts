@@ -45,4 +45,4 @@ export type ActionClearState = {
 
 
 //Axios Response
-export type UsersResponse = Omit<IUsersState, "isFetching" | "followingsInProgress">
+export type UsersResponse = Omit<IUsersState, "isFetching" | "followingsInProgress" | "usresOnPageCount">

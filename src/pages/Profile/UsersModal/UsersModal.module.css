@@ -13,11 +13,14 @@
 .users_modal {
     position: relative;
     width: 750px;
-    max-height: 90vh;
     border-radius: 10px;
     overflow: hidden;
     background-color: azure;
 }
+
+::-webkit-scrollbar {
+    width: 5px;
+  }
 
 .menu {
     width: 100%;
@@ -34,9 +37,13 @@
 }
 
 .users_list {
-    /* overflow: scroll; */
     display: grid;
     grid-template-columns: 1fr 1fr;
+}
+
+.users_list_wrap {
+    max-height: 85vh;
+    overflow: scroll;
 }
 
 .activeMenu {
@@ -55,4 +62,35 @@
 }
 .close_btn:hover {
     color:rgb(255, 81, 81);
+}
+
+.show_more_btn_wrap {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.show_more_btn_wrap button {
+    margin: 10px 0;
+    width: 170px;
+    font-size: 16px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 3px 2px rgb(168, 168, 168);
+    background-color: #6DEFC0;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.show_more_btn_wrap button:hover {
+    color: white;
+    box-shadow: 0 1px 1px rgb(168, 168, 168);
+    top: 3px;
+}
+
+@media (max-width: 768px) {
+    .users_list {
+        grid-template-columns: 1fr;
+    }
 }

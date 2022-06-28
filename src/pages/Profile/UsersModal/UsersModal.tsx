@@ -27,11 +27,12 @@ type UsersModalProps = {
   usresOnPageCount: number;
   totalCount: number;
   isFetching: boolean;
+  nextUsers: string | null;
   followingsInProgress: Array<number>;
   authUserId: number;
   getUsersList(count: number, page: number): void;
-  getFollowersList(id: number): void;
-  getFollowingList(id: number): void;
+  getFollowersList(id: number, next: string | null): void;
+  getFollowingList(id: number, next: string | null): void;
   toggleFollow(id: number, req: RequestForType): void;
   clearState(): void;
 };
@@ -39,9 +40,9 @@ type UsersModalProps = {
 const UsersModal = (props: UsersModalProps) => {
   useEffect(() => {
     if (props.usersModalFor == "followers") {
-      props.getFollowersList(props.ownerUserId);
+      props.getFollowersList(props.ownerUserId, null);
     } else if (props.usersModalFor == "following") {
-      props.getFollowingList(props.ownerUserId);
+      props.getFollowingList(props.ownerUserId, null);
     }
   }, [props.usersModalFor]);
 
@@ -49,10 +50,19 @@ const UsersModal = (props: UsersModalProps) => {
     return () => {
       props.clearState();
     };
-  }, []);
+  }, [props.usersModalFor]);
 
-  const closeModalWindow = () => {
+  const closeModalWindow = (): void => {
+    document.getElementsByTagName('body')[0].style.overflowY = 'auto';
     props.setUsersModalFor(undefined);
+  };
+
+  const showMoreUsers = (): void => {
+    if (props.usersModalFor == "followers") {
+      props.getFollowersList(props.ownerUserId, props.nextUsers);
+    } else if (props.usersModalFor == "following") {
+      props.getFollowingList(props.ownerUserId, props.nextUsers);
+    }
   };
 
   const followersOrFollowing = props.users.map((user, key) => (
@@ -80,17 +90,24 @@ const UsersModal = (props: UsersModalProps) => {
           </div>
           <div
             className={`${classes.menu_item} ${
-                props.usersModalFor == "following" && classes.activeMenu
-              }`}
+              props.usersModalFor == "following" && classes.activeMenu
+            }`}
             onClick={() => props.setUsersModalFor("following")}
           >
             Подписки
           </div>
-        <div className={classes.close_btn} onClick={closeModalWindow}>
+          <div className={classes.close_btn} onClick={closeModalWindow}>
             <FontAwesomeIcon icon={faXmark} />
+          </div>
         </div>
+        <div className={classes.users_list_wrap} >
+          <div className={classes.users_list}>{followersOrFollowing}</div>
+          {typeof props.nextUsers == "string" && (
+            <div className={classes.show_more_btn_wrap}>
+              <button onClick={showMoreUsers}>Показать ещё</button>
+            </div>
+          )}
         </div>
-        <div className={classes.users_list}>{followersOrFollowing}</div>
       </div>
     </div>
   );
@@ -101,6 +118,7 @@ let mapSateToProps = (state: StateType) => ({
   usresOnPageCount: state.usersData.usresOnPageCount,
   totalCount: state.usersData.count,
   isFetching: state.usersData.isFetching,
+  nextUsers: state.usersData.next,
   followingsInProgress: state.usersData.followingsInProgress,
   authUserId: state.auth.user_id,
 });
