@@ -5,22 +5,16 @@
 
 .posts {
     display: grid;
-    grid-template-columns: repeat(4, minmax(180px, 360px));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     grid-auto-rows: auto;
     grid-gap: 10px;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1300px) {
     .posts {
-        grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     }
   }
-
-/* @media (max-width: 768px) {
-    .posts_wrap {
-        overflow: visible;
-    }
-} */
 
 @media (max-width: 425px) {
     .posts_wrap {
