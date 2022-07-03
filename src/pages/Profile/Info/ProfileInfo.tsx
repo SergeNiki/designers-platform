@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import classes from "./ProfileInfo.module.css";
 import { IProfileState, RequestForType } from "../../../types/profile";
-import { StateType } from "../../../types/state";
 import { connect } from "react-redux";
 import { getUserProfile, toggleFollow, updateUserAvatar } from "./../../../redux/profile-reducer";
 import { toggleLoginTC } from "./../../../redux/auth-reducer";
 import UsersModal from "../UsersModal/UsersModal";
+import { StateType } from "../../../redux/redux-store";
 
 type ProfileInfoProps = {
   //From Parent

@@ -4,9 +4,9 @@ import classes from './Navigation.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHouseChimney, faImages, faSquarePlus, faUser, faUserGear } from "@fortawesome/free-solid-svg-icons";
 import { faComments, faThumbsUp } from '@fortawesome/free-regular-svg-icons';
-import { StateType } from '../../types/state';
 import { connect } from 'react-redux';
 import { toggleLoginTC } from "./../../redux/auth-reducer";
+import { StateType } from '../../redux/redux-store';
 
 type NavigationProps = {
     user_id: number | null

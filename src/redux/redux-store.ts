@@ -4,6 +4,7 @@ import appReduser from "./app-reducer";
 import authReducer from "./auth-reducer";
 import postPreviewsReducer from "./postPreviews";
 import profileReducer from "./profile-reducer";
+import subscriptionsReducer from "./subscriptions-reducer";
 import usersReducer from "./users-reducer";
 
 let reducers = combineReducers({
@@ -11,8 +12,11 @@ let reducers = combineReducers({
     auth: authReducer,
     appInitialized: appReduser,
     postPreviews: postPreviewsReducer,
-    usersData: usersReducer
+    usersData: usersReducer,
+    subscriptionsData: subscriptionsReducer
 });
+
+export type StateType = ReturnType<typeof reducers> 
 
 let store = createStore(reducers, applyMiddleware(thunk));
 

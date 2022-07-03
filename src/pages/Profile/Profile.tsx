@@ -1,15 +1,15 @@
 import React, { ComponentType, useEffect } from "react";
 import { connect } from "react-redux";
 import { IProfileState } from "../../types/profile";
-import { StateType } from "../../types/state";
 import Albums from "./Albums/Albums";
 import ProfileInfo from "./Info/ProfileInfo";
 import ProfileMenu from "./Menu/ProfileMenu";
 import ProfilePosts from "./Posts/ProfilePosts";
 import classes from "./Profile.module.css";
-import SubTypes from "./SubTypes/SubTypes";
+import Subscriptions from "./Subscriptions/Subscriptions";
 import withRouterProfile from "./../../hoc/withRouterProfile"
 import { compose } from "redux";
+import { StateType } from "../../redux/redux-store";
 
 export type ProfileProps = {
   authUserId: number | null;
@@ -30,7 +30,7 @@ const Profile: React.FC<ProfileProps> = (props) => {
       case "albums":
         return <Albums/>
       case "sub_types":
-        return <SubTypes/>
+        return <Subscriptions isOwner={props.isOwner} />
     }
   }
 

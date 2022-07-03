@@ -1,5 +1,5 @@
 .posts_wrap {
-    grid-area: posts;
+    grid-area: content;
     overflow: scroll;
 }
 

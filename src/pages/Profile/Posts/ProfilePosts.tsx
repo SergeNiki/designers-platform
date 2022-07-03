@@ -1,8 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import Preview from "../../../components/Preview/Preview";
+import { StateType } from "../../../redux/redux-store";
 import { PreviewDataType } from "../../../types/posts";
-import { StateType } from "../../../types/state";
 import classes from "./ProfilePosts.module.css";
 
 type ProfilePostsProps = {
@@ -21,8 +21,8 @@ const ProfilePosts: React.FC<ProfilePostsProps> = (props) => {
   );
 };
 
-let mapSateToProps = (state: StateType) => ({
+let mapStateToProps = (state: StateType) => ({
   postsArray: state.postPreviews.postPreviewsArray,
 });
 
-export default connect(mapSateToProps)(ProfilePosts);
+export default connect(mapStateToProps)(ProfilePosts);

@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 import classes from "./Header.module.css";
 import { toggleLoginTC, logout } from "./../../redux/auth-reducer";
 import { getAuthUserData } from "./../../redux/auth-reducer"
-import { StateType } from "../../types/state";
 import HeaderPopup from "./PopupMenu/HeaderPopup";
+import { StateType } from "../../redux/redux-store";
 
 type HeaderProps = {
   isAuth: boolean;

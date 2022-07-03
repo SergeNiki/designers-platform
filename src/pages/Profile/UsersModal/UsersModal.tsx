@@ -1,5 +1,4 @@
 import { connect } from "react-redux";
-import { StateType } from "../../../types/state";
 import {
   getUsersList,
   getFollowersList,
@@ -14,6 +13,7 @@ import classes from "./UsersModal.module.css";
 import { RequestForType } from "../../../types/profile";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { StateType } from "../../../redux/redux-store";
 
 type UsersModalProps = {
   //From Parent

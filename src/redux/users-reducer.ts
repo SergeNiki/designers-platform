@@ -26,14 +26,6 @@ const usersReducer = (state = initialState, action: ActionsUsers): IUsersState =
             return {
                 ...state, next: action.payload.next, previos: action.payload.previos, users: [...state.users, ...action.payload.users]
             }
-        case SET_FOLLOWERS_LIST:
-            return {
-                ...state, next: action.payload.next, previos: action.payload.previos, users: [...state.users, ...action.payload.users]
-            }
-        case SET_FOLLOWING_LIST:
-            return {
-                ...state, next: action.payload.next, previos: action.payload.previos, users: [...state.users, ...action.payload.users]
-            }
         case SET_IS_FOLLOWED:
             return {
                 ...state,
@@ -63,16 +55,6 @@ const usersReducer = (state = initialState, action: ActionsUsers): IUsersState =
 
 export const setUsers = (payload: UsersResponse): ActionSetUsersDataType => ({
     type: SET_USERS_LIST,
-    payload
-})
-
-export const setFollowers = (payload: UsersResponse): ActionSetUsersDataType => ({
-    type: SET_FOLLOWERS_LIST,
-    payload
-})
-
-export const setFollowing = (payload: UsersResponse): ActionSetUsersDataType => ({
-    type: SET_FOLLOWING_LIST,
     payload
 })
 
@@ -115,7 +97,7 @@ export const getFollowersList = (user_id: number, next: string | null) => {
         try {
             const response = await UsersService.getFollowers(user_id, next);
             dispatch(toggleIsFetching(false))
-            dispatch(setFollowers(response.data))
+            dispatch(setUsers(response.data))
         } catch (error) {
             
         }
@@ -128,7 +110,7 @@ export const getFollowingList = (user_id: number, next: string | null) => {
         try {
             const response = await UsersService.getFollowing(user_id, next);
             dispatch(toggleIsFetching(false))
-            dispatch(setFollowing(response.data))
+            dispatch(setUsers(response.data))
         } catch (error) {
             
         }
