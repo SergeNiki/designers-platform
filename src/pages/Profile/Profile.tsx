@@ -30,7 +30,7 @@ const Profile: React.FC<ProfileProps> = (props) => {
       case "albums":
         return <Albums/>
       case "sub_types":
-        return <Subscriptions isOwner={props.isOwner} />
+        return <Subscriptions isOwner={props.isOwner} ownerUserId={props.ownerUserId} />
     }
   }
 
