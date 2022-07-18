@@ -2,7 +2,7 @@ import { applyMiddleware, combineReducers, createStore } from "redux";
 import thunk from "redux-thunk"
 import appReduser from "./app-reducer";
 import authReducer from "./auth-reducer";
-import postPreviewsReducer from "./postPreviews";
+import postPreviewsReducer from "./postPreviews-reducer";
 import profileReducer from "./profile-reducer";
 import subscriptionsReducer from "./subscriptions-reducer";
 import usersReducer from "./users-reducer";
