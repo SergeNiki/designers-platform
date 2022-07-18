@@ -2,7 +2,7 @@ import { Dispatch } from "redux";
 import { ThunkAction } from "redux-thunk";
 import AuthService from "../services/AuthService";
 import { ActionsAuthType, ActionSetUserData, ActionToggleIsProcessLogin, IAuthState, ITelegramUser } from "../types/auth";
-import { StateType } from "../types/state";
+import { StateType } from "../redux/redux-store";
 
 const SET_USER_DATA = "auth/SET_USER_DATA";
 const TOGGLE_IS_PROCESS_LOGIN = "auth/TOGGLE_IS_PROCESS_LOGIN";
