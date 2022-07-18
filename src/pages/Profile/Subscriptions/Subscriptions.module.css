@@ -10,6 +10,10 @@
     grid-gap: 10px;
 }
 
+.add_sub_btn {
+    background-color: f0f0f0;
+}
+
 @media (max-width: 1300px) {
     .subscriptions {
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));

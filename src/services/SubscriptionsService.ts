@@ -4,7 +4,7 @@ import { GetSubscriptionsResponse, СreatingSubscriptionResponse, SubscriptionDa
 
 class SubscriptionsService {
     static async getSubscriptions(id: number): Promise<AxiosResponse<GetSubscriptionsResponse>> {
-        return $api.get<GetSubscriptionsResponse>(`api/v1/subscription-types/user/${id}/`)
+        return $api.get<GetSubscriptionsResponse>(`api/v1/users/${id}/subscription-types/`)
     }
     static async creatingSubscription(data: SubscriptionData): Promise<AxiosResponse<СreatingSubscriptionResponse>> {
         return $api.post<СreatingSubscriptionResponse>(`api/v1/subscription-types/`, {...data})
