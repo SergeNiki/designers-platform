@@ -11,7 +11,12 @@
 }
 
 .add_sub_btn {
-    background-color: f0f0f0;
+    background-color: #f0f0f0;
+    aspect-ratio: 4/6;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 @media (max-width: 1300px) {
