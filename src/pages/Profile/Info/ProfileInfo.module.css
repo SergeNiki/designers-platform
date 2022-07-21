@@ -1,7 +1,4 @@
 .info_wrap {
-  /* position: fixed; */
-  /* left: 90px; */
-  /* width: 330px; */
   background-color: #f0f0f0;
   grid-area: info;
   border-radius: 5px;

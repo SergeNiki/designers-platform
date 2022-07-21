@@ -45,7 +45,7 @@ const Header = (props: HeaderProps) => {
           </div>
         ) : (
           <div className={classes.login} onClick={toggleLogin}>
-            LOGIN
+            ВОЙТИ
           </div>
         )}
         {isPopupActive && <HeaderPopup logout={props.logout} display_name={props.display_name} username={props.username} avatar={props.avatar} setPopupActive={setPopupActive} />}
