@@ -1,11 +1,16 @@
-import React, { useEffect, useState } from "react";
-import classes from "./ProfileInfo.module.css";
-import { IProfileState, RequestForType } from "../../../types/profile";
-import { connect } from "react-redux";
-import { getUserProfile, toggleFollow, updateUserAvatar } from "./../../../redux/profile-reducer";
-import { toggleLoginTC } from "./../../../redux/auth-reducer";
-import UsersModal from "../UsersModal/UsersModal";
-import { StateType } from "../../../redux/redux-store";
+import React, { useEffect, useState } from 'react';
+import classes from './ProfileInfo.module.css';
+import { IProfileState, RequestForType } from '../../../types/profile';
+import { connect } from 'react-redux';
+import {
+  getUserProfile,
+  toggleFollow,
+  updateUserAvatar,
+} from './../../../redux/profile-reducer';
+import { toggleLoginTC } from './../../../redux/auth-reducer';
+import UsersModal from '../UsersModal/UsersModal';
+import { StateType } from '../../../redux/redux-store';
+import UpdateAvatar from './UpdateAvatar/UpdateAvatar';
 
 type ProfileInfoProps = {
   //From Parent
@@ -29,15 +34,16 @@ const ProfileInfo = (props: ProfileInfoProps) => {
 
   useEffect(() => {
     if (!props.isOwner && props.isAuth) {
-      props.toggleFollow(props.ownerUserId, "is_followed");
+      props.toggleFollow(props.ownerUserId, 'is_followed');
     }
   }, [props.ownerUserId, props.isAuth]);
 
   let [usersModalFor, setUsersModalFor] = useState<
-    "followers" | "following" | undefined
+    'followers' | 'following' | undefined
   >();
 
-  const usersModalWindow = () => {  //show modal window with users
+  const usersModalWindow = () => {
+    //show modal window with users
     if (usersModalFor) {
       return (
         <UsersModal
@@ -50,12 +56,13 @@ const ProfileInfo = (props: ProfileInfoProps) => {
     }
   };
 
-  let showButtonSub = () => { //show subscribe button
+  let showButtonSub = () => {
+    //show subscribe button
     if (!props.isAuth) {
       return (
         <button
           onClick={props.toggleLoginTC}
-          style={{ backgroundColor: "#6DEFC0" }}
+          style={{ backgroundColor: '#6DEFC0' }}
         >
           Подписаться
         </button>
@@ -67,42 +74,33 @@ const ProfileInfo = (props: ProfileInfoProps) => {
           onClick={toggleFollow}
           style={
             props.profileData.is_followed
-              ? { backgroundColor: "#C4C4C4" }
-              : { backgroundColor: "#6DEFC0" }
+              ? { backgroundColor: '#C4C4C4' }
+              : { backgroundColor: '#6DEFC0' }
           }
         >
-          {props.profileData.is_followed ? "Отписаться" : "Подписаться"}
+          {props.profileData.is_followed ? 'Отписаться' : 'Подписаться'}
         </button>
       );
     }
   };
 
-  const toggleFollow = () => {  //follow and unfollow action
+  const toggleFollow = () => {
+    //follow and unfollow action
     if (props.profileData.is_followed) {
-      props.toggleFollow(props.ownerUserId, "unfollow");
+      props.toggleFollow(props.ownerUserId, 'unfollow');
     } else {
-      props.toggleFollow(props.ownerUserId, "follow");
+      props.toggleFollow(props.ownerUserId, 'follow');
     }
   };
 
-  const openModalWindow = (windowFor: "followers" | "following") => { //open modal window
+  const openModalWindow = (windowFor: 'followers' | 'following') => {
+    //open modal window
     if (props.isAuth) {
       document.getElementsByTagName('body')[0].style.overflowY = 'hidden';
-      if (windowFor == "followers") {
-        setUsersModalFor("followers");
-      } else if (windowFor == "following") {
-        setUsersModalFor("following");
-      }
-    }
-  };
-
-  const updateAvatar = (e: React.ChangeEvent<HTMLInputElement>) => {  //user avatar update
-    if (e.currentTarget.files?.length) {
-      const file = e.currentTarget.files[0];
-      if (file.type == "image/jpeg") {
-        props.updateUserAvatar(file);
-      } else {
-        alert("Неподходящий тип или формат файла!")
+      if (windowFor == 'followers') {
+        setUsersModalFor('followers');
+      } else if (windowFor == 'following') {
+        setUsersModalFor('following');
       }
     }
   };
@@ -112,12 +110,10 @@ const ProfileInfo = (props: ProfileInfoProps) => {
       <h2>{props.profileData.display_name}</h2>
       {props.isOwner ? (
         <div className={classes.avatar_wrap}>
-          <img
-            src={props.profileData.avatar}
-            className={classes.update_avatar}
-            alt="avatar"
+          <UpdateAvatar
+            updateUserAvatar={props.updateUserAvatar}
+            srcAvatar={props.profileData.avatar}
           />
-          <input type="file" onChange={updateAvatar} className={classes.input_update_avatar} />
         </div>
       ) : (
         <div className={classes.avatar_wrap}>
@@ -127,14 +123,14 @@ const ProfileInfo = (props: ProfileInfoProps) => {
       <p>@{props.profileData.username}</p>
       <div className={classes.follow_info}>
         <div
-          onClick={() => openModalWindow("followers")}
+          onClick={() => openModalWindow('followers')}
           className={classes.followers}
         >
           <p>Подписчики</p>
           <h2>{props.profileData.followers_count}</h2>
         </div>
         <div
-          onClick={() => openModalWindow("following")}
+          onClick={() => openModalWindow('following')}
           className={classes.following}
         >
           <p>Подписки</p>

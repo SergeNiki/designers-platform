@@ -13,6 +13,7 @@
 .create_sub {
     position: relative;
     width: 750px;
+    padding-bottom: 20px;
     border-radius: 10px;
     overflow: hidden;
     background-color: azure;
@@ -20,6 +21,7 @@
 
 .sub_header {
     width: 100%;
+    color: rgba(0, 0, 0, 0.692);
     background-color: #C8FFE8;
     padding: 8px 10px;
     display: flex;

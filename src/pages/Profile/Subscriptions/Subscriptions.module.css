@@ -12,11 +12,20 @@
 
 .add_sub_btn {
     background-color: #f0f0f0;
+    font-size: 76px;
+    color: #b1b1b1;
+    border: 3px solid #b1b1b12c;
     aspect-ratio: 4/6;
     border-radius: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.add_sub_btn:hover {
+    background-color: #e2e0e0;
 }
 
 @media (max-width: 1300px) {

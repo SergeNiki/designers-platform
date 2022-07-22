@@ -1,8 +1,13 @@
 .sub_form {
     width: 100%;
-    padding: 20px;
+    padding: 20px 50px;
     display: flex;
     flex-direction: column;
+}
+
+.sub_form label {
+    margin-left: 15px;
+    font-size: 20px;
 }
 
 .form_item {
@@ -11,12 +16,17 @@
     margin: 10px 0;
 }
 
+.form_item textarea,
 .form_item input {
     font-size: 18px;
     border-radius: 15px;
-    padding: 2px 10px;
+    padding: 5px 10px;
     margin-top: 5px;
-    /* border: 2px solid ; */
+}
+
+.form_item textarea {
+    resize: none;
+    height: 150px;
 }
 
 .btn_wrap {
@@ -24,4 +34,9 @@
     height: 30px;
     display: flex;
     justify-content: center;
+}
+
+.error_message {
+    color: red;
+    font-size: 12px;
 }

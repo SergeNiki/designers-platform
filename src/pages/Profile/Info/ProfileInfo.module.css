@@ -22,22 +22,10 @@
   overflow: hidden;
 }
 
-.input_update_avatar,
 .avatar_wrap img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-
-.input_update_avatar {
-  opacity: 0;
-  position: absolute;
-  cursor: pointer;
-  border-radius: 50%;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
 }
 
 .follow_info {
@@ -87,10 +75,4 @@
 
 .edit_bth {
   background-color: #6defc0;
-}
-
-#input_update_avatar {
-  position: absolute;
-  width: 100%;
-  height: 100%;
 }

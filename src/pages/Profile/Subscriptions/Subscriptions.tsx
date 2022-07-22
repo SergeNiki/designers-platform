@@ -6,6 +6,8 @@ import classes from "./Subscriptions.module.css";
 import SubscriptionsCard from "./SubscriptionsCard/SubscriptionsCard";
 import { useEffect, useState } from "react";
 import SubCreateWindow from "./SubCreateWindow/SubCreateWindow";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSquarePlus } from "@fortawesome/free-solid-svg-icons";
 
 type SubscriptionsProps = {
   //from State
@@ -46,7 +48,7 @@ const Subscriptions = (props: SubscriptionsProps) => {
       {isCreateWindow && <SubCreateWindow setIsCreateWindow={setIsCreateWindow} />}
       <div className={classes.subscriptions}>
         {props.isOwner && <div className={classes.add_sub_btn} onClick={openSubCreateWindow} >
-          добавить
+          <FontAwesomeIcon icon={faSquarePlus} />
         </div>}
         {subscriptions}
       </div>

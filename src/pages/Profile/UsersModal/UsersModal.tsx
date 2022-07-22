@@ -72,7 +72,7 @@ const UsersModal = (props: UsersModalProps) => {
       toggleFollow={props.toggleFollow}
       authUserId={props.authUserId}
       followingsInProgress={props.followingsInProgress}
-      closeModalWindow={closeModalWindow}
+      handleClickOnUser={closeModalWindow}
     />
   ));
 

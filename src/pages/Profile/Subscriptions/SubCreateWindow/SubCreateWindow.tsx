@@ -2,9 +2,14 @@ import SubCreateForm from "./SubCreateForm/SubCreateForm";
 import classes from "./SubCreateWindow.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { connect } from "react-redux";
+import {creatingSubscription} from "../../../../redux/subscriptions-reducer"
+import { StateType } from "../../../../redux/redux-store";
+import { SubscriptionData } from "../../../../types/subscriptions";
 
 type SubCreateWindowProps = {
     setIsCreateWindow(value: boolean): void
+    creatingSubscription(data: SubscriptionData): void
 }
 
 const SubCreateWindow = (props: SubCreateWindowProps) => {
@@ -22,9 +27,15 @@ const SubCreateWindow = (props: SubCreateWindowProps) => {
                     <FontAwesomeIcon icon={faXmark} />
                 </div>
             </div>
-            <SubCreateForm/>
+            <SubCreateForm creatingSubscription={props.creatingSubscription} />
         </div>
     </div>
 }
 
-export default SubCreateWindow
+let mapSateToProps =(state: StateType) => ({
+
+})
+
+export default connect(mapSateToProps,{
+    creatingSubscription
+})(SubCreateWindow)
