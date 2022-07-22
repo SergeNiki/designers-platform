@@ -1,0 +1,29 @@
+.input_update_avatar {
+    display: none;
+  }
+
+.popupDiv {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    font-weight: bold;
+    font-size: 56px;
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0);
+    color: white;
+    border-radius: 50%;
+    backdrop-filter: blur(0px);
+    transition: all 0.5s;
+}
+
+.popupDiv:hover {
+    background-color: rgba(0, 0, 0, 0.226);
+    backdrop-filter: blur(2px);
+    opacity: 1;
+}
