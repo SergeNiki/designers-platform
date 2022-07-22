@@ -8,6 +8,7 @@ import { initializeApp } from "./redux/app-reducer";
 import Login from "./components/Login/Login";
 import Profile from "./pages/Profile/Profile";
 import { StateType } from "./redux/redux-store";
+import Main from "./pages/Main/Main";
 
 type AppProps = {
   isInitialized: boolean;
@@ -28,9 +29,10 @@ function App(props: AppProps) {
         <Navigation />
         <Routes>
           <Route path="/" element={<Navigate to={"/main"} />} />
-          <Route path="/profile" element={<Profile />}>
-            <Route path="id:user_id" element={<Profile />} />
+          <Route path="/profile/id:user_id" element={<Profile />}>
+            {/* <Route path="id:user_id" element={<Profile />} /> */}
           </Route>
+          <Route path="/main" element={<Main/>} />
         </Routes>
       </BrowserRouter>
     </div>
