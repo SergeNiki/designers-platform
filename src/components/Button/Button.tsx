@@ -1,13 +1,13 @@
 import { useState } from 'react';
-import classes from './Button.module.css';
+import './Button.css';
 
 type ButtonProps = {
   children: React.ReactNode;
   isDisabled: boolean;
   backgroundColor: string;
   hoverBackgroundColor: string;
-  width: string;
-  handleClick(): void;
+  buttonSize: 'small' | 'medium' | 'large'
+  handleClick(e: any): void;
 };
 
 const Button = (props: ButtonProps) => {
@@ -21,11 +21,11 @@ const Button = (props: ButtonProps) => {
 
   return (
     <button
-      className={classes.button}
+      className={`button button_${props.buttonSize}`}
       onClick={props.handleClick}
       onMouseOver={onMouseOver}
       onMouseOut={onMouseOut}
-      style={{ backgroundColor: color, width: props.width }}
+      style={{ backgroundColor: color }}
     >
       {props.children}
     </button>
