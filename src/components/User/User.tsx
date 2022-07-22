@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { RequestForType } from "../../types/profile";
 import { UserDataType } from "../../types/users";
+import Button from "../Button/Button";
 import classes from "./User.module.css";
 
 type UserProps = UserDataType & {
@@ -8,7 +9,7 @@ type UserProps = UserDataType & {
   authUserId: number;
   followingsInProgress: Array<number>;
   toggleFollow(id: number, req: RequestForType): void;
-  closeModalWindow(): void
+  handleClickOnUser(): void
 };
 
 const User = (props: UserProps) => {
@@ -23,7 +24,7 @@ const User = (props: UserProps) => {
 
   return (
     <div className={classes.user_wrap}>
-      <NavLink onClick={props.closeModalWindow} to={`id${props.id}`}>
+      <NavLink onClick={props.handleClickOnUser} to={`/profile/id${props.id}`}>
         <div className={classes.user_info}>
           <img src={props.avatar} alt="avatar" />
           <div className={classes.naming}>
@@ -34,19 +35,28 @@ const User = (props: UserProps) => {
       </NavLink>
       <div className={classes.follow_wrap}>
         {props.isAuth && props.id !== props.authUserId && (
-          <button
-            disabled={props.followingsInProgress.some((id) => id === props.id)}
-            onClick={toggleFollowHandler}
-            style={
-              props.is_followed
-                ? { backgroundColor: "#C4C4C4" }
-                : { backgroundColor: "#6DEFC0" }
-            }
-          >
-            {props.is_followed ? "Отписаться" : "Подписаться"}
-          </button>
+          <Button
+          isDisabled={props.followingsInProgress.some((id) => id === props.id)}
+          handleClick={toggleFollowHandler}
+          backgroundColor={props.is_followed
+          ? '#C4C4C4'
+          : '#6DEFC0'}
+          buttonSize='small'
+          hoverBackgroundColor="auto">
+              {props.is_followed ? "Отписаться" : "Подписаться"}
+          </Button>
+          // <button
+          //   disabled={props.followingsInProgress.some((id) => id === props.id)}
+          //   onClick={toggleFollowHandler}
+          //   style={
+          //     props.is_followed
+          //       ? { backgroundColor: "#C4C4C4" }
+          //       : { backgroundColor: "#6DEFC0" }
+          //   }
+          // >
+          //   {props.is_followed ? "Отписаться" : "Подписаться"}
+          // </button>
         )}
-        {/* <p>Подписчиков: {props.followers_count}</p> */}
       </div>
     </div>
   );
