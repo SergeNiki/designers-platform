@@ -9,7 +9,7 @@ export default class UsersService {
     count: number,
     page: number
   ): Promise<AxiosResponse<UsersResponse>> {
-    return $api.get<UsersResponse>(`api/v1/users/?page${page}&${count}`);
+    return $api.get<UsersResponse>(`api/v1/users/?page=${page}&count=${count}`);
   }
 
   static async getFollowers(user_id: number, next: string | null): Promise<AxiosResponse<UsersResponse>> {
