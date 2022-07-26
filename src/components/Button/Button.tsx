@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './Button.css';
 
 type ButtonProps = {
@@ -11,12 +11,17 @@ type ButtonProps = {
 };
 
 const Button = (props: ButtonProps) => {
-  const [color, setColor] = useState<string>(props.backgroundColor);
+  const [bgColor, setBgColor] = useState<string>('');
+
+  useEffect(() => {
+    setBgColor(props.backgroundColor)
+}, [props.backgroundColor])
+
   const onMouseOver = () => {
-    setColor(props.hoverBackgroundColor);
+    setBgColor(props.hoverBackgroundColor);
   };
   const onMouseOut = () => {
-    setColor(props.backgroundColor);
+    setBgColor(props.backgroundColor);
   };
 
   return (
@@ -25,7 +30,8 @@ const Button = (props: ButtonProps) => {
       onClick={props.handleClick}
       onMouseOver={onMouseOver}
       onMouseOut={onMouseOut}
-      style={{ backgroundColor: color }}
+      style={{ backgroundColor: props.isDisabled ? "#C5D6CA" : bgColor }}
+      disabled={props.isDisabled}
     >
       {props.children}
     </button>
