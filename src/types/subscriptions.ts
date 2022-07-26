@@ -11,7 +11,7 @@ export type SubData = {
   owner: number;
   name: string;
   description: string;
-  image: string;
+  image: any;
   price: string;
   price_currency: string;
   is_subscribed: boolean;

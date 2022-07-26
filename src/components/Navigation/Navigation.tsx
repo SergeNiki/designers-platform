@@ -27,7 +27,6 @@ const Navigation: React.FC<NavigationProps> = (props) => {
                     <NavLink to={"/messages"}><FontAwesomeIcon icon={faComments} /></NavLink>
                     <NavLink to={"/"}><FontAwesomeIcon icon={faThumbsUp} /></NavLink>
                     <NavLink to={"/"}><FontAwesomeIcon icon={faSquarePlus} /></NavLink>
-                    <NavLink to={"/"}><FontAwesomeIcon icon={faUserGear} /></NavLink>
                 </div>
             </div>
         </nav>

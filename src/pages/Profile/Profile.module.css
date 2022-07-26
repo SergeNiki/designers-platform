@@ -11,7 +11,12 @@
     "info content";
 }
 
-@media (max-width: 425px) {
+.profile_content {
+  grid-area: content;
+  overflow: scroll;
+}
+
+@media (max-width: 767px) {
   .profile_wrap {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 45px 1fr;
@@ -19,5 +24,11 @@
       "info"
       "menu"
       "content";
+  }
+}
+
+@media (max-width: 767px) {
+  .profile_content {
+      overflow: visible;
   }
 }

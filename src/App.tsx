@@ -29,8 +29,8 @@ function App(props: AppProps) {
         <Navigation />
         <Routes>
           <Route path="/" element={<Navigate to={"/main"} />} />
-          <Route path="/profile/id:user_id" element={<Profile />}>
-            {/* <Route path="id:user_id" element={<Profile />} /> */}
+          <Route path="/profile" element={<Profile />}>
+            <Route path="id:user_id" element={<Profile />} />
           </Route>
           <Route path="/main" element={<Main/>} />
         </Routes>

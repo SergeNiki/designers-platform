@@ -10,7 +10,7 @@ const SubscriptionsCard = (props: SubData) => {
       </div>
       <img src={props.image} alt="preview" />
       <div className={classes.sub_description}>{props.description}</div>
-      {props.is_subscribed ? (
+      {props.is_subscribed && !props.owner ? (
         <button
           className={classes.unsub_button}
         >

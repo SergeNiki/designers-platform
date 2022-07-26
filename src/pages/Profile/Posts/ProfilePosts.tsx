@@ -15,9 +15,7 @@ const ProfilePosts: React.FC<ProfilePostsProps> = (props) => {
   ));
 
   return (
-    <div className={classes.posts_wrap}>
-      <div className={classes.posts}>{posts}</div>
-    </div>
+      <div className={classes.posts_wrap}>{posts}</div>
   );
 };
 

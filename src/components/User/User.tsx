@@ -45,17 +45,6 @@ const User = (props: UserProps) => {
           hoverBackgroundColor="auto">
               {props.is_followed ? "Отписаться" : "Подписаться"}
           </Button>
-          // <button
-          //   disabled={props.followingsInProgress.some((id) => id === props.id)}
-          //   onClick={toggleFollowHandler}
-          //   style={
-          //     props.is_followed
-          //       ? { backgroundColor: "#C4C4C4" }
-          //       : { backgroundColor: "#6DEFC0" }
-          //   }
-          // >
-          //   {props.is_followed ? "Отписаться" : "Подписаться"}
-          // </button>
         )}
       </div>
     </div>

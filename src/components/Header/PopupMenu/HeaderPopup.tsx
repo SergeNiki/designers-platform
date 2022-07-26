@@ -1,6 +1,7 @@
 import {
   faArrowRightFromBracket,
   faUser,
+  faUserGear,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Navigate, NavLink } from "react-router-dom";
@@ -37,6 +38,10 @@ const HeaderPopup = (props: HeaderPopupProps) => {
       <NavLink to={"/profile"} onClick={onMyProfile} className={classes.list_item}>
         <FontAwesomeIcon icon={faUser} />
         <p>Мой профиль</p>
+      </NavLink>
+      <NavLink to={"/profile"} onClick={onMyProfile} className={classes.list_item}>
+        <FontAwesomeIcon icon={faUserGear} />
+        <p>Настройки</p>
       </NavLink>
       <div
         onClick={onLogout}

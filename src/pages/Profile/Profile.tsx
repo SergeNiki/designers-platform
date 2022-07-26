@@ -39,7 +39,9 @@ const Profile: React.FC<ProfileProps> = (props) => {
       <div className={classes.profile_wrap}>
         <ProfileInfo ownerUserId={props.ownerUserId} isOwner={props.isOwner} isAuth={props.isAuth} />
         <ProfileMenu contentType={contentType} setContentType={setContentType} />
-        {contentTypeComponent()}
+        <div className={classes.profile_content} >
+          {contentTypeComponent()}
+        </div>
       </div>
     </section>
   );
