@@ -40,3 +40,9 @@
     color: red;
     font-size: 12px;
 }
+
+.cover_preview {
+    width: 180px;
+    border-radius: 5px;
+    margin: 5px 15px;
+}
