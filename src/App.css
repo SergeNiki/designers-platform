@@ -1,22 +1,23 @@
 header {
+  position: fixed;
+  height: 55px;
   width: 100vw;
   grid-area: header;
-  /* position: fixed; */
   margin-bottom: 10px;
   z-index: 100;
 }
 
 nav {
   grid-area: nav;
-  /* position: fixed;
-  top: 95px;
-  left: 12.5px; */
+  position: fixed;
+  top: 65px;
+  left: 10px;
   z-index: 100;
 }
 
 section {
   grid-area: page;
-  padding: 0 15px 15px 0;
+  padding: 0 10px 15px 0;
 }
 
 .App {
@@ -27,8 +28,25 @@ section {
   display: grid;
   grid-template-rows: 65px calc(100vh - 65px);
   grid-template-columns: 75px 1fr;
-  /* grid-gap: 10px; */
   grid-template-areas: 
   "header header"
   "nav page";
+}
+
+@media (max-width: 425px) {
+  .App {
+    grid-template-rows: 65px calc(100vh - 65px);
+    grid-template-columns: 1fr;
+    grid-template-areas: 
+    "header"
+    "page"
+  }
+
+  nav {
+    top: auto;
+    bottom: 15px;
+    left: 0;
+    right: 0;
+    z-index: 100;
+  }
 }
