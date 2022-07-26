@@ -55,7 +55,6 @@ const SubCreateForm = (props: SubCreateFormProps) => {
     resolver: yupResolver(validationSchema),
   });
   const onSubmit: SubmitHandler<SubForm> = (data) => {
-    console.log(imageFile!.get('image'))
     props.creatingSubscription({
       description: data.sub_description,
       image: imageFile!.get('image'),

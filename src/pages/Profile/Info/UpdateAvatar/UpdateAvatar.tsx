@@ -15,7 +15,7 @@ const UpdateAvatar = (props: UpdateAvatarProps) => {
     //user avatar update
     if (e.currentTarget.files?.length) {
       const file = e.currentTarget.files[0];
-      if (file.type == 'image/jpeg') {
+      if (file.type == 'image/jpeg' || file.type == 'image/png') {
         props.updateUserAvatar(file);
       } else {
         alert('Неподходящий тип или формат файла!');
