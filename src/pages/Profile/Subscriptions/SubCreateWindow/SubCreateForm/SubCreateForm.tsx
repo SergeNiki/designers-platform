@@ -7,6 +7,7 @@ import { SubscriptionData } from '../../../../../types/subscriptions';
 import { useState } from 'react';
 
 type SubCreateFormProps = {
+  closeCreateWindow(): void
   creatingSubscription(data: SubscriptionData): void
 };
 
@@ -62,6 +63,7 @@ const SubCreateForm = (props: SubCreateFormProps) => {
       price: data.sub_price,
       price_currency: "RUB"})
     reset();
+    props.closeCreateWindow();
   };
 
   const uploadImage = (e: any) => {
@@ -74,12 +76,13 @@ const SubCreateForm = (props: SubCreateFormProps) => {
   const handleImageFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.currentTarget.files?.length) {
       const file = e.currentTarget.files[0];
-      if (file.type == 'image/jpeg') {
+      if (file.type == 'image/jpeg' || file.type == 'image/png') {
         const reader = new FileReader();
         reader.readAsDataURL(file)
         reader.onloadend = function(e) {
           setCoverPreview(String(this.result))
         }
+        
         const formData = new FormData();
         formData.append("image", file)
         setImageFile(formData);
@@ -139,7 +142,6 @@ const SubCreateForm = (props: SubCreateFormProps) => {
           backgroundColor={'#6DEFC0'}
           hoverBackgroundColor={'#67c598'}
           buttonSize='medium'
-          handleClick={() => {}}
         >
           Создать
         </Button>

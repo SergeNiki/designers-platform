@@ -12,9 +12,9 @@ export default class UsersService {
     return $api.get<UsersResponse>(`api/v1/users/?page=${page}&count=${count}`);
   }
 
-  static async getFollowers(user_id: number, next: string | null): Promise<AxiosResponse<UsersResponse>> {
+  static async getFollowers(user_id: number, next: string | null, count: number): Promise<AxiosResponse<UsersResponse>> {
     if (typeof(next) !== 'string') {
-      next = `http://31.148.203.10:25566/api/v1/users/followers/${user_id}/`
+      next = `http://31.148.203.10:25566/api/v1/users/followers/${user_id}/?count=${count}`
     }
     return axios.get<UsersResponse>(next, {
       headers: {
@@ -23,9 +23,9 @@ export default class UsersService {
     });
   }
 
-  static async getFollowing(user_id: number, next: string | null): Promise<AxiosResponse<UsersResponse>> {
+  static async getFollowing(user_id: number, next: string | null, count: number): Promise<AxiosResponse<UsersResponse>> {
     if (typeof(next) !== 'string') {
-      next = `http://31.148.203.10:25566/api/v1/users/following/${user_id}/`
+      next = `http://31.148.203.10:25566/api/v1/users/following/${user_id}/?count=${count}`
     }
     return axios.get<UsersResponse>(next, {
       headers: {

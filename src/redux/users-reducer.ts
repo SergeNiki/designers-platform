@@ -91,11 +91,11 @@ export const getUsersList = (count: number, page: number) => {
     }
 }
 
-export const getFollowersList = (user_id: number, next: string | null) => {
+export const getFollowersList = (user_id: number, next: string | null, count: number = 10) => {
     return async (dispatch:any) => {
         dispatch(toggleIsFetching(true))
         try {
-            const response = await UsersService.getFollowers(user_id, next);
+            const response = await UsersService.getFollowers(user_id, next, count);
             dispatch(toggleIsFetching(false))
             dispatch(setUsers(response.data))
         } catch (error) {
@@ -104,11 +104,11 @@ export const getFollowersList = (user_id: number, next: string | null) => {
     }
 }
 
-export const getFollowingList = (user_id: number, next: string | null) => {
+export const getFollowingList = (user_id: number, next: string | null, count: number = 10) => {
     return async (dispatch:any) => {
         dispatch(toggleIsFetching(true))
         try {
-            const response = await UsersService.getFollowing(user_id, next);
+            const response = await UsersService.getFollowing(user_id, next, count);
             dispatch(toggleIsFetching(false))
             dispatch(setUsers(response.data))
         } catch (error) {

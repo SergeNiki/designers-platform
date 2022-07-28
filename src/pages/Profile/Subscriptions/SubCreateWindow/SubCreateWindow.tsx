@@ -27,7 +27,7 @@ const SubCreateWindow = (props: SubCreateWindowProps) => {
                     <FontAwesomeIcon icon={faXmark} />
                 </div>
             </div>
-            <SubCreateForm creatingSubscription={props.creatingSubscription} />
+            <SubCreateForm closeCreateWindow={closeSubCreateWindow} creatingSubscription={props.creatingSubscription} />
         </div>
     </div>
 }

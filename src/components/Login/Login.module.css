@@ -6,6 +6,7 @@
     justify-content: center;
     align-items: center;
     backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
     background-color: rgba(0, 0, 0, 0.267);
     z-index: 150;
 }

@@ -1,3 +1,6 @@
+import { ThunkAction } from "redux-thunk";
+import { StateType } from "../redux/redux-store";
+
 //Auth State
 export interface IAuthState {
   user_id: number;
@@ -8,16 +11,26 @@ export interface IAuthState {
   isProcessLogin: boolean;
 }
 
+//Dispatch Type
+export type ThunkType = ThunkAction<Promise<void>, StateType, unknown, ActionsAuth>
 
 // Auth Actions
-export type ActionsAuthType = ActionSetUserData | ActionToggleIsProcessLogin;
+export enum ActionsType {
+  TOGGLE_IS_PROCESS_LOGIN = "auth/TOGGLE_IS_PROCESS_LOGIN",
+  SET_USER_DATA = "auth/SET_USER_DATA",
+  CLEAR_AUTH_STATE = "auth/CLEAR_AUTH_STATE"
+}
 export type ActionToggleIsProcessLogin = {
-  type: "auth/TOGGLE_IS_PROCESS_LOGIN";
+  type: ActionsType.TOGGLE_IS_PROCESS_LOGIN;
 }
 export type ActionSetUserData = {
-  type: "auth/SET_USER_DATA";
+  type: ActionsType.SET_USER_DATA;
   payload: IAuthState;
 }
+export type ActionClearAuthState = {
+  type: ActionsType.CLEAR_AUTH_STATE
+}
+export type ActionsAuth = ActionSetUserData | ActionToggleIsProcessLogin | ActionClearAuthState;
 
 
 //Telegram Data

@@ -7,7 +7,7 @@ type ButtonProps = {
   backgroundColor: string;
   hoverBackgroundColor: string;
   buttonSize: 'small' | 'medium' | 'large'
-  handleClick(e: any): void;
+  handleClick?(e: any): void;
 };
 
 const Button = (props: ButtonProps) => {
@@ -27,7 +27,7 @@ const Button = (props: ButtonProps) => {
   return (
     <button
       className={`button button_${props.buttonSize}`}
-      onClick={props.handleClick}
+      onClick={props?.handleClick}
       onMouseOver={onMouseOver}
       onMouseOut={onMouseOut}
       style={{ backgroundColor: props.isDisabled ? "#C5D6CA" : bgColor }}
