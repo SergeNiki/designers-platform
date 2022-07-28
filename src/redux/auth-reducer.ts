@@ -1,11 +1,18 @@
-import { Dispatch } from "redux";
-import { ThunkAction } from "redux-thunk";
-import AuthService from "../services/AuthService";
-import { ActionsAuthType, ActionSetUserData, ActionToggleIsProcessLogin, IAuthState, ITelegramUser } from "../types/auth";
-import { StateType } from "../redux/redux-store";
+import AuthService from '../services/AuthService';
+import {
+  ActionClearAuthState,
+  ActionsAuth,
+  ActionSetUserData,
+  ActionsType,
+  ActionToggleIsProcessLogin,
+  IAuthState,
+  ITelegramUser,
+  ThunkType,
+} from '../types/auth';
+import { openPopupMenu } from './popupMenu-reducer';
 
-const SET_USER_DATA = "auth/SET_USER_DATA";
-const TOGGLE_IS_PROCESS_LOGIN = "auth/TOGGLE_IS_PROCESS_LOGIN";
+const SET_USER_DATA = 'auth/SET_USER_DATA';
+const TOGGLE_IS_PROCESS_LOGIN = 'auth/TOGGLE_IS_PROCESS_LOGIN';
 
 let initialState: IAuthState = {
   user_id: 0,
@@ -18,18 +25,27 @@ let initialState: IAuthState = {
 
 const authReducer = (
   state = initialState,
-  action: ActionsAuthType
+  action: ActionsAuth
 ): IAuthState => {
   switch (action.type) {
-    case SET_USER_DATA:
+    case ActionsType.SET_USER_DATA:
       return {
         ...state,
         ...action.payload,
       };
-    case TOGGLE_IS_PROCESS_LOGIN:
+    case ActionsType.TOGGLE_IS_PROCESS_LOGIN:
       return {
         ...state,
-        isProcessLogin: !state.isProcessLogin
+        isProcessLogin: !state.isProcessLogin,
+      };
+    case ActionsType.CLEAR_AUTH_STATE:
+      return {
+        user_id: 0,
+        username: null,
+        avatar: null,
+        display_name: null,
+        isAuth: false,
+        isProcessLogin: false,
       };
     default:
       return state;
@@ -44,30 +60,30 @@ export const setAuthUserData = (
   isAuth: boolean,
   isProcessLogin: boolean
 ): ActionSetUserData => ({
-  type: SET_USER_DATA,
+  type: ActionsType.SET_USER_DATA,
   payload: { user_id, username, avatar, display_name, isAuth, isProcessLogin },
 });
-
 export const toggleIsProcessLogin = (): ActionToggleIsProcessLogin => ({
-  type: TOGGLE_IS_PROCESS_LOGIN,
+  type: ActionsType.TOGGLE_IS_PROCESS_LOGIN,
+});
+export const clearAuthState = (): ActionClearAuthState => ({
+  type: ActionsType.CLEAR_AUTH_STATE,
 });
 
-type AsyncThunkType = ThunkAction<Promise<void>, StateType, unknown, ActionsAuthType>
-type ThunkType = ThunkAction<void, StateType, unknown, ActionsAuthType>
-
-export const onTelegramAuth = (user: ITelegramUser): AsyncThunkType => {
+export const onTelegramAuth = (user: ITelegramUser): ThunkType => {
   return async (dispatch) => {
     try {
       const response = await AuthService.login(user);
-      localStorage.setItem("token", response.data.access_token);
+      localStorage.setItem('token', response.data.access_token);
       dispatch(getAuthUserData());
+      dispatch(openPopupMenu('Вы успешно авторизовались!', true));
     } catch (error: any) {
       console.log(error.response.data.detail);
     }
   };
 };
 
-export const getAuthUserData = (): AsyncThunkType => {
+export const getAuthUserData = (): ThunkType => {
   return async (dispatch) => {
     try {
       const response = await AuthService.authMe();
@@ -82,15 +98,15 @@ export const getAuthUserData = (): AsyncThunkType => {
 };
 
 export const toggleLoginTC = (): ThunkType => {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch(toggleIsProcessLogin());
   };
 };
 
 export const logout = (): ThunkType => {
-  return (dispatch) => {
+  return async (dispatch) => {
     localStorage.clear();
-    dispatch(setAuthUserData(0, null, null, null, false, false));
+    dispatch(clearAuthState());
     window.location.reload();
   };
 };
