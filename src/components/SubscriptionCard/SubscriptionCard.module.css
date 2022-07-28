@@ -5,9 +5,12 @@
     padding: 15px;
     aspect-ratio: 4/6;
     display: grid;
-    grid-template-rows: 25px 1fr auto 35px;
+    grid-template-rows: 40px 50% auto 55px;
     gap: 10px;
     justify-items: center;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .sub_name_wrap h3 {
@@ -21,12 +24,30 @@
     object-fit:cover;
 }
 
+.price_wrap,
+.sub_name_wrap,
 .sub_description {
+    color: #fff;
     border-radius: 5px;
     width: 100%;
     padding: 10px;
-    background-color: #fff;
+    background-color: rgba(0, 0, 0, 0.322);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+}
+
+.sub_name_wrap {
+    text-align: center;
+}
+
+.sub_description {
     overflow: scroll;
+    word-break: normal;
+}
+
+.price_wrap {
+    padding: 5px;
+    text-align: center;
 }
 
 .unsub_button,
@@ -53,4 +74,10 @@
 .unsub_button:hover {
     color:rgb(255, 81, 81);
     background-color: #b6b6b6;
+}
+
+.button_del_wrap { 
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
