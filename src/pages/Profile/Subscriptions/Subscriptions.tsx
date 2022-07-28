@@ -1,9 +1,9 @@
 import { connect } from "react-redux";
 import { StateType } from "../../../redux/redux-store";
 import { SubData } from "../../../types/subscriptions";
-import { getSubscriptions } from "../../../redux/subscriptions-reducer"
+import { getSubscriptions, subscribeToSubscription, deleteSubscription } from "../../../redux/subscriptions-reducer"
 import classes from "./Subscriptions.module.css";
-import SubscriptionsCard from "./SubscriptionsCard/SubscriptionsCard";
+import SubscriptionCard from "../../../components/SubscriptionCard/SubscriptionCard";
 import { useEffect, useState } from "react";
 import SubCreateWindow from "./SubCreateWindow/SubCreateWindow";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,6 +15,8 @@ type SubscriptionsProps = {
   subscriptionsArr: Array<SubData>
   isFetching: boolean
   getSubscriptions(id: number): void
+  deleteSubscription(subId: number): void
+  subscribeToSubscription(subId: number): void
 
   //from parent
   isOwner: boolean
@@ -34,7 +36,18 @@ const Subscriptions = (props: SubscriptionsProps) => {
     setIsCreateWindow(true);
   }
 
-  const subscriptions = props.subscriptionsArr.map((sub: SubData) => <SubscriptionsCard key={sub.id} {...sub} />)
+  const subscribe = async (subId: number) => {
+    await props.subscribeToSubscription(subId)
+    props.getSubscriptions(props.ownerUserId)
+  }
+  const deleteSub = (subId: number) => {
+    props.deleteSubscription(subId)
+    props.getSubscriptions(props.ownerUserId)
+  }
+
+  const subscriptions = props.subscriptionsArr.map((sub: SubData) => 
+    <SubscriptionCard key={sub.id} subscribe={subscribe} isOwner={props.isOwner} deleteSub={deleteSub} {...sub} 
+  />)
 
   if(props.isFetching) {
     return <p>Loading...</p>
@@ -63,5 +76,7 @@ let mapStateToProps = (state: StateType) => ({
 })
 
 export default connect(mapStateToProps, {
-  getSubscriptions
+  getSubscriptions,
+  deleteSubscription,
+  subscribeToSubscription
 })(Subscriptions);

@@ -1,3 +1,6 @@
+import { ThunkAction } from "redux-thunk";
+import { StateType } from "../redux/redux-store";
+
 // Subscriptions State
 export interface ISubscriptionsState {
   count: number;
@@ -5,6 +8,7 @@ export interface ISubscriptionsState {
   previous: string | null;
   results: Array<SubData>;
   isFetching: boolean;
+  statusMessage: string
 }
 export type SubData = {
   id: number;
@@ -19,16 +23,20 @@ export type SubData = {
 
 export type SubscriptionData = Omit<SubData, "id" | "owner" | "is_subscribed">
 
+//Dispatch Type
+export type ThunkSubType = ThunkAction<Promise<void>, StateType, unknown, ActionsSubscriptions>
+
 // Subscriptions Actions
 export enum SubsActionTypes {
-    GET_SUBSCRIPTIONS = "subscriptions/GET_SUBSCRIPTIONS",
+    SET_SUBSCRIPTIONS = "subscriptions/SET_SUBSCRIPTIONS",
     CREATING_SUBSCRIPTION = "subscriptions/CREATING_SUBSCRIPTION",
     EDIT_SUBSCRIPTION = "subscriptions/EDIT_SUBSCRIPTION",
     DELETE_SUBSCRIPTION = "subscriptions/DELETE_SUBSCRIPTION",
-    TOGGLE_IS_FETCHING = "subscriptions/TOGGLE_IS_FETCHING"
+    TOGGLE_IS_FETCHING = "subscriptions/TOGGLE_IS_FETCHING",
+    SET_STATUS_MESSAGE = "subscriptions/SET_STATUS_MESSAGE"
 }
 export type ActionGetSubscriptions = {
-    type: SubsActionTypes.GET_SUBSCRIPTIONS
+    type: SubsActionTypes.SET_SUBSCRIPTIONS
     payload: GetSubscriptionsResponse
 }
 export type ActionСreatingSubscription = {
@@ -47,7 +55,11 @@ export type ActionToggleIsFetching = {
     type: SubsActionTypes.TOGGLE_IS_FETCHING
     isFetching: boolean
 }
-export type ActionsSubscriptions = ActionGetSubscriptions | ActionСreatingSubscription | ActionEditSubscription | ActionDeleteSubscription | ActionToggleIsFetching
+export type ActionSetStatusMessage = {
+    type: SubsActionTypes.SET_STATUS_MESSAGE
+    message: string
+}
+export type ActionsSubscriptions = ActionGetSubscriptions | ActionСreatingSubscription | ActionEditSubscription | ActionDeleteSubscription | ActionToggleIsFetching | ActionSetStatusMessage
 
 
 // Subscriptions Response
