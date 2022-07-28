@@ -1,18 +1,20 @@
 import { Dispatch } from "react"
 import SubscriptionsService from "../services/SubscriptionsService"
-import { ActionDeleteSubscription, ActionEditSubscription, ActionGetSubscriptions, ActionsSubscriptions, ActionToggleIsFetching, ActionСreatingSubscription, GetSubscriptionsResponse, ISubscriptionsState, SubData, SubsActionTypes, SubscriptionData } from "../types/subscriptions"
+import { ActionDeleteSubscription, ActionEditSubscription, ActionGetSubscriptions, ActionSetStatusMessage, ActionsSubscriptions, ActionToggleIsFetching, ActionСreatingSubscription, GetSubscriptionsResponse, ISubscriptionsState, SubData, SubsActionTypes, SubscriptionData, ThunkSubType } from "../types/subscriptions"
+import { openPopupMenu } from "./popupMenu-reducer"
 
 let initialState: ISubscriptionsState = {
     count: 0,
     next: null,
     previous: null,
     results: [],
-    isFetching: false
+    isFetching: false,
+    statusMessage: ''
 }
 
 const subscriptionsReducer = (state = initialState, action: ActionsSubscriptions): ISubscriptionsState => {
     switch (action.type) {
-        case SubsActionTypes.GET_SUBSCRIPTIONS:
+        case SubsActionTypes.SET_SUBSCRIPTIONS:
             return {...state, ...action.payload}
         case SubsActionTypes.CREATING_SUBSCRIPTION:
             return {...state, results: [...state.results, {...action.payload}]}
@@ -27,14 +29,16 @@ const subscriptionsReducer = (state = initialState, action: ActionsSubscriptions
             return {...state, results: state.results.filter((sub: SubData) => sub.id !== action.id)}
         case SubsActionTypes.TOGGLE_IS_FETCHING:
             return {...state, isFetching: action.isFetching}
+        case SubsActionTypes.SET_STATUS_MESSAGE:
+            return {...state, statusMessage: action.message}
         default:
             return state
     }
 }
 
 
-export const getSubscriptionsAC = (payload: GetSubscriptionsResponse): ActionGetSubscriptions => ({
-    type: SubsActionTypes.GET_SUBSCRIPTIONS,
+export const setSubscriptionsAC = (payload: GetSubscriptionsResponse): ActionGetSubscriptions => ({
+    type: SubsActionTypes.SET_SUBSCRIPTIONS,
     payload
 })
 export const creatingSubscriptionsAC = (payload: SubData): ActionСreatingSubscription => ({
@@ -53,37 +57,42 @@ export const toggleIsFetching = (isFetching: boolean): ActionToggleIsFetching =>
     type: SubsActionTypes.TOGGLE_IS_FETCHING,
     isFetching
 })
+export const setStatusMessage = (message: string): ActionSetStatusMessage => ({
+    type: SubsActionTypes.SET_STATUS_MESSAGE,
+    message
+})
 
 
-export const getSubscriptions = (id: number) => {
-    return async (dispatch: Dispatch<ActionsSubscriptions>) => {
+export const getSubscriptions = (userId: number): ThunkSubType => {
+    return async (dispatch) => {
         dispatch(toggleIsFetching(true))
         try {
-            const response = await SubscriptionsService.getSubscriptions(id)
-            dispatch(getSubscriptionsAC(response.data))
+            const response = await SubscriptionsService.getSubscriptions(userId)
+            dispatch(setSubscriptionsAC(response.data))
             dispatch(toggleIsFetching(false))
         } catch (error) {
             
         }
     }
 }
-export const creatingSubscription = (data: SubscriptionData) => {
-    return async (dispatch: Dispatch<ActionsSubscriptions>) => {
+export const creatingSubscription = (data: SubscriptionData): ThunkSubType => {
+    return async (dispatch) => {
         dispatch(toggleIsFetching(true))
         try {
             const response = await SubscriptionsService.creatingSubscription(data)
             dispatch(creatingSubscriptionsAC(response.data))
             dispatch(toggleIsFetching(false))
+            dispatch(openPopupMenu('Подписка успешно создана!', true))
         } catch (error) {
-            
+            dispatch(openPopupMenu('Произошла ошибка!', true))            
         }
     }
 }
-export const editSubscription = (id: number, data: SubscriptionData) => {
-    return async (dispatch: Dispatch<ActionsSubscriptions>) => {
+export const editSubscription = (subId: number, data: SubscriptionData): ThunkSubType => {
+    return async (dispatch) => {
         dispatch(toggleIsFetching(true))
         try {
-            const response = await SubscriptionsService.editSubscription(id, data)
+            const response = await SubscriptionsService.editSubscription(subId, data)
             dispatch(editSubscriptionsAC(response.data))
             dispatch(toggleIsFetching(false))
         } catch (error) {
@@ -91,15 +100,30 @@ export const editSubscription = (id: number, data: SubscriptionData) => {
         }
     }
 }
-export const deleteSubscription = (id: number) => {
-    return async (dispatch: Dispatch<ActionsSubscriptions>) => {
+export const deleteSubscription = (subId: number): ThunkSubType => {
+    return async (dispatch) => {
         dispatch(toggleIsFetching(true))
         try {
-            const response = await SubscriptionsService.deleteSubscription(id)
-            dispatch(deleteSubscriptionsAC(id))
+            const response = await SubscriptionsService.deleteSubscription(subId)
+            dispatch(deleteSubscriptionsAC(subId))
             dispatch(toggleIsFetching(false))
+            dispatch(openPopupMenu('Подписка успешно удалена!', false))
         } catch (error) {
             
+        }
+    }
+}
+
+export const subscribeToSubscription = (subId: number): ThunkSubType => {
+    return async (dispatch) => {
+        dispatch(toggleIsFetching(true))
+        try {
+            const response = await SubscriptionsService.subscribeToSubscription(subId);
+            dispatch(setStatusMessage(response.data.message))
+            dispatch(toggleIsFetching(false))
+            dispatch(openPopupMenu('Подписка успешно оформлена!', true))
+        } catch (error) {
+            dispatch(openPopupMenu('Произошла ошибка!', false))
         }
     }
 }
