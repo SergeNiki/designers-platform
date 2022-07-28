@@ -2,6 +2,7 @@ import { applyMiddleware, combineReducers, createStore } from "redux";
 import thunk from "redux-thunk"
 import appReduser from "./app-reducer";
 import authReducer from "./auth-reducer";
+import PopupMenuReducer from "./popupMenu-reducer";
 import postPreviewsReducer from "./postPreviews-reducer";
 import profileReducer from "./profile-reducer";
 import subscriptionsReducer from "./subscriptions-reducer";
@@ -13,7 +14,8 @@ let reducers = combineReducers({
     appInitialized: appReduser,
     postPreviews: postPreviewsReducer,
     usersData: usersReducer,
-    subscriptionsData: subscriptionsReducer
+    subscriptionsData: subscriptionsReducer,
+    popupMenu: PopupMenuReducer
 });
 
 export type StateType = ReturnType<typeof reducers> 
