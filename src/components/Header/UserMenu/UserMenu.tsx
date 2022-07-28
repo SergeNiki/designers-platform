@@ -5,7 +5,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Navigate, NavLink } from "react-router-dom";
-import classes from "./HeaderPopup.module.css";
+import classes from "./UserMenu.module.css";
 
 type HeaderPopupProps = {
   username: string | null;

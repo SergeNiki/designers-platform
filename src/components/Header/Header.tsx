@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import classes from "./Header.module.css";
 import { toggleLoginTC, logout } from "./../../redux/auth-reducer";
 import { getAuthUserData } from "./../../redux/auth-reducer"
-import HeaderPopup from "./PopupMenu/HeaderPopup";
+import HeaderPopup from "./UserMenu/UserMenu";
 import { StateType } from "../../redux/redux-store";
 
 type HeaderProps = {
