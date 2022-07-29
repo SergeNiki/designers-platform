@@ -39,8 +39,8 @@ const ProfileInfo = (props: ProfileInfoProps) => {
   }, [props.ownerUserId, props.isAuth]);
 
   let [usersModalFor, setUsersModalFor] = useState<
-    'followers' | 'following' | undefined
-  >();
+    'followers' | 'following' | false
+  >(false);
 
   const usersModalWindow = () => {
     //show modal window with users
@@ -96,7 +96,6 @@ const ProfileInfo = (props: ProfileInfoProps) => {
   const openModalWindow = (windowFor: 'followers' | 'following') => {
     //open modal window
     if (props.isAuth) {
-      document.getElementsByTagName('body')[0].style.overflowY = 'hidden';
       if (windowFor == 'followers') {
         setUsersModalFor('followers');
       } else if (windowFor == 'following') {

@@ -9,7 +9,7 @@ type UserProps = UserDataType & {
   authUserId: number;
   followingsInProgress: Array<number>;
   toggleFollow(id: number, req: RequestForType): void;
-  handleClickOnUser(): void
+  handleClickOnUser(value: false): void
 };
 
 const User = (props: UserProps) => {
@@ -24,7 +24,7 @@ const User = (props: UserProps) => {
 
   return (
     <div className={classes.user_wrap}>
-      <NavLink onClick={props.handleClickOnUser} to={`/profile/id${props.id}`}>
+      <NavLink onClick={() => props.handleClickOnUser(false)} to={`/profile/id${props.id}`}>
         <div className={classes.user_info}>
           <img src={props.avatar} alt="avatar" />
           <div className={classes.naming}>

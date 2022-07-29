@@ -42,6 +42,10 @@ section {
     "page"
   }
 
+  section {
+    padding: 0 10px;
+  }
+
   nav {
     top: auto;
     bottom: 15px;

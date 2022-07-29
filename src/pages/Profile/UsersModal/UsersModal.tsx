@@ -1,26 +1,26 @@
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 import {
   getUsersList,
   getFollowersList,
   getFollowingList,
   toggleFollow,
   clearState,
-} from "../../../redux/users-reducer";
-import { useEffect } from "react";
-import { UserDataType } from "../../../types/users";
-import User from "../../../components/User/User";
-import classes from "./UsersModal.module.css";
-import { RequestForType } from "../../../types/profile";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import { StateType } from "../../../redux/redux-store";
+} from '../../../redux/users-reducer';
+import { useEffect, useMemo } from 'react';
+import { UserDataType } from '../../../types/users';
+import User from '../../../components/User/User';
+import classes from './UsersModal.module.css';
+import { RequestForType } from '../../../types/profile';
+import { StateType } from '../../../redux/redux-store';
+import ModalWindow from '../../../components/ModalWindow/ModalWindow';
+import UsersModalMenu from './UsersModalMenu/UsersModalMenu';
 
 type UsersModalProps = {
   //From Parent
-  usersModalFor: "followers" | "following" | undefined;
+  usersModalFor: 'followers' | 'following' | false;
   ownerUserId: number;
   isAuth: boolean;
-  setUsersModalFor(value: "followers" | "following" | undefined): void;
+  setUsersModalFor(value: 'followers' | 'following' | false): void;
 
   //From State
   users: Array<UserDataType>;
@@ -39,9 +39,9 @@ type UsersModalProps = {
 
 const UsersModal = (props: UsersModalProps) => {
   useEffect(() => {
-    if (props.usersModalFor == "followers") {
+    if (props.usersModalFor == 'followers') {
       props.getFollowersList(props.ownerUserId, null);
-    } else if (props.usersModalFor == "following") {
+    } else if (props.usersModalFor == 'following') {
       props.getFollowingList(props.ownerUserId, null);
     }
   }, [props.usersModalFor]);
@@ -52,64 +52,38 @@ const UsersModal = (props: UsersModalProps) => {
     };
   }, [props.usersModalFor]);
 
-  const closeModalWindow = (): void => {
-    document.getElementsByTagName('body')[0].style.overflowY = 'auto';
-    props.setUsersModalFor(undefined);
-  };
-
   const showMoreUsers = (): void => {
-    if (props.usersModalFor == "followers") {
+    if (props.usersModalFor == 'followers') {
       props.getFollowersList(props.ownerUserId, props.nextUsers);
-    } else if (props.usersModalFor == "following") {
+    } else if (props.usersModalFor == 'following') {
       props.getFollowingList(props.ownerUserId, props.nextUsers);
     }
   };
 
-  const followersOrFollowing = props.users.map((user, key) => (
+  const followersOrFollowing = props.users.map((user) => (
     <User
+      key={user.id}
       {...user}
       isAuth={props.isAuth}
       toggleFollow={props.toggleFollow}
       authUserId={props.authUserId}
       followingsInProgress={props.followingsInProgress}
-      handleClickOnUser={closeModalWindow}
+      handleClickOnUser={props.setUsersModalFor}
     />
   ));
 
   return (
-    <div className={classes.users_modal_wrap} onClick={closeModalWindow}>
-      <div className={classes.users_modal} onClick={(e) => e.stopPropagation()}>
-        <div className={classes.menu}>
-          <div
-            className={`${classes.menu_item} ${
-              props.usersModalFor == "followers" && classes.activeMenu
-            }`}
-            onClick={() => props.setUsersModalFor("followers")}
-          >
-            Подписчики
+    <ModalWindow closeWindow={props.setUsersModalFor}>
+      <UsersModalMenu usersModalFor={props.usersModalFor} setUsersModalFor={props.setUsersModalFor} />
+      <div className={classes.users_list_wrap}>
+        <div className={classes.users_list}>{followersOrFollowing}</div>
+        {typeof props.nextUsers == 'string' && (
+          <div className={classes.show_more_btn_wrap}>
+            <button onClick={showMoreUsers}>Показать ещё</button>
           </div>
-          <div
-            className={`${classes.menu_item} ${
-              props.usersModalFor == "following" && classes.activeMenu
-            }`}
-            onClick={() => props.setUsersModalFor("following")}
-          >
-            Подписки
-          </div>
-          <div className={classes.close_btn} onClick={closeModalWindow}>
-            <FontAwesomeIcon icon={faXmark} />
-          </div>
-        </div>
-        <div className={classes.users_list_wrap} >
-          <div className={classes.users_list}>{followersOrFollowing}</div>
-          {typeof props.nextUsers == "string" && (
-            <div className={classes.show_more_btn_wrap}>
-              <button onClick={showMoreUsers}>Показать ещё</button>
-            </div>
-          )}
-        </div>
+        )}
       </div>
-    </div>
+    </ModalWindow>
   );
 };
 

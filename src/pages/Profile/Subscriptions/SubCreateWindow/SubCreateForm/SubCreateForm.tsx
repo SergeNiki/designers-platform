@@ -7,7 +7,7 @@ import { SubscriptionData } from '../../../../../types/subscriptions';
 import { useState } from 'react';
 
 type SubCreateFormProps = {
-  closeCreateWindow(): void
+  closeWindow(value: false): void
   creatingSubscription(data: SubscriptionData): void
 };
 
@@ -63,7 +63,7 @@ const SubCreateForm = (props: SubCreateFormProps) => {
       price: data.sub_price,
       price_currency: "RUB"})
     reset();
-    props.closeCreateWindow();
+    props.closeWindow(false);
   };
 
   const uploadImage = (e: any) => {
@@ -115,7 +115,6 @@ const SubCreateForm = (props: SubCreateFormProps) => {
           buttonSize='medium'
           handleClick={uploadImage} >{coverPreview ? 'Изменить' : 'Добавить обложку'}
         </Button>
-        {/* <div className={classes.error_message}>{errors.sub_image?.message}</div> */}
       </div>
       <div className={classes.sub_description + ' ' + classes.form_item}>
         <label htmlFor="sub_description">Описание подписки</label>
