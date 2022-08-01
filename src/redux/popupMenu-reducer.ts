@@ -1,14 +1,14 @@
-import { Dispatch } from 'react';
 import {
-    ActionClearPopupState,
-    ActionSetPopupData,
+  ActionClearPopupState,
+  ActionSetPopupData,
   ActionsPopupMenu,
   IPopupMenuState,
   PopupActionsType,
+  ThunkType,
 } from '../types/popupMenu';
 
 let initialState: IPopupMenuState = {
-    isActive: false,
+  isActive: false,
   contentMessage: '',
   isSuccessful: false,
 };
@@ -45,15 +45,18 @@ export const clearPopupState = (): ActionClearPopupState => ({
   type: PopupActionsType.CLEAR_POPUP_STATE,
 });
 
-export const openPopupMenu = (contentMessage: string, isSuccessful: boolean) => {
-    return (dispatch: Dispatch<ActionsPopupMenu>) => {
-        dispatch(setPopupData(contentMessage, isSuccessful))
-    }
-}
-export const closePopupMenu = () => {
-    return (dispatch: Dispatch<ActionsPopupMenu>) => {
-        dispatch(clearPopupState())
-    }
-}
+export const openPopupMenu = (
+  contentMessage: string,
+  isSuccessful: boolean
+): ThunkType => {
+  return async (dispatch) => {
+    dispatch(setPopupData(contentMessage, isSuccessful));
+  };
+};
+export const closePopupMenu = (): ThunkType => {
+  return async (dispatch) => {
+    dispatch(clearPopupState());
+  };
+};
 
 export default PopupMenuReducer;

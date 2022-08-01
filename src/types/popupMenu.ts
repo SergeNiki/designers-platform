@@ -1,9 +1,15 @@
+import { ThunkAction } from "redux-thunk"
+import { StateType } from "../redux/redux-store"
+
 // Popup State
 export interface IPopupMenuState {
     isActive: boolean
     contentMessage: string
     isSuccessful: boolean
 }
+
+// Dispatch Type
+export type ThunkType = ThunkAction<Promise<void>, StateType, unknown, ActionsPopupMenu>
 
 // Popup Actions
 export enum PopupActionsType {
