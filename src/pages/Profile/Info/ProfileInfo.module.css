@@ -1,4 +1,5 @@
 .info_wrap {
+  position: relative;
   background-color: #f0f0f0;
   grid-area: info;
   border-radius: 5px;
@@ -28,51 +29,17 @@
   object-fit: cover;
 }
 
-.follow_info {
-  width: 100%;
-  margin: 15px 0 20px;
-  display: flex;
-  justify-content: space-around;
-}
-
-.followers,
-.following {
-  cursor: pointer;
-}
-
-.follow_info p {
-  color: #646464;
-}
-
 .button_wrap {
   display: flex;
   justify-content: center;
   margin-top: 20px;
 }
 
-.button_wrap button {
-  margin-right: 10px;
-  width: 210px;
-  font-size: 20px;
-}
-
-.button_wrap button {
-  position: relative;
-  top: 0;
-  height: 45px;
+.settings_btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
   cursor: pointer;
-  border: none;
-  border-radius: 5px;
-  box-shadow: 0 4px 4px rgb(168, 168, 168);
-  transition: all 0.2s;
-}
-
-.button_wrap button:hover {
-  color: #fff;
-  box-shadow: 0 1px 1px rgb(168, 168, 168);
-  top: 3px;
-}
-
-.edit_bth {
-  background-color: #6defc0;
+  opacity: 0.4;
+  font-size: 24px;
 }
