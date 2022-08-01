@@ -1,3 +1,6 @@
+import { ThunkAction } from "redux-thunk";
+import { StateType } from "../redux/redux-store";
+
 //Profile State
 export interface IProfileState {
   id: number;
@@ -25,25 +28,43 @@ export type ImageFileType = {
   type: string
   webkitRelativePath: string
 }
+export type UpdateProfileType = {
+  username: string
+  display_name: string
+  bio: string
+}
 
+// Dispatch Type
+export type ThunkType = ThunkAction<Promise<void>, StateType, unknown, ActionsProfileType>
 
 //Profile Actions 
-export type ActionsProfileType = ActionSetDataType | ActionIsFollowedType | ActionToggleIsFetching | ActionUpdateUserAvatar
+export enum ProfileActionTypes {
+  SET_USER_PROFILE = "profile/SET_USER_PROFILE",
+  SET_IS_FOLLOWED = "profile/SET_IS_FOLLOWED",
+  TOGGLE_IS_FETCHING = "profile/TOGGLE_IS_FETCHING",
+  UPDATE_USER_AVATAR = "profile/UPDATE_USER_AVATAR",
+  UPDATE_USER_PROFILE = "profile/UPDATE_USER_PROFILE"
+}
+export type ActionsProfileType = ActionSetDataType | ActionIsFollowedType | ActionToggleIsFetching | ActionUpdateUserAvatar | ActionUpdateProfile
 export type ActionSetDataType = {
-  type: "profile/SET_USER_PROFILE";
+  type: ProfileActionTypes.SET_USER_PROFILE
   profileData: ProfileDataResponse;
 };
 export type ActionIsFollowedType = {
-  type: "profile/SET_IS_FOLLOWED";
+  type: ProfileActionTypes.SET_IS_FOLLOWED
   is_followed: boolean;
 }
 export type ActionToggleIsFetching = {
-  type: "profile/TOGGLE_IS_FETCHING"
+  type: ProfileActionTypes.TOGGLE_IS_FETCHING
   isFetching: boolean
 }
 export type ActionUpdateUserAvatar = {
-  type: "profile/UPDATE_USER_AVATAR"
+  type: ProfileActionTypes.UPDATE_USER_AVATAR
   avatar: string
+}
+export type ActionUpdateProfile = {
+  type: ProfileActionTypes.UPDATE_USER_PROFILE
+  payload: UpdateProfileResponse
 }
 
 
@@ -52,4 +73,5 @@ export type ProfileDataResponse = Omit<IProfileState, "is_followed">;
 export type IsFollowedResponse = {
   is_followed: boolean;
 }
-export type RequestForType = "is_followed" | "follow" | "unfollow"
+export type RequestFollowType = "isFollowed" | "follow" | "unfollow"
+export type UpdateProfileResponse = UpdateProfileType | { id: number }

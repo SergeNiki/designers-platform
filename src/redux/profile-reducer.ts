@@ -6,15 +6,16 @@ import {
   ActionSetDataType,
   ActionIsFollowedType,
   ProfileDataResponse,
-  RequestForType,
+  RequestFollowType,
   ActionToggleIsFetching,
   ImageFileType,
+  ThunkType,
+  UpdateProfileType,
+  UpdateProfileResponse,
+  ActionUpdateUserAvatar,
+  ProfileActionTypes,
+  ActionUpdateProfile,
 } from "./../types/profile";
-
-const SET_USER_PROFILE = "profile/SET_USER_PROFILE";
-const SET_IS_FOLLOWED = "profile/SET_IS_FOLLOWED";
-const TOGGLE_IS_FETCHING = "profile/TOGGLE_IS_FETCHING";
-const UPDATE_USER_AVATAR = "profile/UPDATE_USER_AVATAR";
 
 let initialState: IProfileState = {
   id: 0,
@@ -34,14 +35,16 @@ const profileReducer = (
   action: ActionsProfileType
 ): IProfileState => {
   switch (action.type) {
-    case SET_USER_PROFILE:
+    case ProfileActionTypes.SET_USER_PROFILE:
       return { ...state, ...action.profileData };
-    case SET_IS_FOLLOWED:
+    case ProfileActionTypes.SET_IS_FOLLOWED:
       return { ...state, is_followed: action.is_followed };
-    case TOGGLE_IS_FETCHING:
+    case ProfileActionTypes.TOGGLE_IS_FETCHING:
       return { ...state, isFetching: action.isFetching };
-    case UPDATE_USER_AVATAR:
+    case ProfileActionTypes.UPDATE_USER_AVATAR:
       return { ...state, avatar: action.avatar };
+    case ProfileActionTypes.UPDATE_USER_PROFILE:
+      return {...state, ...action.payload}
     default:
       return state;
   }
@@ -50,29 +53,30 @@ const profileReducer = (
 export const setUserProfile = (
   profileData: ProfileDataResponse
 ): ActionSetDataType => ({
-  type: SET_USER_PROFILE,
+  type: ProfileActionTypes.SET_USER_PROFILE,
   profileData,
 });
-
 export const setIsFollowed = (is_followed: boolean): ActionIsFollowedType => ({
-  type: SET_IS_FOLLOWED,
+  type: ProfileActionTypes.SET_IS_FOLLOWED,
   is_followed,
 });
-
 export const toggleIsFetching = (
   isFetching: boolean
 ): ActionToggleIsFetching => ({
-  type: TOGGLE_IS_FETCHING,
+  type: ProfileActionTypes.TOGGLE_IS_FETCHING,
   isFetching,
 });
-
-export const setUserAvatar = (avatar: string) => ({
-  type: UPDATE_USER_AVATAR,
+export const setUserAvatar = (avatar: string): ActionUpdateUserAvatar => ({
+  type: ProfileActionTypes.UPDATE_USER_AVATAR,
   avatar,
 });
+export const updateProfile = (payload: UpdateProfileResponse): ActionUpdateProfile => ({
+  type: ProfileActionTypes.UPDATE_USER_PROFILE,
+  payload
+})
 
-export const getUserProfile = (user_id: number) => {
-  return async (dispatch: any) => {
+export const getUserProfile = (user_id: number): ThunkType => {
+  return async (dispatch) => {
     dispatch(toggleIsFetching(true));
     try {
       const response = await ProfileService.getProfileData(user_id);
@@ -84,8 +88,8 @@ export const getUserProfile = (user_id: number) => {
   };
 };
 
-export const toggleFollow = (user_id: number, request_for: RequestForType) => {
-  return async (dispatch: any) => {
+export const toggleFollow = (user_id: number, request_for: RequestFollowType): ThunkType => {
+  return async (dispatch) => {
     dispatch(toggleIsFetching(true));
     try {
       const response = await UsersService.following(user_id, request_for);
@@ -97,15 +101,30 @@ export const toggleFollow = (user_id: number, request_for: RequestForType) => {
   };
 };
 
-export const updateUserAvatar = (imageFile: ImageFileType) => {
+export const updateUserAvatar = (imageFile: ImageFileType): ThunkType => {
   return async (dispatch: any) => {
+    dispatch(toggleIsFetching(true))
     try {
       const response = await ProfileService.updateUserAvatar(imageFile);
       dispatch(setUserAvatar(response.data.avatar));
+      dispatch(toggleIsFetching(false))
     } catch (error) {
       console.log(error);
     }
   };
 };
+
+export const updateProfileData = (data: UpdateProfileType): ThunkType => {
+  return async (dispatch) => {
+    dispatch(toggleIsFetching(true))
+    try {
+      const response = await ProfileService.updateProfileData(data)
+      dispatch(updateProfile(response.data))
+      dispatch(toggleIsFetching(false))
+    } catch (error) {
+      console.log(error);
+    }
+  }
+}
 
 export default profileReducer;

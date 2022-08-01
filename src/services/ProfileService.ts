@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 import $api from "../http";
-import { IsFollowedResponse, ProfileDataResponse, RequestForType } from "../types/profile";
+import { ProfileDataResponse, UpdateProfileResponse, UpdateProfileType } from "../types/profile";
 
 export default class ProfileService {
   static async getProfileData(id: number): Promise<AxiosResponse<ProfileDataResponse>> {
@@ -14,5 +14,8 @@ export default class ProfileService {
         'Content-type' : 'multipart/form-data'
       }
     })
+  }
+  static async updateProfileData(data: UpdateProfileType): Promise<AxiosResponse<UpdateProfileResponse>> {
+    return $api.patch<UpdateProfileResponse>('api/v1/users/me/profile-settings/', {...data})
   }
 }
