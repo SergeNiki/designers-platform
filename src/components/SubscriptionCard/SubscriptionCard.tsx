@@ -5,7 +5,7 @@ import classes from './SubscriptionCard.module.css';
 type SubscriptionCardProps = SubData & {
   isOwner: boolean;
   deleteSub(subId: number): void;
-  subscribe(subId: number): void;
+  subOrUnsub(subId: number, type: 'sub' | 'unsub'): void;
 };
 
 const SubscriptionCard = (props: SubscriptionCardProps) => {
@@ -26,12 +26,14 @@ const SubscriptionCard = (props: SubscriptionCardProps) => {
       );
       return el;
     } else if (props.is_subscribed) {
-      return <button className={classes.unsub_button}>Отменить</button>;
+      return <button className={classes.unsub_button} 
+      onClick={() => props.subOrUnsub(props.id, 'unsub')} 
+      >Отменить</button>;
     } else {
       return (
         <button
           className={classes.sub_button}
-          onClick={() => props.subscribe(props.id)}
+          onClick={() => props.subOrUnsub(props.id, 'sub')}
         >
           {props.price} {props.price_currency}
         </button>
