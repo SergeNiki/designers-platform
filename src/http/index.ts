@@ -14,10 +14,4 @@ $api.interceptors.request.use((config) => {
   return config;
 });
 
-// $api.interceptors.response.use((config) => {
-//     return config
-// }, (error) => {
-    
-// })
-
 export default $api;

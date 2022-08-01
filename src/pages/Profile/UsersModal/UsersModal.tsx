@@ -10,7 +10,7 @@ import { useEffect, useMemo } from 'react';
 import { UserDataType } from '../../../types/users';
 import User from '../../../components/User/User';
 import classes from './UsersModal.module.css';
-import { RequestForType } from '../../../types/profile';
+import { RequestFollowType } from '../../../types/profile';
 import { StateType } from '../../../redux/redux-store';
 import ModalWindow from '../../../components/ModalWindow/ModalWindow';
 import UsersModalMenu from './UsersModalMenu/UsersModalMenu';
@@ -33,7 +33,7 @@ type UsersModalProps = {
   getUsersList(count: number, page: number): void;
   getFollowersList(id: number, next: string | null): void;
   getFollowingList(id: number, next: string | null): void;
-  toggleFollow(id: number, req: RequestForType): void;
+  toggleFollow(id: number, req: RequestFollowType): void;
   clearState(): void;
 };
 
@@ -74,7 +74,10 @@ const UsersModal = (props: UsersModalProps) => {
 
   return (
     <ModalWindow closeWindow={props.setUsersModalFor}>
-      <UsersModalMenu usersModalFor={props.usersModalFor} setUsersModalFor={props.setUsersModalFor} />
+      <UsersModalMenu
+        usersModalFor={props.usersModalFor}
+        setUsersModalFor={props.setUsersModalFor}
+      />
       <div className={classes.users_list_wrap}>
         <div className={classes.users_list}>{followersOrFollowing}</div>
         {typeof props.nextUsers == 'string' && (

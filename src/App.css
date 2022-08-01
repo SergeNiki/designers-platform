@@ -12,7 +12,7 @@ nav {
   position: fixed;
   top: 65px;
   left: 10px;
-  z-index: 100;
+  z-index: 90;
 }
 
 section {
@@ -22,7 +22,6 @@ section {
 
 .App {
   width: 100vw;
-  height: 100vh;
   margin: 0;
   padding: 0;
   display: grid;
@@ -35,7 +34,8 @@ section {
 
 @media (max-width: 425px) {
   .App {
-    grid-template-rows: 65px calc(100vh - 65px);
+    margin-bottom: 85px;
+    grid-template-rows: 65px 1fr;
     grid-template-columns: 1fr;
     grid-template-areas: 
     "header"

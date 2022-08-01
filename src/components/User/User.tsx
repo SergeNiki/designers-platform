@@ -1,30 +1,32 @@
-import { NavLink } from "react-router-dom";
-import { RequestForType } from "../../types/profile";
-import { UserDataType } from "../../types/users";
-import Button from "../Button/Button";
-import classes from "./User.module.css";
+import { NavLink } from 'react-router-dom';
+import { RequestFollowType } from '../../types/profile';
+import { UserDataType } from '../../types/users';
+import Button from '../Button/Button';
+import classes from './User.module.css';
 
 type UserProps = UserDataType & {
   isAuth: boolean;
   authUserId: number;
   followingsInProgress: Array<number>;
-  toggleFollow(id: number, req: RequestForType): void;
-  handleClickOnUser(value: false): void
+  toggleFollow(id: number, req: RequestFollowType): void;
+  handleClickOnUser(value: false): void;
 };
 
 const User = (props: UserProps) => {
   const toggleFollowHandler = () => {
-      
     if (props.is_followed) {
-      props.toggleFollow(props.id, "unfollow");
+      props.toggleFollow(props.id, 'unfollow');
     } else {
-      props.toggleFollow(props.id, "follow");
+      props.toggleFollow(props.id, 'follow');
     }
   };
 
   return (
     <div className={classes.user_wrap}>
-      <NavLink onClick={() => props.handleClickOnUser(false)} to={`/profile/id${props.id}`}>
+      <NavLink
+        onClick={() => props.handleClickOnUser(false)}
+        to={`/profile/id${props.id}`}
+      >
         <div className={classes.user_info}>
           <img src={props.avatar} alt="avatar" />
           <div className={classes.naming}>
@@ -36,14 +38,14 @@ const User = (props: UserProps) => {
       <div className={classes.follow_wrap}>
         {props.isAuth && props.id !== props.authUserId && (
           <Button
-          isDisabled={props.followingsInProgress.some((id) => id === props.id)}
-          handleClick={toggleFollowHandler}
-          backgroundColor={props.is_followed
-          ? '#C4C4C4'
-          : '#6DEFC0'}
-          buttonSize='small'
-          hoverBackgroundColor="auto">
-              {props.is_followed ? "Отписаться" : "Подписаться"}
+            isDisabled={props.followingsInProgress.some(
+              (id) => id === props.id
+            )}
+            handleClick={toggleFollowHandler}
+            backgroundColor={props.is_followed ? '#C4C4C4' : '#6DEFC0'}
+            buttonSize="small"
+          >
+            {props.is_followed ? 'Отписаться' : 'Подписаться'}
           </Button>
         )}
       </div>

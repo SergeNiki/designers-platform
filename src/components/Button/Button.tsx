@@ -4,8 +4,8 @@ import './Button.css';
 type ButtonProps = {
   children: React.ReactNode;
   isDisabled: boolean;
-  backgroundColor: string;
-  hoverBackgroundColor: string;
+  backgroundColor?: string;
+  hoverBackgroundColor?: string;
   buttonSize: 'small' | 'medium' | 'large'
   handleClick?(e: any): void;
 };
@@ -14,14 +14,14 @@ const Button = (props: ButtonProps) => {
   const [bgColor, setBgColor] = useState<string>('');
 
   useEffect(() => {
-    setBgColor(props.backgroundColor)
+    if (props.backgroundColor) setBgColor(props.backgroundColor)
 }, [props.backgroundColor])
 
   const onMouseOver = () => {
-    setBgColor(props.hoverBackgroundColor);
+    if (props.hoverBackgroundColor) setBgColor(props.hoverBackgroundColor);
   };
   const onMouseOut = () => {
-    setBgColor(props.backgroundColor);
+    if (props.backgroundColor) setBgColor(props.backgroundColor);
   };
 
   return (
@@ -30,7 +30,7 @@ const Button = (props: ButtonProps) => {
       onClick={props?.handleClick}
       onMouseOver={onMouseOver}
       onMouseOut={onMouseOut}
-      style={{ backgroundColor: props.isDisabled ? "#C5D6CA" : bgColor }}
+      style={{ backgroundColor: !props.isDisabled ? bgColor : "#C5D6CA" }}
       disabled={props.isDisabled}
     >
       {props.children}

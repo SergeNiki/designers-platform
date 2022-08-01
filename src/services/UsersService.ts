@@ -1,7 +1,6 @@
 import axios, { AxiosResponse } from "axios";
-import React from "react";
 import $api from "../http";
-import { IsFollowedResponse, RequestForType } from "../types/profile";
+import { IsFollowedResponse, RequestFollowType } from "../types/profile";
 import { UsersResponse } from "../types/users";
 
 export default class UsersService {
@@ -36,10 +35,10 @@ export default class UsersService {
   
   static async following(
     id: number,
-    requestFor: RequestForType
+    requestFor: RequestFollowType
   ): Promise<AxiosResponse<IsFollowedResponse>> {
     switch (requestFor) {
-      case "is_followed":
+      case "isFollowed":
         return $api.get<IsFollowedResponse>(`api/v1/users/follow/${id}/`);
       case "follow":
         return $api.post<IsFollowedResponse>(`api/v1/users/follow/${id}/`);

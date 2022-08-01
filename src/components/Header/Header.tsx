@@ -1,10 +1,10 @@
-import React from "react";
-import { connect } from "react-redux";
-import classes from "./Header.module.css";
-import { toggleLoginTC, logout } from "./../../redux/auth-reducer";
-import { getAuthUserData } from "./../../redux/auth-reducer"
-import HeaderPopup from "./UserMenu/UserMenu";
-import { StateType } from "../../redux/redux-store";
+import React from 'react';
+import { connect } from 'react-redux';
+import classes from './Header.module.css';
+import { toggleLoginTC, logout } from './../../redux/auth-reducer';
+import { getAuthUserData } from './../../redux/auth-reducer';
+import HeaderPopup from './UserMenu/UserMenu';
+import { StateType } from '../../redux/redux-store';
 
 type HeaderProps = {
   isAuth: boolean;
@@ -15,25 +15,24 @@ type HeaderProps = {
   toggleLoginTC(): void;
   logout(): void;
   getAuthUserData(): void;
-}
+};
 
 const Header = (props: HeaderProps) => {
-
   React.useEffect(() => {
-    if(props.isAuth) {
-      props.getAuthUserData()
+    if (props.isAuth) {
+      props.getAuthUserData();
     }
-  }, [props.avatarFromProfile])
+  }, [props.avatarFromProfile]);
 
   const toggleLogin = () => {
     props.toggleLoginTC();
   };
 
-  let [isPopupActive, setPopupActive] = React.useState<boolean>(false)
-  
+  let [isUserMenuActive, setUserMenuActive] = React.useState<boolean>(false);
+
   const openPopupMenu = () => {
-    setPopupActive(!isPopupActive)
-  }
+    setUserMenuActive(!isUserMenuActive);
+  };
 
   return (
     <header>
@@ -48,7 +47,15 @@ const Header = (props: HeaderProps) => {
             ВОЙТИ
           </div>
         )}
-        {isPopupActive && <HeaderPopup logout={props.logout} display_name={props.display_name} username={props.username} avatar={props.avatar} setPopupActive={setPopupActive} />}
+        {isUserMenuActive && (
+          <HeaderPopup
+            logout={props.logout}
+            display_name={props.display_name}
+            username={props.username}
+            avatar={props.avatar}
+            setUserMenuActive={setUserMenuActive}
+          />
+        )}
       </div>
     </header>
   );
@@ -59,7 +66,11 @@ let mapStateToProps = (state: StateType) => ({
   username: state.auth.username,
   avatar: state.auth.avatar,
   avatarFromProfile: state.profilePage.avatar,
-  display_name: state.auth.display_name
+  display_name: state.auth.display_name,
 });
 
-export default connect(mapStateToProps, { toggleLoginTC, logout, getAuthUserData })(Header);
+export default connect(mapStateToProps, {
+  toggleLoginTC,
+  logout,
+  getAuthUserData,
+})(Header);

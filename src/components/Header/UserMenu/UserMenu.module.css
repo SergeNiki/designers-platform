@@ -1,57 +1,65 @@
-.popup_wrap {
-    position: absolute;
-    /* width: 320px; */
-    /* height: 180px; */
-    background-color: #78E1AF;
-    border-radius: 0 0 10px 10px;
-    right: 15px;
-    top: 55px;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
+.user_menu_wrap {
+  position: absolute;
+  top: 55px;
+  bottom: calc(55px - 100vh);
+  left: 0;
+  right: 0;
+  opacity: 0;
+  z-index: 100;
+}
+
+.user_menu {
+  position: absolute;
+  background-color: #78e1af;
+  border-radius: 0 0 10px 10px;
+  right: 15px;
+  top: 55px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 101;
 }
 
 .user_info {
-    display: flex;
-    flex-direction: row;
-    padding: 10px;
-    border-bottom: 1px solid rgb(230, 230, 230);
-    border-top: 1px solid rgb(230, 230, 230);
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+  border-bottom: 1px solid rgb(230, 230, 230);
+  border-top: 1px solid rgb(230, 230, 230);
 }
 
-.user_info img { 
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    object-fit:cover;
+.user_info img {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
 }
 
 .naming {
-    display: flex;
-    flex-direction: column;
-    margin-left: 10px;
-    color: white;
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+  color: white;
 }
 
 .list_item {
-    color: white;
-    font-weight: bolder;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    transition: all 0.3s;
+  color: white;
+  font-weight: bolder;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  transition: all 0.3s;
 }
 
 .list_item p {
-    padding-left: 5px;
+  padding-left: 5px;
 }
 
 .list_item:hover {
-    background-color: #67c598;
+  background-color: #67c598;
 }
 
 .logout:hover {
-    color:rgb(255, 81, 81);
+  color: rgb(255, 81, 81);
 }
-

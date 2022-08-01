@@ -97,7 +97,7 @@ export const getAuthUserData = (): ThunkType => {
   };
 };
 
-export const toggleLoginTC = (): ThunkType => {
+export const toggleLoginTC = (value?: boolean): ThunkType => {
   return async (dispatch) => {
     dispatch(toggleIsProcessLogin());
   };

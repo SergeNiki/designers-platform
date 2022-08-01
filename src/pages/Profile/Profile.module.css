@@ -1,5 +1,4 @@
 .profile_wrap {
-  position: relative;
   width: 100%;
   height: 100%;
   display: grid;
@@ -18,8 +17,9 @@
 
 @media (max-width: 767px) {
   .profile_wrap {
+    height: auto;
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr 45px 1fr;
+    grid-template-rows: auto 45px 1fr;
     grid-template-areas:
       "info"
       "menu"

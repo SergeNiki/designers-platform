@@ -1,6 +1,5 @@
-import React, { ComponentType, useEffect } from "react";
+import React, { ComponentType } from "react";
 import { connect } from "react-redux";
-import { IProfileState } from "../../types/profile";
 import Albums from "./Albums/Albums";
 import ProfileInfo from "./Info/ProfileInfo";
 import ProfileMenu from "./Menu/ProfileMenu";

@@ -13,7 +13,6 @@ type SubCreateFormProps = {
 
 type SubForm = {
   sub_name: string;
-  sub_image: any;
   sub_description: string;
   sub_price: string;
 };
@@ -106,7 +105,7 @@ const SubCreateForm = (props: SubCreateFormProps) => {
       </div>
       <div className={classes.sub_image + ' ' + classes.form_item}>
         <label>Обложка подписки</label>
-        <input style={{display: 'none'}} id="sub_image" type="file" {...register('sub_image')} onChange={handleImageFile} />
+        <input style={{display: 'none'}} id="sub_image" type="file" onChange={handleImageFile} />
         {coverPreview !== '' ? <img src={coverPreview} alt='обложка' className={classes.cover_preview} /> : <></>}
         <Button 
           isDisabled={false}

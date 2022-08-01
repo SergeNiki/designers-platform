@@ -7,7 +7,7 @@ import {
   toggleFollow,
   clearState,
 } from '../../../redux/users-reducer';
-import { RequestForType } from '../../../types/profile';
+import { RequestFollowType } from '../../../types/profile';
 import { UserDataType } from '../../../types/users';
 import classes from './UsersMain.module.css';
 
@@ -22,7 +22,7 @@ type UsersMainProps = {
   followingsInProgress: Array<number>;
   authUserId: number;
   getUsersList(count: number, page: number): void;
-  toggleFollow(id: number, req: RequestForType): void;
+  toggleFollow(id: number, req: RequestFollowType): void;
   clearState(): void;
 };
 
@@ -33,7 +33,7 @@ const UsersMain = (props: UsersMainProps) => {
     return () => {
         props.clearState()
     }
-  }, []);
+  }, [props.isAuth]);
 
   const users = props.users.map((user) => (
     <User

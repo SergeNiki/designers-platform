@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { StateType } from "../../../redux/redux-store";
 import { SubData } from "../../../types/subscriptions";
-import { getSubscriptions, subscribeToSubscription, deleteSubscription } from "../../../redux/subscriptions-reducer"
+import { getSubscriptions, subscribeOrUnsubscribe, deleteSubscription } from "../../../redux/subscriptions-reducer"
 import classes from "./Subscriptions.module.css";
 import SubscriptionCard from "../../../components/SubscriptionCard/SubscriptionCard";
 import { useEffect, useState } from "react";
@@ -16,7 +16,7 @@ type SubscriptionsProps = {
   isFetching: boolean
   getSubscriptions(id: number): void
   deleteSubscription(subId: number): void
-  subscribeToSubscription(subId: number): void
+  subscribeOrUnsubscribe(subId: number, type: 'sub' | 'unsub'): void
 
   //from parent
   isOwner: boolean
@@ -36,8 +36,8 @@ const Subscriptions = (props: SubscriptionsProps) => {
     setIsCreateWindow(true);
   }
 
-  const subscribe = async (subId: number) => {
-    await props.subscribeToSubscription(subId)
+  const subOrUnsub = async (subId: number, type: 'sub' | 'unsub') => {
+    await props.subscribeOrUnsubscribe(subId, type)
     props.getSubscriptions(props.ownerUserId)
   }
   const deleteSub = (subId: number) => {
@@ -46,7 +46,7 @@ const Subscriptions = (props: SubscriptionsProps) => {
   }
 
   const subscriptions = props.subscriptionsArr.map((sub: SubData) => 
-    <SubscriptionCard key={sub.id} subscribe={subscribe} isOwner={props.isOwner} deleteSub={deleteSub} {...sub} 
+    <SubscriptionCard key={sub.id} subOrUnsub={subOrUnsub} isOwner={props.isOwner} deleteSub={deleteSub} {...sub} 
   />)
 
   if(props.isFetching) {
@@ -78,5 +78,5 @@ let mapStateToProps = (state: StateType) => ({
 export default connect(mapStateToProps, {
   getSubscriptions,
   deleteSubscription,
-  subscribeToSubscription
+  subscribeOrUnsubscribe
 })(Subscriptions);
