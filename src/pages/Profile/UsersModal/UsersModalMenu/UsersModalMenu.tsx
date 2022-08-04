@@ -14,7 +14,7 @@ const UsersModalMenu = (props: UsersModalMenuProps) => {
         }`}
         onClick={() => props.setUsersModalFor('followers')}
       >
-        Подписчики
+        <h2>Подписчики</h2>
       </div>
       <div
         className={`${classes.menu_item} ${
@@ -22,7 +22,7 @@ const UsersModalMenu = (props: UsersModalMenuProps) => {
         }`}
         onClick={() => props.setUsersModalFor('following')}
       >
-        Подписки
+        <h2>Подписки</h2>
       </div>
     </div>
   );

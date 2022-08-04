@@ -8,7 +8,6 @@ import {
   ProfileDataResponse,
   RequestFollowType,
   ActionToggleIsFetching,
-  ImageFileType,
   ThunkType,
   UpdateProfileType,
   UpdateProfileResponse,
@@ -16,6 +15,7 @@ import {
   ProfileActionTypes,
   ActionUpdateProfile,
 } from "./../types/profile";
+import { openPopupMenu } from "./popupMenu-reducer";
 
 let initialState: IProfileState = {
   id: 0,
@@ -101,15 +101,17 @@ export const toggleFollow = (user_id: number, request_for: RequestFollowType): T
   };
 };
 
-export const updateUserAvatar = (imageFile: ImageFileType): ThunkType => {
+export const updateUserAvatar = (imageFile: File): ThunkType => {
   return async (dispatch: any) => {
     dispatch(toggleIsFetching(true))
     try {
       const response = await ProfileService.updateUserAvatar(imageFile);
       dispatch(setUserAvatar(response.data.avatar));
       dispatch(toggleIsFetching(false))
+      dispatch(openPopupMenu('Ваш аватар успешно обновлён!', true))
     } catch (error) {
       console.log(error);
+      dispatch(openPopupMenu('Что-то пошло не так(', false))
     }
   };
 };
@@ -121,8 +123,10 @@ export const updateProfileData = (data: UpdateProfileType): ThunkType => {
       const response = await ProfileService.updateProfileData(data)
       dispatch(updateProfile(response.data))
       dispatch(toggleIsFetching(false))
+      dispatch(openPopupMenu('Данные профиля обновлены!', true))
     } catch (error) {
       console.log(error);
+      dispatch(openPopupMenu('Что-то пошло не так(', true))
     }
   }
 }

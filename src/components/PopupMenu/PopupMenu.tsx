@@ -27,7 +27,7 @@ const PopupMenu = (props: PopupMenuProps) => {
   return (
     <div
       className={classes.popup_wrap}
-      style={{ opacity: opacity, backgroundColor: props.isSuccessful ? '#78E1AF' : '#C4C4C4' }}
+      style={{ opacity: opacity, backgroundColor: props.isSuccessful ? '#78E1AF' : '#ff342c' }}
     >
       {props.message}
     </div>

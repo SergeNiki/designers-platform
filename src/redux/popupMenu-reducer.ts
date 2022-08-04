@@ -13,7 +13,7 @@ let initialState: IPopupMenuState = {
   isSuccessful: false,
 };
 
-const PopupMenuReducer = (
+const popupMenuReducer = (
   state = initialState,
   action: ActionsPopupMenu
 ): IPopupMenuState => {
@@ -26,7 +26,7 @@ const PopupMenuReducer = (
         isSuccessful: action.isSuccessful,
       };
     case PopupActionsType.CLEAR_POPUP_STATE:
-      return { ...state, isActive: false, contentMessage: '' };
+      return initialState;
     default:
       return state;
   }
@@ -59,4 +59,4 @@ export const closePopupMenu = (): ThunkType => {
   };
 };
 
-export default PopupMenuReducer;
+export default popupMenuReducer;

@@ -11,7 +11,7 @@ type ButtonProps = {
 };
 
 const Button = (props: ButtonProps) => {
-  const [bgColor, setBgColor] = useState<string>('');
+  const [bgColor, setBgColor] = useState<string>('#6DEFC0');
 
   useEffect(() => {
     if (props.backgroundColor) setBgColor(props.backgroundColor)
@@ -21,7 +21,7 @@ const Button = (props: ButtonProps) => {
     if (props.hoverBackgroundColor) setBgColor(props.hoverBackgroundColor);
   };
   const onMouseOut = () => {
-    if (props.backgroundColor) setBgColor(props.backgroundColor);
+    setBgColor(props.backgroundColor ? props.backgroundColor : '#6DEFC0');
   };
 
   return (

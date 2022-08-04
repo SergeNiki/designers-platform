@@ -20,14 +20,6 @@ export type SocialLinksType = {
   id: number;
   link: string;
 }
-export type ImageFileType = {
-  lastModified: number
-  lastModifiedDate: Date
-  name: string
-  size: number
-  type: string
-  webkitRelativePath: string
-}
 export type UpdateProfileType = {
   username: string
   display_name: string
