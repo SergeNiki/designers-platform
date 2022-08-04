@@ -1,0 +1,12 @@
+.modal_header {
+  width: 100%;
+  color: rgba(0, 0, 0, 0.692);
+  background-color: #c8ffe8;
+  display: flex;
+  justify-content: center;
+}
+.modal_header h2 {
+  font-size: 1.3em;
+  font-weight: bolder;
+  padding: 8px 0;
+}
