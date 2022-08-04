@@ -2,20 +2,16 @@ import { useEffect, useState } from 'react';
 import classes from './ProfileInfo.module.css';
 import { IProfileState, RequestFollowType } from '../../../types/profile';
 import { connect } from 'react-redux';
-import {
-  getUserProfile,
-  toggleFollow,
-  updateUserAvatar,
-} from './../../../redux/profile-reducer';
+import { getUserProfile, toggleFollow } from './../../../redux/profile-reducer';
 import { toggleLoginTC } from './../../../redux/auth-reducer';
 import UsersModal from '../UsersModal/UsersModal';
 import { StateType } from '../../../redux/redux-store';
-import UpdateAvatar from './UpdateAvatar/UpdateAvatar';
 import FollowInfo from './FollowInfo/FollowInfo';
 import ButtonFollow from './BattonFollow/ButtonFollow';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGear } from '@fortawesome/free-solid-svg-icons';
 import ProfileSettings from './ProfileSettings/ProfileSettings';
+import UserAvatar from './UserAvatar/UserAvatar';
 
 type ProfileInfoProps = {
   //From Parent
@@ -29,7 +25,6 @@ type ProfileInfoProps = {
   getUserProfile(user_id: number): void;
   toggleFollow(user_id: number, request_for: RequestFollowType): void;
   toggleLoginTC(): void;
-  updateUserAvatar(file: any): void;
 };
 
 const ProfileInfo = (props: ProfileInfoProps) => {
@@ -48,7 +43,6 @@ const ProfileInfo = (props: ProfileInfoProps) => {
   >(false);
   const [isSettingsWindow, setIsSettingsWindow] = useState<boolean>(false);
 
-  //show modal window with users
   const usersModalWindow = () => {
     if (usersModalFor) {
       return (
@@ -64,25 +58,21 @@ const ProfileInfo = (props: ProfileInfoProps) => {
 
   return (
     <div className={classes.info_wrap}>
-      <div
-        className={classes.settings_btn}
-        onClick={() => setIsSettingsWindow(true)}
-      >
-        <FontAwesomeIcon icon={faGear} />
-      </div>
-      <h2>{props.profileData.display_name}</h2>
-      {props.isOwner ? (
-        <div className={classes.avatar_wrap}>
-          <UpdateAvatar
-            updateUserAvatar={props.updateUserAvatar}
-            srcAvatar={props.profileData.avatar}
-          />
-        </div>
-      ) : (
-        <div className={classes.avatar_wrap}>
-          <img src={props.profileData.avatar} alt="avatar" />
+      {props.isAuth && props.isOwner && (
+        <div
+          className={classes.settings_btn}
+          onClick={() => setIsSettingsWindow(true)}
+        >
+          <FontAwesomeIcon icon={faGear} />
         </div>
       )}
+      <div className={classes.display_name_wrap}>
+        <h2>{props.profileData.display_name}</h2>
+      </div>
+      <UserAvatar
+        isOwner={props.isOwner}
+        srcAvatar={props.profileData.avatar}
+      />
       <p>@{props.profileData.username}</p>
       <FollowInfo
         isAuth={props.isAuth}
@@ -106,7 +96,12 @@ const ProfileInfo = (props: ProfileInfoProps) => {
       </div>
       {usersModalWindow()}
       {isSettingsWindow && (
-        <ProfileSettings closeSettingsWindow={setIsSettingsWindow} />
+        <ProfileSettings
+          closeSettingsWindow={setIsSettingsWindow}
+          username={props.profileData.username}
+          display_name={props.profileData.display_name}
+          bio={props.profileData.bio}
+        />
       )}
     </div>
   );
@@ -121,5 +116,4 @@ export default connect(mapSateToProps, {
   toggleFollow,
   getUserProfile,
   toggleLoginTC,
-  updateUserAvatar,
 })(ProfileInfo);
