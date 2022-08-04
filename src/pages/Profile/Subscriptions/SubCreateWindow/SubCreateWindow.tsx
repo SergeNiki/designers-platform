@@ -1,32 +1,29 @@
 import SubCreateForm from './SubCreateForm/SubCreateForm';
 import classes from './SubCreateWindow.module.css';
-import { connect } from 'react-redux';
-import { creatingSubscription } from '../../../../redux/subscriptions-reducer';
-import { StateType } from '../../../../redux/redux-store';
-import { SubscriptionData } from '../../../../types/subscriptions';
 import ModalWindow from '../../../../components/ModalWindow/ModalWindow';
+import { connect } from 'react-redux';
+import { clearImageState } from './../../../../redux/image-reducer';
+import { useEffect } from 'react';
 
 type SubCreateWindowProps = {
-  setIsCreateWindow(value: boolean): void;
-  creatingSubscription(data: SubscriptionData): void;
+  setIsCreateWindow(value: false): void;
+  clearImageState(): void;
 };
 
 const SubCreateWindow = (props: SubCreateWindowProps) => {
+  useEffect(() => {
+    return () => props.clearImageState();
+  });
+
+  const header = <h2>Создание подписки</h2>;
+
   return (
-    <ModalWindow closeWindow={props.setIsCreateWindow}>
-      <div className={classes.sub_header}>
-        <h2>Создание подписки</h2>
-      </div>
-      <SubCreateForm
-        closeWindow={props.setIsCreateWindow}
-        creatingSubscription={props.creatingSubscription}
-      />
+    <ModalWindow closeWindow={props.setIsCreateWindow} header={header}>
+      <SubCreateForm closeWindow={props.setIsCreateWindow} />
     </ModalWindow>
   );
 };
 
-let mapSateToProps = (state: StateType) => ({});
-
-export default connect(mapSateToProps, {
-  creatingSubscription,
+export default connect(() => ({}), {
+  clearImageState,
 })(SubCreateWindow);

@@ -72,12 +72,13 @@ const UsersModal = (props: UsersModalProps) => {
     />
   ));
 
+  let header = <UsersModalMenu
+  usersModalFor={props.usersModalFor}
+  setUsersModalFor={props.setUsersModalFor}
+/>
+
   return (
-    <ModalWindow closeWindow={props.setUsersModalFor}>
-      <UsersModalMenu
-        usersModalFor={props.usersModalFor}
-        setUsersModalFor={props.setUsersModalFor}
-      />
+    <ModalWindow closeWindow={props.setUsersModalFor} header={header} styles={{width: '768px'}} >
       <div className={classes.users_list_wrap}>
         <div className={classes.users_list}>{followersOrFollowing}</div>
         {typeof props.nextUsers == 'string' && (

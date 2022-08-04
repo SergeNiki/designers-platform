@@ -1,18 +1,27 @@
-import ModalWindow from "../../../../components/ModalWindow/ModalWindow"
-import classes from "./ProfileSettings.module.css"
-import ProfileSettingsForm from "./ProfileSettingsForm/ProfileSettingsForm"
+import ModalWindow from '../../../../components/ModalWindow/ModalWindow';
+import classes from './ProfileSettings.module.css';
+import ProfileSettingsForm from './ProfileSettingsForm/ProfileSettingsForm';
 
 type ProfileSettingsProps = {
-    closeSettingsWindow(valuse: false): void
-}
+  username: string;
+  display_name: string;
+  bio: string;
+  closeSettingsWindow(valuse: false): void;
+};
 
 const ProfileSettings = (props: ProfileSettingsProps) => {
-    return <ModalWindow closeWindow={props.closeSettingsWindow} >
-        <div className={classes.settings_header} >
-            <h2>Настройка профиля</h2>
-        </div>
-        <ProfileSettingsForm closeWindow={props.closeSettingsWindow} />
-    </ModalWindow>
-}
+  const header = <h2>Настройки профиля</h2>;
 
-export default ProfileSettings
+  return (
+    <ModalWindow closeWindow={props.closeSettingsWindow} header={header}>
+      <ProfileSettingsForm
+        username={props.username}
+        display_name={props.display_name}
+        bio={props.bio}
+        closeWindow={props.closeSettingsWindow}
+      />
+    </ModalWindow>
+  );
+};
+
+export default ProfileSettings;

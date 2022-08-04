@@ -12,11 +12,9 @@ type LoginProps = {
 }
 
 const Login = (props: LoginProps) => {
+  const header = <h2>Авторизация</h2>
 
-  return <ModalWindow closeWindow={props.toggleLoginTC} >
-    <div className={classes.header}>
-          <h3>Авторизация</h3>
-        </div>
+  return <ModalWindow closeWindow={props.toggleLoginTC} header={header} styles={{width: '350px'}} >
         <div className={classes.login} >
         <TelegramLoginButton
           dataOnauth={props.onTelegramAuth}
