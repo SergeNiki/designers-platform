@@ -1,17 +1,18 @@
 import classes from './ProfileSettingsForm.module.css';
 import * as Yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import Button from '../../../../../components/Button/Button';
+import { FormElement } from '../../../../../types/form';
+import Form from '../../../../../components/Form/Form';
+import { connect } from 'react-redux';
+import { updateProfileData } from './../../../../../redux/profile-reducer'
+import { UpdateProfileType } from '../../../../../types/profile';
 
 type SettingsFormProps = {
-  closeWindow(value: false): void;
-};
+  username: string
+  display_name: string
+  bio: string
 
-type ProfileForm = {
-  username: string;
-  display_name: string;
-  bio: string;
+  closeWindow(value: false): void;
+  updateProfileData(data: UpdateProfileType): void
 };
 
 const ProfileSettingsForm = (props: SettingsFormProps) => {
@@ -27,51 +28,40 @@ const ProfileSettingsForm = (props: SettingsFormProps) => {
     bio: Yup.string().max(200, 'Максимальное количесво символов: 200!'),
   });
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isValid },
-    reset,
-  } = useForm<ProfileForm>({
-    mode: 'onChange',
-    resolver: yupResolver(validationSchema),
-  });
+  const onSubmit = (data: UpdateProfileType) => {
+    props.updateProfileData(data);
+    props.closeWindow(false)
+  };
 
-  const onSubmit: SubmitHandler<ProfileForm> = (data) => {};
+  const formElements: Array<FormElement> = [
+    {
+      tag: 'input',
+      id: 'username',
+      label: 'Username',
+      defaultvalue: props.username 
+    },
+    {
+      tag: 'input',
+      id: 'display_name',
+      label: 'Display Name',
+      defaultvalue: props.display_name 
+    },
+    {
+      tag: 'textarea',
+      id: 'bio',
+      label: 'About Me',
+      defaultvalue: props.bio 
+    },
+  ]
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={classes.profile_form}>
-      <div>
-        <label htmlFor="pofile_form_username"></label>
-        <input
-          type="text"
-          id="pofile_form_username"
-          {...register('username')}
-        />
-      </div>
-      <div>
-        <label htmlFor="pofile_form_display_name"></label>
-        <input
-          type="text"
-          id="pofile_form_display_name"
-          {...register('display_name')}
-        />
-      </div>
-      <div>
-        <label htmlFor="pofile_form_bio"></label>
-        <input type="text" id="pofile_form_bio" {...register('bio')} />
-      </div>
-      <div>
-        <Button
-          isDisabled={false}
-          hoverBackgroundColor={'#67c598'}
-          buttonSize="medium"
-        >
-          Сохранить
-        </Button>
-      </div>
-    </form>
+    <Form onSubmit={onSubmit}
+    textBtn='Сохранить'
+    formElements={formElements}
+    validSchema={validationSchema} />
   );
 };
 
-export default ProfileSettingsForm;
+export default connect(()=>({}), {
+  updateProfileData
+})(ProfileSettingsForm);
