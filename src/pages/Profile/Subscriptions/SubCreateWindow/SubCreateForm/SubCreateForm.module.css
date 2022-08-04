@@ -1,48 +1,9 @@
-.sub_form {
-    width: 100%;
-    padding: 20px 50px;
-    display: flex;
-    flex-direction: column;
-}
-
-.sub_form label {
-    margin-left: 15px;
-    font-size: 20px;
-}
-
-.form_item {
-    display: flex;
-    flex-direction: column;
-    margin: 10px 0;
-}
-
-.form_item textarea,
-.form_item input {
-    font-size: 18px;
-    border-radius: 15px;
-    padding: 5px 10px;
-    margin-top: 5px;
-}
-
-.form_item textarea {
-    resize: none;
-    height: 150px;
-}
-
-.btn_wrap {
-    width: 100%;
-    height: 30px;
-    display: flex;
-    justify-content: center;
-}
-
-.error_message {
-    color: red;
-    font-size: 12px;
-}
-
 .cover_preview {
     width: 180px;
     border-radius: 5px;
     margin: 5px 15px;
+}
+
+#sub_image {
+    display: none;
 }

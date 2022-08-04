@@ -1,14 +1,22 @@
-import { SubmitHandler, useForm } from 'react-hook-form';
 import classes from './SubCreateForm.module.css';
-import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import Button from '../../../../../components/Button/Button';
 import { SubscriptionData } from '../../../../../types/subscriptions';
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { FormElement } from '../../../../../types/form';
+import Form from '../../../../../components/Form/Form';
+import { connect } from 'react-redux';
+import { StateType } from '../../../../../redux/redux-store';
+import { creatingSubscription } from '../../../../../redux/subscriptions-reducer';
+import { checkImage } from '../../../../../redux/image-reducer';
 
 type SubCreateFormProps = {
-  closeWindow(value: false): void
-  creatingSubscription(data: SubscriptionData): void
+  imageFile: File | null;
+  coverPreview: string;
+  checkImage(event: React.ChangeEvent<HTMLInputElement>, isSuccess: React.Dispatch<React.SetStateAction<boolean>>): void;
+  creatingSubscription(data: SubscriptionData): void;
+  
+  closeWindow(value: false): void;
 };
 
 type SubForm = {
@@ -18,8 +26,7 @@ type SubForm = {
 };
 
 const SubCreateForm = (props: SubCreateFormProps) => {
-  const [imageFile, setImageFile] = useState<FormData>()
-  const [coverPreview, setCoverPreview] = useState<string>('')
+  const [isLoadImage, setIsLoadImage] = useState<boolean>(false)
 
   const validationSchema = Yup.object().shape({
     sub_name: Yup.string()
@@ -45,107 +52,93 @@ const SubCreateForm = (props: SubCreateFormProps) => {
       ),
   });
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isValid },
-    reset,
-  } = useForm<SubForm>({
-    mode: "onChange",
-    resolver: yupResolver(validationSchema),
-  });
-  const onSubmit: SubmitHandler<SubForm> = (data) => {
+  const onSubmit = (data: SubForm) => {
     props.creatingSubscription({
       description: data.sub_description,
-      image: imageFile!.get('image'),
+      image: props.imageFile,
       name: data.sub_name,
       price: data.sub_price,
-      price_currency: "RUB"})
-    reset();
+      price_currency: 'RUB',
+    });
     props.closeWindow(false);
   };
 
   const uploadImage = (e: any) => {
-    e.preventDefault()
-    setCoverPreview('')
-    let fileInput = document.getElementById('sub_image')
-    fileInput?.click()
-  }
+    e.preventDefault();
+    let fileInput = document.getElementById(classes.sub_image);
+    fileInput?.click();
+  };
 
   const handleImageFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.currentTarget.files?.length) {
-      const file = e.currentTarget.files[0];
-      if (file.type == 'image/jpeg' || file.type == 'image/png') {
-        const reader = new FileReader();
-        reader.readAsDataURL(file)
-        reader.onloadend = function(e) {
-          setCoverPreview(String(this.result))
-        }
-        
-        const formData = new FormData();
-        formData.append("image", file)
-        setImageFile(formData);
-      } else {
-        alert('Неподходящий тип или формат файла!');
-      }
-    }
-  } 
+    props.checkImage(e, setIsLoadImage);
+  };
+
+  const extraElement = (
+    <>
+      <label>Обложка подписки</label>
+      <input id={classes.sub_image} type="file" onChange={handleImageFile} />
+      {(props.coverPreview && isLoadImage) ? (
+        <img
+          src={props.coverPreview}
+          alt="обложка"
+          className={classes.cover_preview}
+        />
+      ) : (
+        <></>
+      )}
+      <Button
+        isDisabled={false}
+        backgroundColor={'#f0f0f0'}
+        hoverBackgroundColor={'#67c598'}
+        buttonSize="medium"
+        handleClick={uploadImage}
+      >
+        {props.coverPreview ? 'Изменить' : 'Добавить обложку'}
+      </Button>
+    </>
+  );
+
+  const formElements: Array<FormElement> = [
+    {
+      tag: 'input',
+      id: 'sub_name',
+      type: 'text',
+      label: 'Название подписки',
+      placeholder: 'Введите название',
+    },
+    {
+      tag: 'textarea',
+      id: 'sub_description',
+      label: 'Описание подписки',
+      placeholder: 'Введите описание',
+    },
+    {
+      tag: 'input',
+      id: 'sub_price',
+      type: 'text',
+      label: 'Месячная стоимость (в руб.)',
+      placeholder: 'Введите стоимость',
+    },
+  ];
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={classes.sub_form}>
-      <div className={classes.sub_name + ' ' + classes.form_item}>
-        <label htmlFor="sub_name">Название подписки</label>
-        <input
-          id="sub_name"
-          type="text"
-          placeholder="Введите название"
-          {...register('sub_name')}
-        />
-        <div className={classes.error_message}>{errors.sub_name?.message}</div>
-      </div>
-      <div className={classes.sub_image + ' ' + classes.form_item}>
-        <label>Обложка подписки</label>
-        <input style={{display: 'none'}} id="sub_image" type="file" onChange={handleImageFile} />
-        {coverPreview !== '' ? <img src={coverPreview} alt='обложка' className={classes.cover_preview} /> : <></>}
-        <Button 
-          isDisabled={false}
-          backgroundColor={'#f0f0f0'}
-          hoverBackgroundColor={'#67c598'}
-          buttonSize='medium'
-          handleClick={uploadImage} >{coverPreview ? 'Изменить' : 'Добавить обложку'}
-        </Button>
-      </div>
-      <div className={classes.sub_description + ' ' + classes.form_item}>
-        <label htmlFor="sub_description">Описание подписки</label>
-        <textarea
-          id="sub_description"
-          placeholder="Введите описание"
-          {...register('sub_description')}
-        />
-        <div className={classes.error_message}>{errors.sub_description?.message}</div>
-      </div>
-      <div className={classes.sub_price + ' ' + classes.form_item}>
-        <label htmlFor="sub_price">Месячная стоимость (в руб.)</label>
-        <input
-          id="sub_price"
-          type="text"
-          placeholder="Введите стоимость"
-          {...register('sub_price')}
-        />
-        <div className={classes.error_message}>{errors.sub_price?.message}</div>
-      </div>
-      <div className={classes.btn_wrap}>
-        <Button
-          isDisabled={!isValid || !coverPreview}
-          backgroundColor={'#6DEFC0'}
-          hoverBackgroundColor={'#67c598'}
-          buttonSize='medium'
-        >
-          Создать
-        </Button>
-      </div>
-    </form>
+    <Form
+      onSubmit={onSubmit}
+      textBtn="Создать"
+      formElements={formElements}
+      validSchema={validationSchema}
+      extraDependence={!props.imageFile}
+      extraElements={[{ index: 1, id: 'sub_image', element: extraElement }]}
+    />
   );
 };
 
-export default SubCreateForm;
+let mapSateToProps = (state: StateType) => ({
+  imageFile: state.image.imageFile,
+  coverPreview: state.image.coverPreview,
+});
+
+export default connect(mapSateToProps, {
+  checkImage,
+  creatingSubscription,
+})(SubCreateForm);
