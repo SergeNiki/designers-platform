@@ -1,4 +1,4 @@
-.input_update_avatar {
+#update_avatar_input {
     display: none;
   }
 
@@ -26,4 +26,19 @@
     background-color: rgba(0, 0, 0, 0.226);
     backdrop-filter: blur(2px);
     opacity: 1;
+}
+
+.avatar_wrap {
+  position: relative;
+  width: 270px;
+  height: 270px;
+  margin: 20px 0;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.avatar_wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
