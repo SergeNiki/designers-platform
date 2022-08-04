@@ -12,10 +12,19 @@
 }
 
 .modal_window {
+    width: 568px;
+    margin: 5px;
     position: relative;
     background-color: azure;
     border-radius: 10px;
     overflow: hidden;
+}
+
+.modal_content {
+    width: 100%;
+    padding: 0 5px 0 10px;
+    max-height: calc(100vh - 50px);
+    overflow-y: scroll;
 }
 
 .close_btn {
