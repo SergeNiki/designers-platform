@@ -18,6 +18,7 @@ type UserAvatarProps = {
   updateUserAvatar(file: File): void;
   checkImage(
     event: React.ChangeEvent<HTMLInputElement>,
+    maxSize: number,
     isSuccess: React.Dispatch<React.SetStateAction<boolean>>
   ): void;
   clearImageState(): void;
@@ -33,7 +34,7 @@ const UserAvatar = (props: UserAvatarProps) => {
     }
   }, [props.imageFile, isUpdate]);
   const updateAvatar = (e: React.ChangeEvent<HTMLInputElement>) => {
-    props.checkImage(e, setIsUpdate);
+    props.checkImage(e, 5, setIsUpdate);
   };
 
   const uploadImage = (e: any) => {

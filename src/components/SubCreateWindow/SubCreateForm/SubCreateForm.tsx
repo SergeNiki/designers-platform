@@ -13,9 +13,13 @@ import { checkImage } from '../../../redux/image-reducer';
 type SubCreateFormProps = {
   imageFile: File | null;
   coverPreview: string;
-  checkImage(event: React.ChangeEvent<HTMLInputElement>, isSuccess: React.Dispatch<React.SetStateAction<boolean>>): void;
+  checkImage(
+    event: React.ChangeEvent<HTMLInputElement>,
+    maxSize: number,
+    isSuccess: React.Dispatch<React.SetStateAction<boolean>>
+  ): void;
   creatingSubscription(data: SubscriptionData): void;
-  
+
   closeWindow(value: false): void;
 };
 
@@ -26,17 +30,17 @@ type SubForm = {
 };
 
 const SubCreateForm = (props: SubCreateFormProps) => {
-  const [isLoadImage, setIsLoadImage] = useState<boolean>(false)
+  const [isLoadImage, setIsLoadImage] = useState<boolean>(false);
 
   const validationSchema = Yup.object().shape({
     sub_name: Yup.string()
       .required('У подписки должно быть название!')
       .min(3, 'Название подписки не может содержать менее 3 символов')
-      .max(20, 'Название подписки не может содержать более 20 символов'),
+      .max(40, 'Название подписки не может содержать более 40 символов'),
     sub_description: Yup.string()
       .required('У подписки должно быть описание!')
       .min(3, 'Описание не может содержать менее 3 символов!')
-      .max(500, 'Описание не может содержать более 500 символов!'),
+      .max(2000, 'Описание не может содержать более 2000 символов!'),
     sub_price: Yup.string()
       .required('Это поле не может быть пустым!')
       .matches(/^[0-9]+$/, 'Стоимость подписки может содержать только числа!')
@@ -70,14 +74,14 @@ const SubCreateForm = (props: SubCreateFormProps) => {
   };
 
   const handleImageFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    props.checkImage(e, setIsLoadImage);
+    props.checkImage(e, 8, setIsLoadImage);
   };
 
   const extraElement = (
     <>
       <label>Обложка подписки</label>
       <input id={classes.sub_image} type="file" onChange={handleImageFile} />
-      {(props.coverPreview && isLoadImage) ? (
+      {props.coverPreview && isLoadImage ? (
         <img
           src={props.coverPreview}
           alt="обложка"

@@ -45,7 +45,8 @@ export const clearImageState = (): ActionClearImageState => ({
 });
 
 export const checkImage = (
-  event: React.ChangeEvent<HTMLInputElement>, 
+  event: React.ChangeEvent<HTMLInputElement>,
+  maxSize: number,
   isSuccess: React.Dispatch<React.SetStateAction<boolean>>
 ): ThunkType => {
   return async (dispatch) => {
@@ -53,8 +54,8 @@ export const checkImage = (
       const file = event.currentTarget.files[0];
       if(file.type !== 'image/jpeg' && file.type !== 'image/png') {
         dispatch(addPopup('Неподходящий тип или формат файла!', false))
-      } else if(file.size >= 2000000) {
-        dispatch(addPopup('Размер изображения не должн превышать 2Мб!', false))
+      } else if(file.size >= maxSize * 1000000) {
+        dispatch(addPopup(`Размер изображения не должн превышать ${maxSize}Мб!`, false))
       }  else {
         const reader = new FileReader();
         reader.readAsDataURL(file);
