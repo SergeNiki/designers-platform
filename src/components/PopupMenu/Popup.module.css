@@ -1,0 +1,18 @@
+.popups_wrap {
+    position: fixed;
+    top: 80px;
+    bottom: 15px;
+    left: 15px;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: flex-start;
+    z-index: 999;
+    pointer-events: none;
+    transition: all 2s;
+}
+
+@media (max-width: 425px) {
+    .popups_wrap {
+        bottom: 80px;
+    }
+}

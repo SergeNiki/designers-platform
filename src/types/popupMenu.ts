@@ -4,24 +4,34 @@ import { StateType } from "../redux/redux-store"
 // Popup State
 export interface IPopupMenuState {
     isActive: boolean
-    contentMessage: string
+    popups: Array<PopupData>
+}
+export type PopupData = {
     isSuccessful: boolean
+    contentMessage: string
+    isTimerStarted: boolean
+    id: number
 }
 
-// Dispatch Type
+// Thunk Type
 export type ThunkType = ThunkAction<Promise<void>, StateType, unknown, ActionsPopupMenu>
 
 // Popup Actions
 export enum PopupActionsType {
-    SET_POPUP_DATA = "popupMenu/SET_POPUP_DATA",
-    CLEAR_POPUP_STATE = "popupMenu/CLEAR_POPUP_STATE"
+    ADD_POPUP = "popupMenu/ADD_POPUP",
+    START_TIMER = "popupMenu/START_TIMER", 
+    REMOVE_POPUP = "popupMenu/REMOVE_POPUP",
 }
-export type ActionSetPopupData = {
-    type: PopupActionsType.SET_POPUP_DATA
+export type ActionAddPopup = {
+    type: PopupActionsType.ADD_POPUP
     contentMessage: string
     isSuccessful: boolean
 }
-export type ActionClearPopupState = {
-    type: PopupActionsType.CLEAR_POPUP_STATE
+export type ActionStartTimer = {
+    type: PopupActionsType.START_TIMER
+    id: number
 }
-export type ActionsPopupMenu = ActionSetPopupData | ActionClearPopupState
+export type ActionRemovePopup = {
+    type: PopupActionsType.REMOVE_POPUP
+}
+export type ActionsPopupMenu = ActionAddPopup | ActionRemovePopup | ActionStartTimer

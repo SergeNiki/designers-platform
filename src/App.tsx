@@ -9,7 +9,7 @@ import Login from "./components/Login/Login";
 import Profile from "./pages/Profile/Profile";
 import { StateType } from "./redux/redux-store";
 import Main from "./pages/Main/Main";
-import PopupMenu from "./components/PopupMenu/PopupMenu";
+import Popup from "./components/PopupMenu/Popup";
 
 type AppProps = {
   isInitialized: boolean;
@@ -25,7 +25,7 @@ function App(props: AppProps) {
 
   return (
     <div className="App">
-      {props.isPopupActive && <PopupMenu/>}
+      {props.isPopupActive && <Popup/>}
       {props.isProcessLogin && <Login />}
       <BrowserRouter>
         <Header />
