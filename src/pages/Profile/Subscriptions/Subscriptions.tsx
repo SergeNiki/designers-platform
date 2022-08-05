@@ -4,10 +4,7 @@ import { SubData } from "../../../types/subscriptions";
 import { getSubscriptions, subscribeOrUnsubscribe, deleteSubscription } from "../../../redux/subscriptions-reducer"
 import classes from "./Subscriptions.module.css";
 import SubscriptionCard from "../../../components/SubscriptionCard/SubscriptionCard";
-import { useEffect, useState } from "react";
-import SubCreateWindow from "./SubCreateWindow/SubCreateWindow";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSquarePlus } from "@fortawesome/free-solid-svg-icons";
+import { useEffect } from "react";
 
 type SubscriptionsProps = {
   //from State
@@ -27,14 +24,7 @@ const Subscriptions = (props: SubscriptionsProps) => {
 
   useEffect(() => {
     props.getSubscriptions(props.ownerUserId)
-  }, [props.ownerUserId])
-
-  const [isCreateWindow, setIsCreateWindow] = useState<boolean>(false)
-
-  const openSubCreateWindow = (): void => {
-    document.getElementsByTagName('body')[0].style.overflowY = 'hidden';
-    setIsCreateWindow(true);
-  }
+  }, [props.ownerUserId, props.subscriptionsCount])
 
   const subOrUnsub = async (subId: number, type: 'sub' | 'unsub') => {
     await props.subscribeOrUnsubscribe(subId, type)
@@ -58,11 +48,7 @@ const Subscriptions = (props: SubscriptionsProps) => {
 
   return (
     <div className={classes.subscriptions_wrap}>
-      {isCreateWindow && <SubCreateWindow setIsCreateWindow={setIsCreateWindow} />}
       <div className={classes.subscriptions}>
-        {props.isOwner && <div className={classes.add_sub_btn} onClick={openSubCreateWindow} >
-          <FontAwesomeIcon icon={faSquarePlus} />
-        </div>}
         {subscriptions}
       </div>
     </div>

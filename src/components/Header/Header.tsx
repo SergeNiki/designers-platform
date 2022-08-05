@@ -5,6 +5,9 @@ import { toggleLoginTC, logout } from './../../redux/auth-reducer';
 import { getAuthUserData } from './../../redux/auth-reducer';
 import HeaderPopup from './UserMenu/UserMenu';
 import { StateType } from '../../redux/redux-store';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
+import SubCreateWindow from '../../pages/Profile/Subscriptions/SubCreateWindow/SubCreateWindow';
 
 type HeaderProps = {
   isAuth: boolean;
@@ -28,19 +31,29 @@ const Header = (props: HeaderProps) => {
     props.toggleLoginTC();
   };
 
-  let [isUserMenuActive, setUserMenuActive] = React.useState<boolean>(false);
+  const [isUserMenuActive, setUserMenuActive] = React.useState<boolean>(false);
+  const [isCreateWindow, setIsCreateWindow] = React.useState<boolean>(false)
 
   const openPopupMenu = () => {
     setUserMenuActive(!isUserMenuActive);
   };
+  const openSubCreateWindow = (): void => {
+    setIsCreateWindow(true);
+  }
 
   return (
     <header>
+      {isCreateWindow && <SubCreateWindow setIsCreateWindow={setIsCreateWindow} />}
       <div className={classes.header_wrap}>
         <h1>FLOW OF ART</h1>
         {props.isAuth ? (
-          <div onClick={openPopupMenu} className={classes.avatar}>
-            {props.avatar && <img src={props.avatar} alt="" />}
+          <div className={classes.header_items}>
+            <div className={classes.add_btn} onClick={openSubCreateWindow} >
+              <FontAwesomeIcon icon={faSquarePlus} />
+            </div>
+            <div onClick={openPopupMenu} className={classes.avatar}>
+              {props.avatar && <img src={props.avatar} alt="" />}
+            </div>
           </div>
         ) : (
           <div className={classes.login} onClick={toggleLogin}>
