@@ -3,7 +3,7 @@ import thunk from "redux-thunk"
 import appReduser from "./app-reducer";
 import authReducer from "./auth-reducer";
 import imageReducer from "./image-reducer";
-import popupMenuReducer from "./popupMenu-reducer";
+import popupMenuReducer from "./popup-reducer";
 import postPreviewsReducer from "./postPreviews-reducer";
 import profileReducer from "./profile-reducer";
 import subscriptionsReducer from "./subscriptions-reducer";

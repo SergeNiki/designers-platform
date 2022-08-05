@@ -14,7 +14,7 @@ import {
   SubscriptionData,
   ThunkSubType,
 } from '../types/subscriptions';
-import { openPopupMenu } from './popupMenu-reducer';
+import { addPopup } from './popup-reducer';
 
 let initialState: ISubscriptionsState = {
   count: 0,
@@ -100,7 +100,9 @@ export const getSubscriptions = (userId: number): ThunkSubType => {
       const response = await SubscriptionsService.getSubscriptions(userId);
       dispatch(setSubscriptionsAC(response.data));
       dispatch(toggleIsFetching(false));
-    } catch (error) {}
+    } catch (error) {
+      dispatch(addPopup('Что-то пошло не так(', false))
+    }
   };
 };
 export const creatingSubscription = (data: SubscriptionData): ThunkSubType => {
@@ -110,9 +112,9 @@ export const creatingSubscription = (data: SubscriptionData): ThunkSubType => {
       const response = await SubscriptionsService.creatingSubscription(data);
       dispatch(creatingSubscriptionsAC(response.data));
       dispatch(toggleIsFetching(false));
-      dispatch(openPopupMenu('Подписка успешно создана!', true));
+      dispatch(addPopup('Подписка успешно создана!', true));
     } catch (error) {
-      dispatch(openPopupMenu('Произошла ошибка!', true));
+      dispatch(addPopup('Что-то пошло не так(', false))
     }
   };
 };
@@ -126,7 +128,9 @@ export const editSubscription = (
       const response = await SubscriptionsService.editSubscription(subId, data);
       dispatch(editSubscriptionsAC(response.data));
       dispatch(toggleIsFetching(false));
-    } catch (error) {}
+    } catch (error) {
+      dispatch(addPopup('Что-то пошло не так(', false))
+    }
   };
 };
 export const deleteSubscription = (subId: number): ThunkSubType => {
@@ -136,8 +140,10 @@ export const deleteSubscription = (subId: number): ThunkSubType => {
       const response = await SubscriptionsService.deleteSubscription(subId);
       dispatch(deleteSubscriptionsAC(subId));
       dispatch(toggleIsFetching(false));
-      dispatch(openPopupMenu('Подписка была удалена', false));
-    } catch (error) {}
+      dispatch(addPopup('Подписка была удалена', false));
+    } catch (error) {
+      dispatch(addPopup('Что-то пошло не так(', false))
+    }
   };
 };
 
@@ -152,11 +158,11 @@ export const subscribeOrUnsubscribe = (
       dispatch(setStatusMessage(response.data.message));
       dispatch(toggleIsFetching(false));
       if (type == 'sub')
-        dispatch(openPopupMenu('Подписка успешно оформлена!', true));
+        dispatch(addPopup('Подписка успешно оформлена!', true));
       else if (type == 'unsub')
-        dispatch(openPopupMenu('Подписка была отменена!', true));
+        dispatch(addPopup('Подписка была отменена!', false));
     } catch (error) {
-      dispatch(openPopupMenu('Произошла ошибка!', false));
+      dispatch(addPopup('Что-то пошло не так(', false))
     }
   };
 };

@@ -7,7 +7,7 @@ import {
   ImageActionsType,
   ThunkType,
 } from '../types/image';
-import { openPopupMenu } from './popupMenu-reducer';
+import { addPopup } from './popup-reducer';
 
 let initialState: IImageState = {
   imageFile: null,
@@ -45,15 +45,16 @@ export const clearImageState = (): ActionClearImageState => ({
 });
 
 export const checkImage = (
-  event: React.ChangeEvent<HTMLInputElement>, isSuccess: React.Dispatch<React.SetStateAction<boolean>>
+  event: React.ChangeEvent<HTMLInputElement>, 
+  isSuccess: React.Dispatch<React.SetStateAction<boolean>>
 ): ThunkType => {
   return async (dispatch) => {
     if (event.currentTarget.files?.length) {
       const file = event.currentTarget.files[0];
       if(file.type !== 'image/jpeg' && file.type !== 'image/png') {
-        dispatch(openPopupMenu('Неподходящий тип или формат файла!', false))
+        dispatch(addPopup('Неподходящий тип или формат файла!', false))
       } else if(file.size >= 2000000) {
-        dispatch(openPopupMenu('Размер изображения не должн превышать 2Мб!', false))
+        dispatch(addPopup('Размер изображения не должн превышать 2Мб!', false))
       }  else {
         const reader = new FileReader();
         reader.readAsDataURL(file);

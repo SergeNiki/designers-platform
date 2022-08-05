@@ -9,10 +9,7 @@ import {
   ITelegramUser,
   ThunkType,
 } from '../types/auth';
-import { openPopupMenu } from './popupMenu-reducer';
-
-const SET_USER_DATA = 'auth/SET_USER_DATA';
-const TOGGLE_IS_PROCESS_LOGIN = 'auth/TOGGLE_IS_PROCESS_LOGIN';
+import { addPopup } from './popup-reducer';
 
 let initialState: IAuthState = {
   user_id: 0,
@@ -76,9 +73,10 @@ export const onTelegramAuth = (user: ITelegramUser): ThunkType => {
       const response = await AuthService.login(user);
       localStorage.setItem('token', response.data.access_token);
       dispatch(getAuthUserData());
-      dispatch(openPopupMenu('Вы успешно авторизовались!', true));
+      dispatch(addPopup('Вы успешно авторизовались!', true));
     } catch (error: any) {
       console.log(error.response.data.detail);
+      dispatch(addPopup('Что-то пошло не так(', false))
     }
   };
 };
@@ -93,6 +91,7 @@ export const getAuthUserData = (): ThunkType => {
       );
     } catch (error: any) {
       dispatch(logout());
+      dispatch(addPopup('Что-то пошло не так(', false))
     }
   };
 };

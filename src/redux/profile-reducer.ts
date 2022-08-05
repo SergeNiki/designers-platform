@@ -15,7 +15,7 @@ import {
   ProfileActionTypes,
   ActionUpdateProfile,
 } from "./../types/profile";
-import { openPopupMenu } from "./popupMenu-reducer";
+import { addPopup } from "./popup-reducer";
 
 let initialState: IProfileState = {
   id: 0,
@@ -108,10 +108,10 @@ export const updateUserAvatar = (imageFile: File): ThunkType => {
       const response = await ProfileService.updateUserAvatar(imageFile);
       dispatch(setUserAvatar(response.data.avatar));
       dispatch(toggleIsFetching(false))
-      dispatch(openPopupMenu('Ваш аватар успешно обновлён!', true))
+      dispatch(addPopup('Ваш аватар успешно обновлён!', true))
     } catch (error) {
       console.log(error);
-      dispatch(openPopupMenu('Что-то пошло не так(', false))
+      dispatch(addPopup('Что-то пошло не так(', false))
     }
   };
 };
@@ -123,10 +123,10 @@ export const updateProfileData = (data: UpdateProfileType): ThunkType => {
       const response = await ProfileService.updateProfileData(data)
       dispatch(updateProfile(response.data))
       dispatch(toggleIsFetching(false))
-      dispatch(openPopupMenu('Данные профиля обновлены!', true))
+      dispatch(addPopup('Данные профиля обновлены!', true))
     } catch (error) {
       console.log(error);
-      dispatch(openPopupMenu('Что-то пошло не так(', true))
+      dispatch(addPopup('Что-то пошло не так(', false))
     }
   }
 }
