@@ -1,8 +1,7 @@
 import SubCreateForm from './SubCreateForm/SubCreateForm';
-import classes from './SubCreateWindow.module.css';
-import ModalWindow from '../../../../components/ModalWindow/ModalWindow';
+import ModalWindow from '../ModalWindow/ModalWindow';
 import { connect } from 'react-redux';
-import { clearImageState } from './../../../../redux/image-reducer';
+import { clearImageState } from '../../redux/image-reducer';
 import { useEffect } from 'react';
 
 type SubCreateWindowProps = {

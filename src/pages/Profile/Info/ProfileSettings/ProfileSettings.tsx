@@ -1,6 +1,5 @@
 import ModalWindow from '../../../../components/ModalWindow/ModalWindow';
-import classes from './ProfileSettings.module.css';
-import ProfileSettingsForm from './ProfileSettingsForm/ProfileSettingsForm';
+import ProfileSettingsForm from './ProfileSettingsForm';
 
 type ProfileSettingsProps = {
   username: string;

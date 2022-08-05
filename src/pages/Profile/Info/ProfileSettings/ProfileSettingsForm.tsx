@@ -1,10 +1,9 @@
-import classes from './ProfileSettingsForm.module.css';
 import * as Yup from 'yup';
-import { FormElement } from '../../../../../types/form';
-import Form from '../../../../../components/Form/Form';
+import { FormElement } from '../../../../types/form';
+import Form from '../../../../components/Form/Form';
 import { connect } from 'react-redux';
-import { updateProfileData } from './../../../../../redux/profile-reducer'
-import { UpdateProfileType } from '../../../../../types/profile';
+import { updateProfileData } from '../../../../redux/profile-reducer'
+import { UpdateProfileType } from '../../../../types/profile';
 
 type SettingsFormProps = {
   username: string

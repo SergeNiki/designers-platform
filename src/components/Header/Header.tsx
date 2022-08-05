@@ -7,7 +7,7 @@ import HeaderPopup from './UserMenu/UserMenu';
 import { StateType } from '../../redux/redux-store';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
-import SubCreateWindow from '../../pages/Profile/Subscriptions/SubCreateWindow/SubCreateWindow';
+import SubCreateWindow from '../SubCreateWindow/SubCreateWindow';
 
 type HeaderProps = {
   isAuth: boolean;

@@ -1,14 +1,14 @@
 import classes from './SubCreateForm.module.css';
 import * as Yup from 'yup';
-import Button from '../../../../../components/Button/Button';
-import { SubscriptionData } from '../../../../../types/subscriptions';
+import Button from '../../Button/Button';
+import { SubscriptionData } from '../../../types/subscriptions';
 import React, { useState } from 'react';
-import { FormElement } from '../../../../../types/form';
-import Form from '../../../../../components/Form/Form';
+import { FormElement } from '../../../types/form';
+import Form from '../../Form/Form';
 import { connect } from 'react-redux';
-import { StateType } from '../../../../../redux/redux-store';
-import { creatingSubscription } from '../../../../../redux/subscriptions-reducer';
-import { checkImage } from '../../../../../redux/image-reducer';
+import { StateType } from '../../../redux/redux-store';
+import { creatingSubscription } from '../../../redux/subscriptions-reducer';
+import { checkImage } from '../../../redux/image-reducer';
 
 type SubCreateFormProps = {
   imageFile: File | null;
