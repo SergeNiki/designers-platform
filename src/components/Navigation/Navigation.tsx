@@ -22,11 +22,9 @@ const Navigation: React.FC<NavigationProps> = (props) => {
                 <div className={classes.nav_list}>
                     <NavLink to={"/main"}><FontAwesomeIcon icon={faHouseChimney} /></NavLink>
                     <NavLink to={"/subscriptions"}><FontAwesomeIcon icon={faImages} /></NavLink>
-                    {/* <NavLink to={`/profile/${props.username}`}><FontAwesomeIcon icon={faUser} /></NavLink> */}
                     {props.isAuth && <NavLink to={`/profile/id${props.user_id}`}><FontAwesomeIcon icon={faUser} /></NavLink>}
                     <NavLink to={"/messages"}><FontAwesomeIcon icon={faComments} /></NavLink>
                     <NavLink to={"/"}><FontAwesomeIcon icon={faThumbsUp} /></NavLink>
-                    <NavLink to={"/"}><FontAwesomeIcon icon={faSquarePlus} /></NavLink>
                 </div>
             </div>
         </nav>

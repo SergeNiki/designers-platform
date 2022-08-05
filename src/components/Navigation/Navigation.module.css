@@ -22,11 +22,6 @@
     background-color: #67c598;
 }
 
-.nav_list p {
-    font-size: 10px;
-    text-align: center;
-}
-
 @media (max-width: 425px) {
     .nav_wrap {
         width: 90%;
