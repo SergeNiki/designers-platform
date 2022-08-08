@@ -128,6 +128,7 @@ export const editSubscription = (
       const response = await SubscriptionsService.editSubscription(subId, data);
       dispatch(editSubscriptionsAC(response.data));
       dispatch(toggleIsFetching(false));
+      dispatch(addPopup('Подписка успешно отредактирована!', true))
     } catch (error) {
       dispatch(addPopup('Что-то пошло не так(', false))
     }
