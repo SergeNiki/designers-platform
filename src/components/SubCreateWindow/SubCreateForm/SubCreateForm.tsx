@@ -1,14 +1,13 @@
-import classes from './SubCreateForm.module.css';
 import * as Yup from 'yup';
-import Button from '../../Button/Button';
 import { SubscriptionData } from '../../../types/subscriptions';
-import React, { useState } from 'react';
+import React from 'react';
 import { FormElement } from '../../../types/form';
 import Form from '../../Form/Form';
 import { connect } from 'react-redux';
 import { StateType } from '../../../redux/redux-store';
 import { creatingSubscription } from '../../../redux/subscriptions-reducer';
 import { checkImage } from '../../../redux/image-reducer';
+import SubCoverDownload from '../SubCoverDownload/SubCoverDownload';
 
 type SubCreateFormProps = {
   imageFile: File | null;
@@ -30,8 +29,6 @@ type SubForm = {
 };
 
 const SubCreateForm = (props: SubCreateFormProps) => {
-  const [isLoadImage, setIsLoadImage] = useState<boolean>(false);
-
   const validationSchema = Yup.object().shape({
     sub_name: Yup.string()
       .required('У подписки должно быть название!')
@@ -67,39 +64,11 @@ const SubCreateForm = (props: SubCreateFormProps) => {
     props.closeWindow(false);
   };
 
-  const uploadImage = (e: any) => {
-    e.preventDefault();
-    let fileInput = document.getElementById(classes.sub_image);
-    fileInput?.click();
-  };
-
-  const handleImageFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    props.checkImage(e, 8, setIsLoadImage);
-  };
-
   const extraElement = (
-    <>
-      <label>Обложка подписки</label>
-      <input id={classes.sub_image} type="file" onChange={handleImageFile} />
-      {props.coverPreview && isLoadImage ? (
-        <img
-          src={props.coverPreview}
-          alt="обложка"
-          className={classes.cover_preview}
-        />
-      ) : (
-        <></>
-      )}
-      <Button
-        isDisabled={false}
-        backgroundColor={'#f0f0f0'}
-        hoverBackgroundColor={'#67c598'}
-        buttonSize="medium"
-        handleClick={uploadImage}
-      >
-        {props.coverPreview ? 'Изменить' : 'Добавить обложку'}
-      </Button>
-    </>
+    <SubCoverDownload
+      coverPreview={props.coverPreview}
+      checkImage={props.checkImage}
+    />
   );
 
   const formElements: Array<FormElement> = [
