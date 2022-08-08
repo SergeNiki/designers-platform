@@ -1,37 +1,46 @@
-import { useEffect, useState } from 'react';
+import { CSSProperties, useEffect, useState } from 'react';
 import './Button.css';
 
 type ButtonProps = {
   children: React.ReactNode;
-  isDisabled: boolean;
-  backgroundColor?: string;
-  hoverBackgroundColor?: string;
-  buttonSize: 'small' | 'medium' | 'large'
+  isDisabled?: boolean;
+  styles?: CSSProperties;
+  hoverStyles?: CSSProperties;
   handleClick?(e: any): void;
 };
 
 const Button = (props: ButtonProps) => {
-  const [bgColor, setBgColor] = useState<string>('#6DEFC0');
-
-  useEffect(() => {
-    if (props.backgroundColor) setBgColor(props.backgroundColor)
-}, [props.backgroundColor])
+  const [isHover, setIsHover] = useState<boolean>(false);
+  let style = { ...props.styles };
+  let hoverStyle = { ...style, ...props.hoverStyles };
 
   const onMouseOver = () => {
-    if (props.hoverBackgroundColor) setBgColor(props.hoverBackgroundColor);
+    setIsHover(true);
   };
   const onMouseOut = () => {
-    setBgColor(props.backgroundColor ? props.backgroundColor : '#6DEFC0');
+    setIsHover(false);
   };
 
   return (
     <button
-      className={`button button_${props.buttonSize}`}
+      className={`button`}
       onClick={props?.handleClick}
       onMouseOver={onMouseOver}
       onMouseOut={onMouseOut}
-      style={{ backgroundColor: !props.isDisabled ? bgColor : "#C5D6CA" }}
-      disabled={props.isDisabled}
+      style={
+        isHover
+          ? {
+              ...hoverStyle,
+              backgroundColor: props.isDisabled
+                ? 'rgb(173, 173, 173)'
+                : hoverStyle?.backgroundColor,
+              color: props.isDisabled
+                ? 'rgb(95, 95, 95)'
+                : hoverStyle?.color
+            }
+          : { ...style }
+      }
+      disabled={props.isDisabled ? props.isDisabled : false}
     >
       {props.children}
     </button>
