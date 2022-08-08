@@ -8,6 +8,7 @@ import { StateType } from '../../redux/redux-store';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import SubCreateWindow from '../SubCreateWindow/SubCreateWindow';
+import SubCreateForm from '../SubCreateWindow/SubCreateForm/SubCreateForm';
 
 type HeaderProps = {
   isAuth: boolean;
@@ -43,7 +44,9 @@ const Header = (props: HeaderProps) => {
 
   return (
     <header>
-      {isCreateWindow && <SubCreateWindow setIsCreateWindow={setIsCreateWindow} />}
+      {isCreateWindow && <SubCreateWindow setIsCreateWindow={setIsCreateWindow} >
+        <SubCreateForm closeWindow={setIsCreateWindow} />
+      </SubCreateWindow>}
       <div className={classes.header_wrap}>
         <h1>FLOW OF ART</h1>
         {props.isAuth ? (
