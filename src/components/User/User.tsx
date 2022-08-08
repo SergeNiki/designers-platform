@@ -42,8 +42,11 @@ const User = (props: UserProps) => {
               (id) => id === props.id
             )}
             handleClick={toggleFollowHandler}
-            backgroundColor={props.is_followed ? '#C4C4C4' : '#6DEFC0'}
-            buttonSize="small"
+            styles={{
+              width: '110px',
+              height: '30px',
+              backgroundColor: props.is_followed ? '#C4C4C4' : '#6DEFC0',
+            }}
           >
             {props.is_followed ? 'Отписаться' : 'Подписаться'}
           </Button>

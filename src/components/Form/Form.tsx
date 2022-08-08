@@ -8,8 +8,8 @@ import Button from '../Button/Button';
 type FormProps = {
   formElements: Array<FormElement>;
   extraElements?: Array<{ index: number; id: string; element: JSX.Element }>;
-  extraDependence?: boolean
-  textBtn: string
+  extraDependence?: boolean;
+  textBtn: string;
   validSchema: any;
   onSubmit(data: FormInputs): void;
 };
@@ -84,8 +84,8 @@ const Form = (props: FormProps) => {
       <div className={classes.btn_wrap}>
         <Button
           isDisabled={!isValid || !!props.extraDependence}
-          hoverBackgroundColor={'#67c598'}
-          buttonSize="medium"
+          styles={{ width: '180px', height: '35px' }}
+          hoverStyles={{ backgroundColor: '#67c598' }}
         >
           {props.textBtn}
         </Button>

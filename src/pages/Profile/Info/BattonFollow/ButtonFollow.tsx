@@ -26,8 +26,7 @@ const ButtonSub = (props:ButtonFollowProps) => {
       return (
         <Button
           handleClick={props.toggleLoginTC}
-          isDisabled={false}
-          buttonSize={'large'}
+          styles={{'width': '210px', 'height': '45px', 'fontSize': '20px'}}
         >
           Подписаться
         </Button>
@@ -37,8 +36,8 @@ const ButtonSub = (props:ButtonFollowProps) => {
         <Button
           isDisabled={props.isFetching}
           handleClick={toggleFollow}
-          backgroundColor={props.isFollowed ? '#C4C4C4' : '#6DEFC0' }
-          buttonSize={'large'}
+          styles={{'backgroundColor': props.isFollowed ? '#C4C4C4' : '#6DEFC0', 
+          'width': '210px', 'height': '45px', 'fontSize': '20px'}}
         >
           {props.isFollowed ? 'Отписаться' : 'Подписаться'}
         </Button>
