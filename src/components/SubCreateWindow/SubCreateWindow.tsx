@@ -1,10 +1,10 @@
-import SubCreateForm from './SubCreateForm/SubCreateForm';
 import ModalWindow from '../ModalWindow/ModalWindow';
 import { connect } from 'react-redux';
 import { clearImageState } from '../../redux/image-reducer';
 import { useEffect } from 'react';
 
 type SubCreateWindowProps = {
+  children: React.ReactNode
   setIsCreateWindow(value: false): void;
   clearImageState(): void;
 };
@@ -14,11 +14,11 @@ const SubCreateWindow = (props: SubCreateWindowProps) => {
     return () => props.clearImageState();
   });
 
-  const header = <h2>Создание подписки</h2>;
+  const header = <h2>Редактирование подписки</h2>;
 
   return (
     <ModalWindow closeWindow={props.setIsCreateWindow} header={header}>
-      <SubCreateForm closeWindow={props.setIsCreateWindow} />
+      {props.children}
     </ModalWindow>
   );
 };
