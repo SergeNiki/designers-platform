@@ -1,20 +1,17 @@
 .sub_wrap {
     background-color: #f0f0f0;
+    color: #fff;
     overflow: hidden;
     border-radius: 5px;
     padding: 15px;
     aspect-ratio: 4/6;
     display: grid;
-    grid-template-rows: 40px 50% auto 55px;
+    grid-template-rows: 65px 50% auto 45px;
     gap: 10px;
     justify-items: center;
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-}
-
-.sub_name_wrap h3 {
-    font-weight: bold;
 }
 
 .sub_wrap img {
@@ -25,59 +22,50 @@
 }
 
 .price_wrap,
-.sub_name_wrap,
 .sub_description {
-    color: #fff;
     border-radius: 5px;
-    width: 100%;
     padding: 10px;
     background-color: rgba(0, 0, 0, 0.322);
     backdrop-filter: blur(2px);
     -webkit-backdrop-filter: blur(2px);
 }
 
-.sub_name_wrap {
-    text-align: center;
-}
-
 .sub_description {
+    width: 100%;
+    border-top: 1px solid #6DEFC0;
     overflow: scroll;
     word-break: normal;
 }
 
+.sub_name_wrap,
 .price_wrap {
-    padding: 5px;
+    width: 63px;
+    height: 63px;
     text-align: center;
-}
-
-.unsub_button,
-.sub_button {
-    background-color: #6DEFC0;
-    width: 100%;
-    height: 100%;
-    color: #000;
-    font-size: 16px;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-    box-shadow: 0 1px 1px rgb(168, 168, 168);
-    transition: all 0.2s;
-}
-.sub_button:hover {
-    background-color: #67c598;
-    color: #fff;
-}
-
-.unsub_button {
-    background-color: #C4C4C4;
-}
-.unsub_button:hover {
-    color:rgb(255, 81, 81);
-    background-color: #b6b6b6;
-}
-
-.button_del_wrap { 
     display: flex;
-    flex-direction: column;
-    width: 100%;
+    justify-content: center;
+    align-items: center;
 }
+
+.sub_name_wrap {
+    font-weight: bold;
+    flex-grow: 1;
+    max-height: 65px;
+    hyphens: auto;
+}
+
+.price_wrap {
+    border-radius: 50%;
+    border-right: solid 1px #6DEFC0;
+}
+
+.sub_header {
+    width: 100%;
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.322);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    border-radius: 50px;
+    border-bottom: solid 1px #6DEFC0;
+    border-top: solid 1px #6DEFC0;
+} 
