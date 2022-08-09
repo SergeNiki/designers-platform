@@ -9,9 +9,10 @@ import {
   ActionСreatingSubscription,
   GetSubscriptionsResponse,
   ISubscriptionsState,
+  SubCreateData,
   SubData,
+  SubEditData,
   SubsActionTypes,
-  SubscriptionData,
   ThunkSubType,
 } from '../types/subscriptions';
 import { addPopup } from './popup-reducer';
@@ -105,7 +106,7 @@ export const getSubscriptions = (userId: number): ThunkSubType => {
     }
   };
 };
-export const creatingSubscription = (data: SubscriptionData): ThunkSubType => {
+export const creatingSubscription = (data: SubCreateData): ThunkSubType => {
   return async (dispatch) => {
     dispatch(toggleIsFetching(true));
     try {
@@ -120,7 +121,7 @@ export const creatingSubscription = (data: SubscriptionData): ThunkSubType => {
 };
 export const editSubscription = (
   subId: number,
-  data: SubscriptionData
+  data: SubEditData
 ): ThunkSubType => {
   return async (dispatch) => {
     dispatch(toggleIsFetching(true));
