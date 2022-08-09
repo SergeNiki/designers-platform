@@ -1,0 +1,19 @@
+.buttons_wrap {
+    display: flex;
+    justify-content: flex-end;
+    height: 40px;
+}
+
+.buttons_wrap button {
+    width: 110px;
+    height: 30px;
+    background-color: rgb(206, 211, 214);
+}
+
+.buttons_wrap button:hover {
+    background-color: #b6b5b5;
+}
+
+.message {
+    margin: 15px;
+}

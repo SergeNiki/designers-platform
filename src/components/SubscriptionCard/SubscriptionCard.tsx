@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { SubData } from '../../types/subscriptions';
+import ConfirmWindow from '../ConfirmWindow/ConfirmWindow';
 import ModalWindow from '../ModalWindow/ModalWindow';
 import SubEditForm from '../SubCreateWindow/SubEditForm/SubEditForm';
 import SubButtons from './SubButtons/SubButtons';
@@ -15,6 +16,7 @@ type SubscriptionCardProps = SubData & {
 const SubscriptionCard = (props: SubscriptionCardProps) => {
   const [isEditWindow, setIsEditWindow] = useState<boolean>(false);
   const [isTextWrap, setIsTextWrap] = useState<boolean>(false);
+  const [isConfirmDeletion, setIsConfirmDeletion] = useState<boolean>(false);
 
   useEffect(() => {
     for (let word of props.name.split(' ')) {
@@ -26,13 +28,17 @@ const SubscriptionCard = (props: SubscriptionCardProps) => {
       }
     }
   }, [window.innerWidth]);
-  
-  const header = <h2>Редактирование подписки</h2>;
+  const deleteSubscription = () => {
+    props.deleteSub(props.id)
+  }
+
+  const editHeader = <h2>Редактирование подписки</h2>;
+  const confirmHeader = <h2>Удаление</h2>;
 
   return (
     <>
       {isEditWindow && (
-        <ModalWindow closeWindow={setIsEditWindow} header={header} >
+        <ModalWindow closeWindow={setIsEditWindow} header={editHeader}>
           <SubEditForm
             subId={props.id}
             closeWindow={setIsEditWindow}
@@ -42,6 +48,16 @@ const SubscriptionCard = (props: SubscriptionCardProps) => {
             subCoverPreview={props.image}
           />
         </ModalWindow>
+      )}
+      {isConfirmDeletion && (
+        <ConfirmWindow
+          closeWindow={setIsConfirmDeletion}
+          header={confirmHeader}
+          handleClick={deleteSubscription}
+          confirmTextBtn="Удалить"
+        >
+          Вы уверены, что хотите безвозвратно удалить подписку?
+        </ConfirmWindow>
       )}
       <div
         className={classes.sub_wrap}
@@ -68,7 +84,7 @@ const SubscriptionCard = (props: SubscriptionCardProps) => {
           price={props.price}
           price_currency={props.price_currency}
           is_subscribed={props.is_subscribed}
-          deleteSub={props.deleteSub}
+          openDeletionWindow={setIsConfirmDeletion}
           subOrUnsub={props.subOrUnsub}
           openEditWindow={setIsEditWindow}
         />
