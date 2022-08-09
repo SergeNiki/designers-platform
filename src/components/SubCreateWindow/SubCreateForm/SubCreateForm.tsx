@@ -1,44 +1,50 @@
 import * as Yup from 'yup';
-import { SubscriptionData } from '../../../types/subscriptions';
-import React from 'react';
+import { SubCreateData } from '../../../types/subscriptions';
+import React, { useEffect } from 'react';
 import { FormElement } from '../../../types/form';
 import Form from '../../Form/Form';
 import { connect } from 'react-redux';
 import { StateType } from '../../../redux/redux-store';
 import { creatingSubscription } from '../../../redux/subscriptions-reducer';
-import { checkImage } from '../../../redux/image-reducer';
+import { checkImage, clearImageState } from '../../../redux/image-reducer';
 import SubCoverDownload from '../SubCoverDownload/SubCoverDownload';
 
 type SubCreateFormProps = {
   imageFile: File | null;
   coverPreview: string;
+  clearImageState(): void;
   checkImage(
     event: React.ChangeEvent<HTMLInputElement>,
     maxSize: number,
     isSuccess: React.Dispatch<React.SetStateAction<boolean>>
   ): void;
-  creatingSubscription(data: SubscriptionData): void;
+  creatingSubscription(data: SubCreateData): void;
+  
 
   closeWindow(value: false): void;
 };
 
 type SubForm = {
-  sub_name: string;
-  sub_description: string;
-  sub_price: string;
+  subName: string;
+  subDescription: string;
+  subPrice: string;
 };
 
 const SubCreateForm = (props: SubCreateFormProps) => {
+  useEffect(() => {
+    return () => props.clearImageState()
+  }, [])
+
   const validationSchema = Yup.object().shape({
-    sub_name: Yup.string()
+    subName: Yup.string()
       .required('У подписки должно быть название!')
       .min(3, 'Название подписки не может содержать менее 3 символов')
       .max(40, 'Название подписки не может содержать более 40 символов'),
-    sub_description: Yup.string()
+    subDescription: Yup.string()
       .required('У подписки должно быть описание!')
       .min(3, 'Описание не может содержать менее 3 символов!')
       .max(2000, 'Описание не может содержать более 2000 символов!'),
-    sub_price: Yup.string()
+    subPrice: Yup.string()
       .required('Это поле не может быть пустым!')
       .matches(/^[0-9]+$/, 'Стоимость подписки может содержать только числа!')
       .test(
@@ -55,10 +61,10 @@ const SubCreateForm = (props: SubCreateFormProps) => {
 
   const onSubmit = (data: SubForm) => {
     props.creatingSubscription({
-      description: data.sub_description,
+      description: data.subDescription,
       image: props.imageFile,
-      name: data.sub_name,
-      price: data.sub_price,
+      name: data.subName,
+      price: data.subPrice,
       price_currency: 'RUB',
     });
     props.closeWindow(false);
@@ -74,20 +80,20 @@ const SubCreateForm = (props: SubCreateFormProps) => {
   const formElements: Array<FormElement> = [
     {
       tag: 'input',
-      id: 'sub_name',
+      id: 'subName',
       type: 'text',
       label: 'Название подписки',
       placeholder: 'Введите название',
     },
     {
       tag: 'textarea',
-      id: 'sub_description',
+      id: 'subDescription',
       label: 'Описание подписки',
       placeholder: 'Введите описание',
     },
     {
       tag: 'input',
-      id: 'sub_price',
+      id: 'subPrice',
       type: 'text',
       label: 'Месячная стоимость (в руб.)',
       placeholder: 'Введите стоимость',
@@ -114,4 +120,5 @@ let mapSateToProps = (state: StateType) => ({
 export default connect(mapSateToProps, {
   checkImage,
   creatingSubscription,
+  clearImageState
 })(SubCreateForm);
