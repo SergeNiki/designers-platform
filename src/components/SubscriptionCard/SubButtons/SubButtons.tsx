@@ -24,6 +24,7 @@ const SubButtons = (props: SubButtonsProps) => {
             'marginRight': '5px', 
             'backgroundColor': '#c4c4c488',
             'fontSize': '1.2em',
+            'backdropFilter': 'blur(2px)',
             'boxShadow': 'none',
             'borderBottom': '1px solid white'
           }}
@@ -39,7 +40,7 @@ const SubButtons = (props: SubButtonsProps) => {
             'color': '#6DEFC0',
             'borderBottom': '1px solid #6DEFC0',
           }}
-              hoverStyles={{'color': 'black', 'backgroundColor': '#6DEFC0'}}
+              hoverStyles={{'color': 'rgba(0, 0, 0, 0.692)', 'backgroundColor': '#6DEFC0'}}
               handleClick={() => props.openEditWindow(true)}
             >
               Изменить
@@ -74,7 +75,7 @@ const SubButtons = (props: SubButtonsProps) => {
             'color': '#6DEFC0',
             'borderBottom': '1px solid #6DEFC0',
           }}
-              hoverStyles={{'color': 'black', 'backgroundColor': '#6DEFC0'}}
+              hoverStyles={{'color': 'rgba(0, 0, 0, 0.692)', 'backgroundColor': '#6DEFC0'}}
             handleClick={() => props.subOrUnsub(props.id, 'sub')}
           >
             Оформить подписку

@@ -3,7 +3,7 @@ import { StateType } from "../redux/redux-store"
 
 // Image State
 export interface IImageState {
-    imageFile: null | File
+    imageFile: File | null
     coverPreview: string
 }
 

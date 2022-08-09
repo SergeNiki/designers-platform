@@ -3,7 +3,7 @@ import ProfileSettingsForm from './ProfileSettingsForm';
 
 type ProfileSettingsProps = {
   username: string;
-  display_name: string;
+  displayName: string;
   bio: string;
   closeSettingsWindow(valuse: false): void;
 };
@@ -15,7 +15,7 @@ const ProfileSettings = (props: ProfileSettingsProps) => {
     <ModalWindow closeWindow={props.closeSettingsWindow} header={header}>
       <ProfileSettingsForm
         username={props.username}
-        display_name={props.display_name}
+        displayName={props.displayName}
         bio={props.bio}
         closeWindow={props.closeSettingsWindow}
       />

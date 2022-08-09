@@ -1,6 +1,13 @@
 export type FormElement = {
   tag: 'input' | 'textarea';
-  id: 'sub_name' | 'sub_description' | 'sub_price' | 'sub_image' | 'username' | 'display_name' | 'bio';
+  id:
+    | 'subName'
+    | 'subDescription'
+    | 'subPrice'
+    | 'subCoverPreview'
+    | 'username'
+    | 'display_name'
+    | 'bio';
   label: string;
   type?:
     | 'text'
@@ -19,11 +26,11 @@ export type FormElement = {
 };
 
 export type FormInputs = {
-    sub_name: string
-    sub_description: string
-    sub_price: string
-    sub_image: string
-    username: string
-    display_name: string
-    bio: string
-}
+  subName: string;
+  subDescription: string;
+  subPrice: string;
+  subCoverPreview: string;
+  username: string;
+  display_name: string;
+  bio: string;
+};

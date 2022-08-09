@@ -99,7 +99,7 @@ const ProfileInfo = (props: ProfileInfoProps) => {
         <ProfileSettings
           closeSettingsWindow={setIsSettingsWindow}
           username={props.profileData.username}
-          display_name={props.profileData.display_name}
+          displayName={props.profileData.display_name}
           bio={props.profileData.bio}
         />
       )}

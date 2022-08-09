@@ -52,6 +52,7 @@
     flex-grow: 1;
     max-height: 65px;
     hyphens: auto;
+    padding: 0 10px;
 }
 
 .price_wrap {

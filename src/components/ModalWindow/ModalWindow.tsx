@@ -21,12 +21,12 @@ const ModalWindow = (props: ModalWindowProps) => {
   return (
     <div
       className={classes.modal_wrap}
-      onClick={() => props.closeWindow(false)}
+      onMouseDown={() => props.closeWindow(false)}
     >
       <div
         className={classes.modal_window}
         style={props?.styles}
-        onClick={(e: React.MouseEvent) => e.stopPropagation()}
+        onMouseDown={(e: React.MouseEvent) => e.stopPropagation()}
       >
         <ModalHeader>{props.header}</ModalHeader>
         <div className={classes.close_btn}>

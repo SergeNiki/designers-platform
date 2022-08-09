@@ -83,7 +83,7 @@ const Form = (props: FormProps) => {
       {elements}
       <div className={classes.btn_wrap}>
         <Button
-          isDisabled={!isValid || !!props.extraDependence}
+          isDisabled={!isValid || !!props?.extraDependence}
           styles={{ width: '180px', height: '35px' }}
           hoverStyles={{ backgroundColor: '#67c598' }}
         >

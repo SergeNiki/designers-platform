@@ -21,6 +21,11 @@ const Button = (props: ButtonProps) => {
     setIsHover(false);
   };
 
+  const stylesForDisabled: CSSProperties = {
+    backgroundColor: 'rgb(173, 173, 173)',
+    color: 'rgb(95, 95, 95)',
+  };
+
   return (
     <button
       className={`button`}
@@ -28,17 +33,10 @@ const Button = (props: ButtonProps) => {
       onMouseOver={onMouseOver}
       onMouseOut={onMouseOut}
       style={
-        isHover
-          ? {
-              ...hoverStyle,
-              backgroundColor: props.isDisabled
-                ? 'rgb(173, 173, 173)'
-                : hoverStyle?.backgroundColor,
-              color: props.isDisabled
-                ? 'rgb(95, 95, 95)'
-                : hoverStyle?.color
-            }
-          : { ...style }
+        props.isDisabled ? {...style, ...stylesForDisabled}
+        : isHover
+          ? {...hoverStyle}
+          : {...style}
       }
       disabled={props.isDisabled ? props.isDisabled : false}
     >

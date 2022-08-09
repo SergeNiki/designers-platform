@@ -7,7 +7,7 @@ import { UpdateProfileType } from '../../../../types/profile';
 
 type SettingsFormProps = {
   username: string
-  display_name: string
+  displayName: string
   bio: string
 
   closeWindow(value: false): void;
@@ -20,7 +20,7 @@ const ProfileSettingsForm = (props: SettingsFormProps) => {
       .required('Это поле не может быть пустым!')
       .min(3, 'Минимальное количесвто символов: 3!')
       .max(20, 'Максимальное количесво символов: 20!'),
-    display_name: Yup.string()
+      display_name: Yup.string()
       .required('Это поле не может быть пустым!')
       .min(3, 'Минимальное количесвто символов: 3!')
       .max(20, 'Максимальное количесво символов: 20!'),
@@ -43,7 +43,7 @@ const ProfileSettingsForm = (props: SettingsFormProps) => {
       tag: 'input',
       id: 'display_name',
       label: 'Display Name',
-      defaultvalue: props.display_name 
+      defaultvalue: props.displayName 
     },
     {
       tag: 'textarea',
