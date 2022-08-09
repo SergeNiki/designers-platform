@@ -32,7 +32,7 @@ const Navigation: React.FC<NavigationProps> = (props) => {
 }
 
 let mapStateToProps = (state: StateType) => ({
-    user_id: state.auth.user_id,
+    user_id: state.auth.id,
     isAuth: state.auth.isAuth
 })
 

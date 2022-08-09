@@ -3,7 +3,7 @@ import { StateType } from "../redux/redux-store";
 
 //Auth State
 export interface IAuthState {
-  user_id: number;
+  id: number;
   username: string | null;
   avatar: string | null;
   display_name: string | null;

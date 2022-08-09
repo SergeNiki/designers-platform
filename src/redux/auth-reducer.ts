@@ -12,7 +12,7 @@ import {
 import { addPopup } from './popup-reducer';
 
 let initialState: IAuthState = {
-  user_id: 0,
+  id: 0,
   username: null,
   avatar: null,
   display_name: null,
@@ -37,7 +37,7 @@ const authReducer = (
       };
     case ActionsType.CLEAR_AUTH_STATE:
       return {
-        user_id: 0,
+        id: 0,
         username: null,
         avatar: null,
         display_name: null,
@@ -50,7 +50,7 @@ const authReducer = (
 };
 
 export const setAuthUserData = (
-  user_id: number,
+  id: number,
   username: string | null,
   avatar: string | null,
   display_name: string | null,
@@ -58,7 +58,7 @@ export const setAuthUserData = (
   isProcessLogin: boolean
 ): ActionSetUserData => ({
   type: ActionsType.SET_USER_DATA,
-  payload: { user_id, username, avatar, display_name, isAuth, isProcessLogin },
+  payload: { id, username, avatar, display_name, isAuth, isProcessLogin },
 });
 export const toggleIsProcessLogin = (): ActionToggleIsProcessLogin => ({
   type: ActionsType.TOGGLE_IS_PROCESS_LOGIN,

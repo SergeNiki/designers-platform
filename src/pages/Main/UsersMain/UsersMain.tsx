@@ -57,7 +57,7 @@ let mapSateToProps = (state: StateType) => ({
   isFetching: state.usersData.isFetching,
   nextUsers: state.usersData.next,
   followingsInProgress: state.usersData.followingsInProgress,
-  authUserId: state.auth.user_id,
+  authUserId: state.auth.id,
   isAuth: state.auth.isAuth,
 });
 

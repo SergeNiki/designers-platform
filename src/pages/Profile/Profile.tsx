@@ -47,7 +47,7 @@ const Profile: React.FC<ProfileProps> = (props) => {
 };
 
 let mapSateToProps = (state: StateType) => ({
-  authUserId: state.auth.user_id,
+  authUserId: state.auth.id,
   isAuth: state.auth.isAuth
 })
 

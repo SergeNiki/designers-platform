@@ -80,7 +80,7 @@ const ProfileInfo = (props: ProfileInfoProps) => {
         following_count={props.profileData.following_count}
         setUsersModalFor={setUsersModalFor}
       />
-      <p>{props.profileData.bio}</p>
+      <p className={classes.bio} >{props.profileData.bio}</p>
       <div className={classes.button_wrap}>
         {
           <ButtonFollow
