@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { SubData } from '../../types/subscriptions';
-import SubCreateWindow from '../SubCreateWindow/SubCreateWindow';
+import ModalWindow from '../ModalWindow/ModalWindow';
 import SubEditForm from '../SubCreateWindow/SubEditForm/SubEditForm';
 import SubButtons from './SubButtons/SubButtons';
 import classes from './SubscriptionCard.module.css';
@@ -25,21 +25,23 @@ const SubscriptionCard = (props: SubscriptionCardProps) => {
         setIsTextWrap(true);
       }
     }
-  }, []);
+  }, [window.innerWidth]);
+  
+  const header = <h2>Редактирование подписки</h2>;
 
   return (
     <>
       {isEditWindow && (
-        <SubCreateWindow setIsCreateWindow={setIsEditWindow}>
+        <ModalWindow closeWindow={setIsEditWindow} header={header} >
           <SubEditForm
             subId={props.id}
             closeWindow={setIsEditWindow}
-            sub_name={props.name}
-            sub_description={props.description}
-            sub_price={props.price}
-            sub_cover_preview={props.image}
+            subName={props.name}
+            subDescription={props.description}
+            subPrice={props.price}
+            subCoverPreview={props.image}
           />
-        </SubCreateWindow>
+        </ModalWindow>
       )}
       <div
         className={classes.sub_wrap}

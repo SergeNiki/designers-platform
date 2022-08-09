@@ -7,8 +7,8 @@ import HeaderPopup from './UserMenu/UserMenu';
 import { StateType } from '../../redux/redux-store';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
-import SubCreateWindow from '../SubCreateWindow/SubCreateWindow';
 import SubCreateForm from '../SubCreateWindow/SubCreateForm/SubCreateForm';
+import ModalWindow from '../ModalWindow/ModalWindow';
 
 type HeaderProps = {
   isAuth: boolean;
@@ -42,11 +42,13 @@ const Header = (props: HeaderProps) => {
     setIsCreateWindow(true);
   }
 
+  const header = <h2>Создание подписки</h2>;
+
   return (
     <header>
-      {isCreateWindow && <SubCreateWindow setIsCreateWindow={setIsCreateWindow} >
+      {isCreateWindow && <ModalWindow closeWindow={setIsCreateWindow} header={header} >
         <SubCreateForm closeWindow={setIsCreateWindow} />
-      </SubCreateWindow>}
+      </ModalWindow>}
       <div className={classes.header_wrap}>
         <h1>FLOW OF ART</h1>
         {props.isAuth ? (
