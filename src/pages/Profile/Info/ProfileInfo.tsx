@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGear } from '@fortawesome/free-solid-svg-icons';
 import ProfileSettings from './ProfileSettings/ProfileSettings';
 import UserAvatar from './UserAvatar/UserAvatar';
+import Tooltips from '../../../components/Tooltips/Tooltips';
 
 type ProfileInfoProps = {
   //From Parent
@@ -42,6 +43,19 @@ const ProfileInfo = (props: ProfileInfoProps) => {
     'followers' | 'following' | false
   >(false);
   const [isSettingsWindow, setIsSettingsWindow] = useState<boolean>(false);
+  const [tooltipText, setTooltipText] = useState<string>('');
+
+  const showTooltip = (event: React.MouseEvent<HTMLDivElement>) => {
+    let text = String(event.currentTarget.getAttribute('datatype'));
+    setTooltipText(text);
+  };
+  const hideTooltip = (event: React.MouseEvent<HTMLDivElement>) => {
+    setTooltipText('');
+  };
+ const openSettingsWindow = (event: React.MouseEvent<HTMLDivElement>) => {
+  setIsSettingsWindow(true)
+  setTooltipText('');
+ }
 
   const usersModalWindow = () => {
     if (usersModalFor) {
@@ -61,9 +75,17 @@ const ProfileInfo = (props: ProfileInfoProps) => {
       {props.isAuth && props.isOwner && (
         <div
           className={classes.settings_btn}
-          onClick={() => setIsSettingsWindow(true)}
+          onClick={openSettingsWindow}
+          onMouseOver={showTooltip}
+          onMouseOut={hideTooltip}
         >
           <FontAwesomeIcon icon={faGear} />
+          {tooltipText && (
+                <Tooltips orientation='vertical'
+                styles={{top: '-5px', left: '40px', fontSize: '.6em', width: '190px'}}>
+                  редактировать профиль
+                </Tooltips>
+              )}
         </div>
       )}
       <div className={classes.display_name_wrap}>
