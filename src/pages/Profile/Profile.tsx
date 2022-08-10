@@ -19,16 +19,16 @@ export type ProfileProps = {
 
 const Profile: React.FC<ProfileProps> = (props) => {
 
-  type ContentType = "posts" | "sub_types" | "albums"
-  let [contentType, setContentType] = React.useState<ContentType>("posts");
+  type ContentType = "посты" | "виды подписок" | "альбомы"
+  let [contentType, setContentType] = React.useState<ContentType>("посты");
 
   let contentTypeComponent = () => {
     switch (contentType) {
-      case "posts":
+      case "посты":
         return <ProfilePosts/>
-      case "albums":
+      case "альбомы":
         return <Albums/>
-      case "sub_types":
+      case "виды подписок":
         return <Subscriptions isOwner={props.isOwner} ownerUserId={props.ownerUserId} />
     }
   }

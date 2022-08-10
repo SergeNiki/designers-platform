@@ -9,7 +9,7 @@ import {
 } from '../../../redux/subscriptions-reducer';
 import classes from './Subscriptions.module.css';
 import SubscriptionCard from '../../../components/SubscriptionCard/SubscriptionCard';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 type SubscriptionsProps = {
   //from State

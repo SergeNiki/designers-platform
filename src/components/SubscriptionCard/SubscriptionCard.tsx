@@ -28,6 +28,7 @@ const SubscriptionCard = (props: SubscriptionCardProps) => {
       }
     }
   }, [window.innerWidth]);
+  
   const deleteSubscription = () => {
     props.deleteSub(props.id)
   }

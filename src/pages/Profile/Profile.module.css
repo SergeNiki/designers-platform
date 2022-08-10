@@ -15,7 +15,7 @@
   overflow: scroll;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 700px) {
   .profile_wrap {
     height: auto;
     grid-template-columns: 1fr;
@@ -25,10 +25,7 @@
       "menu"
       "content";
   }
-}
-
-@media (max-width: 767px) {
   .profile_content {
-      overflow: visible;
+    overflow: visible;
   }
 }
