@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import classes from './Header.module.css';
 import { toggleLoginTC, logout } from './../../redux/auth-reducer';
@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import SubCreateForm from '../SubCreateWindow/SubCreateForm/SubCreateForm';
 import ModalWindow from '../ModalWindow/ModalWindow';
+import Tooltips from '../Tooltips/Tooltips';
 
 type HeaderProps = {
   isAuth: boolean;
@@ -33,28 +34,57 @@ const Header = (props: HeaderProps) => {
   };
 
   const [isUserMenuActive, setUserMenuActive] = React.useState<boolean>(false);
-  const [isCreateWindow, setIsCreateWindow] = React.useState<boolean>(false)
+  const [isCreateWindow, setIsCreateWindow] = React.useState<boolean>(false);
+  const [tooltipText, setTooltipText] = useState<string>('');
 
   const openPopupMenu = () => {
     setUserMenuActive(!isUserMenuActive);
   };
   const openSubCreateWindow = (): void => {
+    setTooltipText('');
     setIsCreateWindow(true);
-  }
+  };
+
+  const showTooltip = (event: React.MouseEvent<HTMLDivElement>) => {
+    let text = String(event.currentTarget.getAttribute('datatype'));
+    setTooltipText(text);
+  };
+  const hideTooltip = (event: React.MouseEvent<HTMLDivElement>) => {
+    setTooltipText('');
+  };
 
   const header = <h2>Создание подписки</h2>;
 
   return (
     <header>
-      {isCreateWindow && <ModalWindow closeWindow={setIsCreateWindow} header={header} >
-        <SubCreateForm closeWindow={setIsCreateWindow} />
-      </ModalWindow>}
+      {isCreateWindow && (
+        <ModalWindow closeWindow={setIsCreateWindow} header={header}>
+          <SubCreateForm closeWindow={setIsCreateWindow} />
+        </ModalWindow>
+      )}
       <div className={classes.header_wrap}>
         <h1>FLOW OF ART</h1>
         {props.isAuth ? (
           <div className={classes.header_items}>
-            <div className={classes.add_btn} onClick={openSubCreateWindow} >
+            <div
+              className={classes.add_btn}
+              datatype="добавить"
+              onClick={openSubCreateWindow}
+              onMouseOver={showTooltip}
+              onMouseOut={hideTooltip}
+            >
               <FontAwesomeIcon icon={faSquarePlus} />
+              {tooltipText && (
+                <Tooltips
+                  orientation="vertical"
+                  styles={{
+                    top: '56px',
+                    backgroundColor: '#78e1af',
+                  }}
+                >
+                  добавить
+                </Tooltips>
+              )}
             </div>
             <div onClick={openPopupMenu} className={classes.avatar}>
               {props.avatar && <img src={props.avatar} alt="" />}
