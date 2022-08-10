@@ -1,0 +1,19 @@
+.tooltip {
+    position: absolute;
+    padding: 10px;
+    font-size: .8em;
+    color: white;
+    background-color: #67c598;
+    border-radius: 5px;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+.horizontal {
+    left: 65px;
+}
+
+.vertical {
+    top: 50px;
+    margin: auto;
+}
