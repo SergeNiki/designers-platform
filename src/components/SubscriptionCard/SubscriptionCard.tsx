@@ -28,21 +28,24 @@ const SubscriptionCard = (props: SubscriptionCardProps) => {
       }
     }
   }, [window.innerWidth]);
-  
+
   const deleteSubscription = () => {
-    props.deleteSub(props.id)
-  }
+    props.deleteSub(props.id);
+  };
 
   const editHeader = <h2>Редактирование подписки</h2>;
-  const confirmHeader = <h2>Удаление</h2>;
+  const confirmDeleteHeader = <h2>Удаление</h2>;
 
   return (
     <>
       {isEditWindow && (
-        <ModalWindow closeWindow={setIsEditWindow} header={editHeader}>
+        <ModalWindow
+          closeWindow={() => setIsEditWindow(false)}
+          header={editHeader}
+        >
           <SubEditForm
             subId={props.id}
-            closeWindow={setIsEditWindow}
+            closeWindow={() => setIsEditWindow(false)}
             subName={props.name}
             subDescription={props.description}
             subPrice={props.price}
@@ -52,8 +55,8 @@ const SubscriptionCard = (props: SubscriptionCardProps) => {
       )}
       {isConfirmDeletion && (
         <ConfirmWindow
-          closeWindow={setIsConfirmDeletion}
-          header={confirmHeader}
+          closeWindow={() => setIsConfirmDeletion(false)}
+          header={confirmDeleteHeader}
           handleClick={deleteSubscription}
           confirmTextBtn="Удалить"
         >
@@ -65,7 +68,14 @@ const SubscriptionCard = (props: SubscriptionCardProps) => {
         style={{ backgroundImage: `url(${props.image})` }}
       >
         <div className={classes.sub_header}>
-          <div className={classes.price_wrap}>
+          <div
+            className={classes.price_wrap}
+            style={{
+              color: props.is_subscribed
+                ? '#6DEFC0'
+                : 'white',
+            }}
+          >
             {props.price.split('.')[0]} {props.price_currency}
           </div>
           <div

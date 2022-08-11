@@ -69,7 +69,7 @@ const Navigation: React.FC<NavigationProps> = (props) => {
 
   const navElements = navElementsData.map((element) => {
     return (
-      <NavLink
+      <NavLink key={element.datatype}
         to={element.path}
         datatype={element.datatype}
         onMouseOver={showTooltip}

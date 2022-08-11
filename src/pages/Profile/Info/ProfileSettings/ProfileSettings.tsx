@@ -5,7 +5,7 @@ type ProfileSettingsProps = {
   username: string;
   displayName: string;
   bio: string;
-  closeSettingsWindow(valuse: false): void;
+  closeSettingsWindow(): void;
 };
 
 const ProfileSettings = (props: ProfileSettingsProps) => {

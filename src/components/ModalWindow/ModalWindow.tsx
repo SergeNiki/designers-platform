@@ -8,7 +8,7 @@ type ModalWindowProps = {
   children: React.ReactNode;
   header?: React.ReactNode;
   styles?: CSSProperties
-  closeWindow(value: false): void;
+  closeWindow(): void;
 };
 
 const ModalWindow = (props: ModalWindowProps) => {
@@ -21,7 +21,7 @@ const ModalWindow = (props: ModalWindowProps) => {
   return (
     <div
       className={classes.modal_wrap}
-      onMouseDown={() => props.closeWindow(false)}
+      onMouseDown={props.closeWindow}
     >
       <div
         className={classes.modal_window}
@@ -32,7 +32,7 @@ const ModalWindow = (props: ModalWindowProps) => {
         <div className={classes.close_btn}>
           <FontAwesomeIcon
             icon={faXmark}
-            onClick={() => props.closeWindow(false)}
+            onClick={props.closeWindow}
           />
         </div>
         <div className={classes.modal_content}>{props.children}</div>

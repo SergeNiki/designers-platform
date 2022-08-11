@@ -25,7 +25,7 @@ type SubEditFormProps = {
   subDescription: string;
   subCoverPreview: string;
   subPrice: string;
-  closeWindow(value: false): void;
+  closeWindow(): void;
 };
 
 type SubForm = {
@@ -55,7 +55,7 @@ const SubEditForm = (props: SubEditFormProps) => {
     if(data.subDescription) editBody.description = data.subDescription
     if (props.imageFile) editBody.image = props.imageFile
     props.editSubscription(props.subId, editBody);
-    props.closeWindow(false);
+    props.closeWindow();
   };
 
   const extraElement = (

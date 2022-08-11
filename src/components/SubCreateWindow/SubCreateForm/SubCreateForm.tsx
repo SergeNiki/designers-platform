@@ -21,7 +21,7 @@ type SubCreateFormProps = {
   creatingSubscription(data: SubCreateData): void;
   
 
-  closeWindow(value: false): void;
+  closeWindow(): void;
 };
 
 type SubForm = {
@@ -67,7 +67,7 @@ const SubCreateForm = (props: SubCreateFormProps) => {
       price: data.subPrice,
       price_currency: 'RUB',
     });
-    props.closeWindow(false);
+    props.closeWindow();
   };
 
   const extraElement = (

@@ -7,12 +7,12 @@ type ConfirmWindowProps = {
     header?: JSX.Element
     confirmTextBtn: string
     handleClick(e: any): void;
-    closeWindow(value: false): void
+    closeWindow(): void
 }
 
 const ConfirmWindow = (props: ConfirmWindowProps) => {
     return <ModalWindow styles={{'width': '480px'}} closeWindow={props.closeWindow} header={props.header} >
-        <p className={classes.message} >{props.children}</p>
+        <div className={classes.message} >{props.children}</div>
         <div className={classes.buttons_wrap}>
             <Button
             styles={{'marginRight': '5px'}}
@@ -20,7 +20,7 @@ const ConfirmWindow = (props: ConfirmWindowProps) => {
             >{props.confirmTextBtn}
             </Button>
             <Button
-            handleClick={() => props.closeWindow(false)} >
+            handleClick={props.closeWindow} >
                 Отменить
             </Button>
         </div>

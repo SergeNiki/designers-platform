@@ -1,13 +1,6 @@
 export type FormElement = {
   tag: 'input' | 'textarea';
-  id:
-    | 'subName'
-    | 'subDescription'
-    | 'subPrice'
-    | 'subCoverPreview'
-    | 'username'
-    | 'display_name'
-    | 'bio';
+  id: FormId
   label: string;
   type?:
     | 'text'
@@ -25,12 +18,12 @@ export type FormElement = {
   jsxElement?: React.ReactNode;
 };
 
-export type FormInputs = {
-  subName: string;
-  subDescription: string;
-  subPrice: string;
-  subCoverPreview: string;
-  username: string;
-  display_name: string;
-  bio: string;
-};
+type FormId =
+  | 'subName'
+  | 'subDescription'
+  | 'subPrice'
+  | 'subCoverPreview'
+  | 'username'
+  | 'display_name'
+  | 'bio';
+export type FormInputs = Record<FormId, string>;

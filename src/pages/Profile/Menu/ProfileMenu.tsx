@@ -62,7 +62,7 @@ const ProfileMenu: React.FC<ProfileMenuProps> = (props) => {
 
   const elements = elementsData.map((element) => {
     return (
-      <div
+      <div key={element.datatype}
         datatype={element.datatype}
         onMouseOver={showTooltip}
         onMouseOut={hideTooltip}

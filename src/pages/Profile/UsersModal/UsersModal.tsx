@@ -78,7 +78,7 @@ const UsersModal = (props: UsersModalProps) => {
 />
 
   return (
-    <ModalWindow closeWindow={props.setUsersModalFor} header={header} styles={{width: '768px'}} >
+    <ModalWindow closeWindow={() => props.setUsersModalFor(false)} header={header} styles={{width: '768px'}} >
       <div className={classes.users_list_wrap}>
         <div className={classes.users_list}>{followersOrFollowing}</div>
         {typeof props.nextUsers == 'string' && (

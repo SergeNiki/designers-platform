@@ -119,7 +119,7 @@ const ProfileInfo = (props: ProfileInfoProps) => {
       {usersModalWindow()}
       {isSettingsWindow && (
         <ProfileSettings
-          closeSettingsWindow={setIsSettingsWindow}
+          closeSettingsWindow={() => setIsSettingsWindow(false)}
           username={props.profileData.username}
           displayName={props.profileData.display_name}
           bio={props.profileData.bio}

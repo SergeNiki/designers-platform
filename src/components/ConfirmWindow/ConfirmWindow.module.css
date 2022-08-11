@@ -1,7 +1,8 @@
 .buttons_wrap {
     display: flex;
     justify-content: flex-end;
-    height: 40px;
+    border-top: 1px solid rgb(155, 155, 155);
+    padding: 10px 0;
 }
 
 .buttons_wrap button {
