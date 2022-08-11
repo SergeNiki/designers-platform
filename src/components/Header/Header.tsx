@@ -3,13 +3,12 @@ import { connect } from 'react-redux';
 import classes from './Header.module.css';
 import { toggleLoginTC, logout } from './../../redux/auth-reducer';
 import { getAuthUserData } from './../../redux/auth-reducer';
-import HeaderPopup from './UserMenu/UserMenu';
+import UserContextMenu from './UserContextMenu/UserContextMenu';
 import { StateType } from '../../redux/redux-store';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
-import SubCreateForm from '../SubCreateWindow/SubCreateForm/SubCreateForm';
-import ModalWindow from '../ModalWindow/ModalWindow';
 import Tooltips from '../Tooltips/Tooltips';
+import AddContextMenu from './AddContextMenu/AddContextMenu';
 
 type HeaderProps = {
   isAuth: boolean;
@@ -33,16 +32,25 @@ const Header = (props: HeaderProps) => {
     props.toggleLoginTC();
   };
 
-  const [isUserMenuActive, setUserMenuActive] = React.useState<boolean>(false);
-  const [isCreateWindow, setIsCreateWindow] = React.useState<boolean>(false);
+  const [isUserMenuActive, setIsUserMenuActive] = useState<boolean>(false);
+  const [isAddMenuActive, setIsAddMenuActive] = useState<boolean>(false);
   const [tooltipText, setTooltipText] = useState<string>('');
+  const [coordsButtonData, setCoordsButtonData] = useState<DOMRect>();
 
-  const openPopupMenu = () => {
-    setUserMenuActive(!isUserMenuActive);
+  const openUserContextMenu = (event: React.MouseEvent<HTMLDivElement>) => {
+    const coords = event.currentTarget.getBoundingClientRect();
+    setCoordsButtonData(coords);
+    setIsUserMenuActive(!isUserMenuActive);
+    setIsAddMenuActive(false)
   };
-  const openSubCreateWindow = (): void => {
+  const openAddContextMenu = (
+    event: React.MouseEvent<HTMLDivElement>
+  ): void => {
+    const coords = event.currentTarget.getBoundingClientRect();
+    setCoordsButtonData(coords);
+    setIsAddMenuActive(!isAddMenuActive);
+    setIsUserMenuActive(false)
     setTooltipText('');
-    setIsCreateWindow(true);
   };
 
   const showTooltip = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -53,15 +61,8 @@ const Header = (props: HeaderProps) => {
     setTooltipText('');
   };
 
-  const header = <h2>Создание подписки</h2>;
-
   return (
     <header>
-      {isCreateWindow && (
-        <ModalWindow closeWindow={setIsCreateWindow} header={header}>
-          <SubCreateForm closeWindow={setIsCreateWindow} />
-        </ModalWindow>
-      )}
       <div className={classes.header_wrap}>
         <h1>FLOW OF ART</h1>
         {props.isAuth ? (
@@ -69,12 +70,12 @@ const Header = (props: HeaderProps) => {
             <div
               className={classes.add_btn}
               datatype="добавить"
-              onClick={openSubCreateWindow}
+              onClick={openAddContextMenu}
               onMouseOver={showTooltip}
               onMouseOut={hideTooltip}
             >
               <FontAwesomeIcon icon={faSquarePlus} />
-              {tooltipText && (
+              {tooltipText && !isAddMenuActive && (
                 <Tooltips
                   orientation="vertical"
                   styles={{
@@ -82,11 +83,11 @@ const Header = (props: HeaderProps) => {
                     backgroundColor: '#78e1af',
                   }}
                 >
-                  добавить
+                  создать
                 </Tooltips>
               )}
             </div>
-            <div onClick={openPopupMenu} className={classes.avatar}>
+            <div onClick={openUserContextMenu} className={classes.avatar}>
               {props.avatar && <img src={props.avatar} alt="" />}
             </div>
           </div>
@@ -95,13 +96,20 @@ const Header = (props: HeaderProps) => {
             ВОЙТИ
           </div>
         )}
-        {isUserMenuActive && (
-          <HeaderPopup
+        {isAddMenuActive && coordsButtonData && (
+          <AddContextMenu
+            coordsData={coordsButtonData}
+            closeMenu={setIsAddMenuActive}
+          />
+        )}
+        {isUserMenuActive && coordsButtonData && (
+          <UserContextMenu
             logout={props.logout}
             display_name={props.display_name}
             username={props.username}
             avatar={props.avatar}
-            setUserMenuActive={setUserMenuActive}
+            closeMenu={setIsUserMenuActive}
+            coordsData={coordsButtonData}
           />
         )}
       </div>
