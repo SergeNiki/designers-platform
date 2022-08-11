@@ -1,0 +1,20 @@
+.create_menu_item {
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    transition: all 0.3s;
+}
+
+.create_menu_item:hover {
+    background-color: #67c598;
+}
+
+.create_menu_item p {
+    margin-left: 5px;
+}
+
+.create_menu_item:nth-child(1) {
+    border-top: 1px solid rgb(230, 230, 230);
+}
