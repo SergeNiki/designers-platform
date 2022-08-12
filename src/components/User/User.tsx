@@ -45,7 +45,7 @@ const User = (props: UserProps) => {
             styles={{
               width: '110px',
               height: '30px',
-              backgroundColor: props.is_followed ? '#C4C4C4' : '#6DEFC0',
+              backgroundColor: props.is_followed ? '#C4C4C4' : 'var(--main-button-color)',
             }}
           >
             {props.is_followed ? 'Отписаться' : 'Подписаться'}

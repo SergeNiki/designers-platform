@@ -8,7 +8,7 @@
 }
 
 .create_menu_item:hover {
-    background-color: #67c598;
+    background-color: var(--hover-main-color);
 }
 
 .create_menu_item p {

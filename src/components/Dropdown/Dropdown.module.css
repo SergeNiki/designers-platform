@@ -9,8 +9,7 @@
 
 .dropdown_menu {
     position: absolute;
-    background-color: #78e1af;
-    /* background-color: rgba(0, 0, 0, 0.767); */
+    background: var(--main-color);
     border-radius: 0 0 10px 10px;
     display: flex;
     flex-direction: column;

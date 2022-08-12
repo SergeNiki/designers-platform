@@ -1,7 +1,7 @@
 .modal_header {
   width: 100%;
-  color: rgba(0, 0, 0, 0.692);
-  background-color: #c8ffe8;
+  color: white;
+  background-color: var(--main-color);
   display: flex;
   justify-content: center;
 }

@@ -85,7 +85,7 @@ const Form = (props: FormProps) => {
         <Button
           isDisabled={!isValid || !!props?.extraDependence}
           styles={{ width: '180px', height: '35px' }}
-          hoverStyles={{ backgroundColor: '#67c598' }}
+          hoverStyles={{ backgroundColor: 'var(--hover-button-color)' }}
         >
           {props.textBtn}
         </Button>

@@ -11,5 +11,5 @@
 
 .activeMenu {
     cursor: default;
-    border-bottom: 5px solid #5EBD9B;
+    border-bottom: 5px solid var(--hover-main-color);
 }

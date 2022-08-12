@@ -36,7 +36,7 @@ const ButtonSub = (props:ButtonFollowProps) => {
         <Button
           isDisabled={props.isFetching}
           handleClick={toggleFollow}
-          styles={{'backgroundColor': props.isFollowed ? '#C4C4C4' : '#6DEFC0', 
+          styles={{'backgroundColor': props.isFollowed ? '#C4C4C4' : 'var(--main-button-color)', 
           'width': '210px', 'height': '45px', 'fontSize': '20px'}}
         >
           {props.isFollowed ? 'Отписаться' : 'Подписаться'}

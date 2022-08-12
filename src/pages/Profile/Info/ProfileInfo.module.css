@@ -30,7 +30,7 @@
   transition: all 0.5s;
 }
 .settings_btn:hover {
-  color: #78e1af;
+  color: var(--hover-main-color);
 }
 
 .bio {

@@ -1,8 +1,8 @@
 .form {
-    width: 100%;
+    max-width: 520px;
     display: flex;
     flex-direction: column;
-    margin: 0 0 10px;
+    margin: 0 auto 10px;
 }
 
 .form_item {
@@ -12,16 +12,19 @@
 }
 
 .form_item label {
+    color: var(--dark-text-color);
     margin-left: 15px;
     font-size: 20px;
+    font-weight: bold;
 }
 
 .form_item textarea,
 .form_item input {
     font-size: 18px;
-    border-radius: 15px;
+    border-radius: 5px;
     padding: 5px 10px;
     margin-top: 5px;
+    
 }
 
 .form_item textarea {

@@ -3,9 +3,10 @@
     padding: 10px;
     font-size: .8em;
     color: white;
-    background-color: #67c598;
+    background: var(--hover-main-color);
     border-radius: 5px;
     pointer-events: none;
+    transition: all 0.2s;
     z-index: 1000;
 }
 

@@ -35,7 +35,7 @@
 }
 
 .list_item:hover {
-  background-color: #67c598;
+  background-color: var(--hover-main-color);
 }
 
 .logout:hover {

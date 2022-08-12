@@ -32,7 +32,7 @@
 
 .sub_description {
     width: 100%;
-    border-top: 1px solid #6DEFC0;
+    border-top: 1px solid var(--main-button-color);
     overflow: scroll;
     word-break: normal;
 }
@@ -57,7 +57,7 @@
 
 .price_wrap {
     border-radius: 50%;
-    border-right: solid 1px #6DEFC0;
+    border-right: solid 1px var(--main-button-color);
 }
 
 .sub_header {
@@ -67,6 +67,6 @@
     backdrop-filter: blur(2px);
     -webkit-backdrop-filter: blur(2px);
     border-radius: 50px;
-    border-bottom: solid 1px #6DEFC0;
-    border-top: solid 1px #6DEFC0;
+    border-bottom: solid 1px var(--main-button-color);
+    border-top: solid 1px var(--main-button-color);
 } 

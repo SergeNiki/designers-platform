@@ -21,8 +21,8 @@ const SubButtons = (props: SubButtonsProps) => {
     backgroundColor: 'rgba(0, 0, 0, 0.322)',
     backdropFilter: 'blur(2px)',
     boxShadow: 'none',
-    color: '#6DEFC0',
-    borderBottom: '1px solid #6DEFC0',
+    color: 'var(--main-button-color)',
+    borderBottom: '1px solid var(--main-button-color)',
   };
   const negBtn: CSSProperties = {
     backgroundColor: '#c4c4c488',
@@ -53,7 +53,7 @@ const SubButtons = (props: SubButtonsProps) => {
           styles={{ ...posBtn }}
           hoverStyles={{
             color: 'rgba(0, 0, 0, 0.692)',
-            backgroundColor: '#6DEFC0',
+            backgroundColor: 'var(--main-button-color)',
           }}
           handleClick={() => props.openEditWindow(true)}
         >
@@ -80,7 +80,7 @@ const SubButtons = (props: SubButtonsProps) => {
         styles={{ ...posBtn }}
         hoverStyles={{
           color: 'rgba(0, 0, 0, 0.692)',
-          backgroundColor: '#6DEFC0',
+          backgroundColor: 'var(--main-button-color)',
         }}
         handleClick={() => props.subOrUnsub(props.id, 'sub')}
       >

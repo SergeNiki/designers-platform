@@ -1,3 +1,20 @@
+:root {
+  --main-color: linear-gradient(119deg,#5ee6f0,#9a3deb,#6912d5);
+  --main-color: #78E1AF;
+  --main-color: #2a3131;
+
+  --hover-main-color: #8634ce;
+  --hover-main-color: #67c598;
+  --hover-main-color: #1e2424;
+
+  --main-button-color: #6DEFC0;
+  --main-button-color: #67baf1;
+  --hover-button-color: #569bc9;
+
+  --header-windows-color: #c8ffe8;
+  --dark-text-color: rgba(0, 0, 0, 0.692);
+}
+
 header {
   position: fixed;
   height: 55px;
