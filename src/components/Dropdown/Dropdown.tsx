@@ -8,18 +8,21 @@ type DropdownProps = {
 };
 
 const Dropdown: React.FC<DropdownProps> = (props) => {
-  const [styles, setStyles] = useState<CSSProperties>({});
+  const [styles, setStyles] = useState<CSSProperties>({
+    top: props.coordsData.bottom + 'px',
+    right: window.innerWidth - props.coordsData.right + 'px',
+  });
+
   useEffect(() => {
-    let top: string
-    let right: string
+    let top: string;
     if (props.coordsData.bottom <= 55) {
-        top = String('55px');
+      top = String('55px');
     } else {
-        top = String(props.coordsData.bottom + 'px');
+      top = String(props.coordsData.bottom + 'px');
     }
-    right = String(window.innerWidth - props.coordsData.right + 'px');
-    setStyles({ top: top, right: right });
+    setStyles({ ...styles, top: top });
   }, [props.coordsData]);
+
   return (
     <>
       <div

@@ -80,7 +80,6 @@ const Header = (props: HeaderProps) => {
                   orientation="vertical"
                   styles={{
                     top: '56px',
-                    backgroundColor: '#78e1af',
                   }}
                 >
                   создать
