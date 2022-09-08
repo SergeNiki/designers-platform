@@ -47,7 +47,7 @@ const UserAvatar = (props: UserAvatarProps) => {
           </div>
           <img
             src={props.srcAvatar}
-            className={classes.update_avatar}
+            className={classes.user_avatar}
             alt="avatar"
           />
           <input
@@ -61,7 +61,7 @@ const UserAvatar = (props: UserAvatarProps) => {
   } else {
     return (
       <div className={classes.avatar_wrap}>
-        <img src={props.srcAvatar} alt="avatar" />
+        <img src={props.srcAvatar} className={classes.user_avatar} alt="avatar" />
       </div>
     );
   }
