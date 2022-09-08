@@ -1,49 +1,50 @@
 import {
-  ActionClearImageState,
-  ActionSetCoverPreview,
-  ActionSetImage,
-  ActionsImage,
+  ClearImageState,
+  SetImagePreview,
+  SetImageFile,
+  ImageActions,
   IImageState,
-  ImageActionsType,
+  ImageActionTypes,
   ThunkType,
 } from '../types/image';
 import { addPopup } from './popup-reducer';
 
 let initialState: IImageState = {
-  imageFile: null,
-  coverPreview: '',
+  imageFile: new File([], ''),
+  imagePreview: '',
 };
 
+// Reducer
 const imageReducer = (
   state = initialState,
-  action: ActionsImage
+  action: ImageActions
 ): IImageState => {
   switch (action.type) {
-    case ImageActionsType.SET_IMAGE_FILE:
+    case ImageActionTypes.SET_IMAGE_FILE:
       return { ...state, imageFile: action.imageFile };
-    case ImageActionsType.SET_COVER_PREVIEW:
-      return { ...state, coverPreview: action.coverPreview };
-    case ImageActionsType.CLEAR_STATE:
+    case ImageActionTypes.SET_IMAGE_PREVIEW:
+      return { ...state, imagePreview: action.imagePreview };
+    case ImageActionTypes.CLEAR_STATE:
       return initialState;
     default:
       return state;
   }
 };
 
-export const setImageFile = (imageFile: File): ActionSetImage => ({
-  type: ImageActionsType.SET_IMAGE_FILE,
+// Action Creators
+export const setImageFile = (imageFile: File): SetImageFile => ({
+  type: ImageActionTypes.SET_IMAGE_FILE,
   imageFile,
 });
-export const setCoverPreview = (
-  coverPreview: string
-): ActionSetCoverPreview => ({
-  type: ImageActionsType.SET_COVER_PREVIEW,
-  coverPreview,
+export const setImagePreview = (imagePreview: string): SetImagePreview => ({
+  type: ImageActionTypes.SET_IMAGE_PREVIEW,
+  imagePreview,
 });
-export const clearImageState = (): ActionClearImageState => ({
-  type: ImageActionsType.CLEAR_STATE,
+export const clearImageState = (): ClearImageState => ({
+  type: ImageActionTypes.CLEAR_STATE,
 });
 
+// Thunk Creators
 export const checkImage = (
   event: React.ChangeEvent<HTMLInputElement>,
   maxSize: number,
@@ -52,18 +53,20 @@ export const checkImage = (
   return async (dispatch) => {
     if (event.currentTarget.files?.length) {
       const file = event.currentTarget.files[0];
-      if(file.type !== 'image/jpeg' && file.type !== 'image/png') {
-        dispatch(addPopup('Неподходящий тип или формат файла!', false))
-      } else if(file.size >= maxSize * 1000000) {
-        dispatch(addPopup(`Размер изображения не должн превышать ${maxSize}Мб!`, false))
-      }  else {
+      if (file.type !== 'image/jpeg' && file.type !== 'image/png') {
+        dispatch(addPopup('Неподходящий тип или формат файла!', false));
+      } else if (file.size >= maxSize * 1000000) {
+        dispatch(
+          addPopup(`Размер изображения не должн превышать ${maxSize}Мб!`, false)
+        );
+      } else {
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onloadend = function (e) {
-          dispatch(setCoverPreview(String(this.result)));
+          dispatch(setImagePreview(String(this.result)));
         };
         dispatch(setImageFile(file));
-        isSuccess(true)
+        isSuccess(true);
       }
     }
   };
