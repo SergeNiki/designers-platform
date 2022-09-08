@@ -5,16 +5,36 @@ import {
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import Tooltips from '../../../components/Tooltips/Tooltips';
 import classes from './ProfileMenu.module.css';
 
+type ContentType = 'посты' | 'виды подписок' | 'альбомы';
+
 type ProfileMenuProps = {
-  contentType: 'посты' | 'виды подписок' | 'альбомы';
-  setContentType(value: 'посты' | 'виды подписок' | 'альбомы'): void;
+  contentType: ContentType;
+  setContentType(value: ContentType): void;
 };
 
-const ProfileMenu: React.FC<ProfileMenuProps> = (props) => {
+const elementsData: Array<{
+  datatype: ContentType;
+  icon: IconDefinition;
+}> = [
+  {
+    datatype: 'виды подписок',
+    icon: faPaste,
+  },
+  {
+    datatype: 'посты',
+    icon: faImages,
+  },
+  {
+    datatype: 'альбомы',
+    icon: faFolderOpen,
+  },
+];
+
+const ProfileMenu: React.FC<ProfileMenuProps> = memo((props) => {
   const [tooltipText, setTooltipText] = useState<string>('');
   const [leftValueActiveBar, setLeftValueActiveBar] = useState<string>('');
 
@@ -35,45 +55,25 @@ const ProfileMenu: React.FC<ProfileMenuProps> = (props) => {
     setTooltipText('');
   };
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    let text = event.currentTarget.getAttribute(
-      'datatype'
-    ) as typeof props.contentType;
+    let text = event.currentTarget.getAttribute('datatype') as ContentType;
     props.setContentType(text);
     setTooltipText('');
   };
 
-  const elementsData: Array<{
-    datatype: typeof props.contentType;
-    icon: IconDefinition;
-  }> = [
-    {
-      datatype: 'виды подписок',
-      icon: faPaste,
-    },
-    {
-      datatype: 'посты',
-      icon: faImages,
-    },
-    {
-      datatype: 'альбомы',
-      icon: faFolderOpen,
-    },
-  ];
-
   const elements = elementsData.map((element) => {
     return (
-      <div key={element.datatype}
+      <div
+        key={element.datatype}
         datatype={element.datatype}
-        onMouseOver={showTooltip}
-        onMouseOut={hideTooltip}
+        onMouseEnter={showTooltip}
+        onMouseLeave={hideTooltip}
         onClick={handleClick}
         className={`${classes.menu_item} ${
           props.contentType == element.datatype && classes.activeMenu
-        }`}
-      >
+        }`}>
         <FontAwesomeIcon icon={element.icon} />
         {tooltipText == element.datatype && (
-          <Tooltips orientation="vertical">{tooltipText}</Tooltips>
+          <Tooltips orientation='vertical'>{tooltipText}</Tooltips>
         )}
       </div>
     );
@@ -83,11 +83,10 @@ const ProfileMenu: React.FC<ProfileMenuProps> = (props) => {
     <div className={classes.menu_wrap}>
       <span
         className={classes.active_bar}
-        style={{ left: leftValueActiveBar }}
-      ></span>
+        style={{ left: leftValueActiveBar }}></span>
       {elements}
     </div>
   );
-};
+});
 
 export default ProfileMenu;

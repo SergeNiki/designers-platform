@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 import { SubCreateData } from '../../../types/subscriptions';
 import React, { useEffect } from 'react';
-import { FormElement } from '../../../types/form';
+import { FormElement, SubForm } from '../../../types/form';
 import Form from '../../Form/Form';
 import { connect } from 'react-redux';
 import { StateType } from '../../../redux/redux-store';
@@ -20,15 +20,31 @@ type SubCreateFormProps = {
   ): void;
   creatingSubscription(data: SubCreateData): void;
   
-
   closeWindow(): void;
 };
 
-type SubForm = {
-  subName: string;
-  subDescription: string;
-  subPrice: string;
-};
+  const formElements: Array<FormElement> = [
+    {
+      tag: 'input',
+      id: 'subName',
+      type: 'text',
+      label: 'Название подписки',
+      placeholder: 'Введите название',
+    },
+    {
+      tag: 'textarea',
+      id: 'subDescription',
+      label: 'Описание подписки',
+      placeholder: 'Введите описание',
+    },
+    {
+      tag: 'input',
+      id: 'subPrice',
+      type: 'text',
+      label: 'Месячная стоимость (в руб.)',
+      placeholder: 'Введите стоимость',
+    },
+  ];
 
 const SubCreateForm = (props: SubCreateFormProps) => {
   useEffect(() => {
@@ -77,29 +93,6 @@ const SubCreateForm = (props: SubCreateFormProps) => {
     />
   );
 
-  const formElements: Array<FormElement> = [
-    {
-      tag: 'input',
-      id: 'subName',
-      type: 'text',
-      label: 'Название подписки',
-      placeholder: 'Введите название',
-    },
-    {
-      tag: 'textarea',
-      id: 'subDescription',
-      label: 'Описание подписки',
-      placeholder: 'Введите описание',
-    },
-    {
-      tag: 'input',
-      id: 'subPrice',
-      type: 'text',
-      label: 'Месячная стоимость (в руб.)',
-      placeholder: 'Введите стоимость',
-    },
-  ];
-
   return (
     <Form
       onSubmit={onSubmit}
@@ -114,7 +107,7 @@ const SubCreateForm = (props: SubCreateFormProps) => {
 
 let mapSateToProps = (state: StateType) => ({
   imageFile: state.image.imageFile,
-  coverPreview: state.image.coverPreview,
+  coverPreview: state.image.imagePreview,
 });
 
 export default connect(mapSateToProps, {
