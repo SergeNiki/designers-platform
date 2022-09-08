@@ -6,7 +6,7 @@
     padding: 15px;
     aspect-ratio: 4/6;
     display: grid;
-    grid-template-rows: 65px 50% auto 45px;
+    grid-template-rows: 65px auto 45px;
     gap: 10px;
     justify-items: center;
     background-position: center;
@@ -21,6 +21,13 @@
     object-fit:cover;
 }
 
+.description_wrap {
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    position: relative;
+}
+
 .price_wrap,
 .sub_description {
     border-radius: 5px;
@@ -31,10 +38,18 @@
 }
 
 .sub_description {
+    position: absolute;
     width: 100%;
+    height: 40px;
     border-top: 1px solid var(--main-button-color);
     overflow: scroll;
     word-break: normal;
+    white-space: pre-line;
+    transition: all 0.5s;
+}
+
+.sub_description:hover {
+    height: 100%;
 }
 
 .sub_name_wrap,
