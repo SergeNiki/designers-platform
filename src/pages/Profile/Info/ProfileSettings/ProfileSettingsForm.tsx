@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { FormElement } from '../../../../types/form';
+import { FormElement, UserDataForm } from '../../../../types/form';
 import Form from '../../../../components/Form/Form';
 import { connect } from 'react-redux';
 import { updateProfileData } from '../../../../redux/profile-reducer'
@@ -27,7 +27,7 @@ const ProfileSettingsForm = (props: SettingsFormProps) => {
     bio: Yup.string().max(200, 'Максимальное количесво символов: 200!'),
   });
 
-  const onSubmit = (data: UpdateProfileType) => {
+  const onSubmit = (data: UserDataForm) => {
     props.updateProfileData(data);
     props.closeWindow(false)
   };

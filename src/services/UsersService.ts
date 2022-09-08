@@ -8,7 +8,7 @@ export default class UsersService {
     count: number,
     page: number
   ): Promise<AxiosResponse<UsersResponse>> {
-    return $api.get<UsersResponse>(`api/v1/users/?page=${page}&count=${count}`);
+    return $api.get<UsersResponse>(`users/?page=${page}&count=${count}`);
   }
 
   static async getFollowers(user_id: number, next: string | null, count: number): Promise<AxiosResponse<UsersResponse>> {
@@ -39,11 +39,11 @@ export default class UsersService {
   ): Promise<AxiosResponse<IsFollowedResponse>> {
     switch (requestFor) {
       case "isFollowed":
-        return $api.get<IsFollowedResponse>(`api/v1/users/follow/${id}/`);
+        return $api.get<IsFollowedResponse>(`users/follow/${id}/`);
       case "follow":
-        return $api.post<IsFollowedResponse>(`api/v1/users/follow/${id}/`);
+        return $api.post<IsFollowedResponse>(`users/follow/${id}/`);
       case "unfollow":
-        return $api.delete<IsFollowedResponse>(`api/v1/users/follow/${id}/`);
+        return $api.delete<IsFollowedResponse>(`users/follow/${id}/`);
     }
   }
 }

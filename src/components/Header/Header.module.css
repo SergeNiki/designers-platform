@@ -20,20 +20,6 @@
     cursor: pointer;
 }
 
-.avatar {
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    overflow: hidden;
-    cursor: pointer;
-}
-
-.avatar img { 
-    width: 100%;
-    height: 100%;
-    object-fit:cover;
-}
-
 .header_items {
     display: flex;
 }

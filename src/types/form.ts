@@ -1,6 +1,6 @@
 export type FormElement = {
   tag: 'input' | 'textarea';
-  id: FormId
+  id: SubscriptionId | UserDataId;
   label: string;
   type?:
     | 'text'
@@ -16,14 +16,13 @@ export type FormElement = {
   placeholder?: string;
   defaultvalue?: string;
   jsxElement?: React.ReactNode;
+  data?: React.ReactNode;
 };
 
-type FormId =
-  | 'subName'
-  | 'subDescription'
-  | 'subPrice'
-  | 'subCoverPreview'
-  | 'username'
-  | 'display_name'
-  | 'bio';
-export type FormInputs = Record<FormId, string>;
+type SubscriptionId = 'subName' | 'subDescription' | 'subPrice';
+type UserDataId = 'username' | 'display_name' | 'bio';
+
+export type SubForm = Record<SubscriptionId, string>
+export type UserDataForm = Record<UserDataId, string>
+
+export type FormInputs = SubForm & UserDataForm;

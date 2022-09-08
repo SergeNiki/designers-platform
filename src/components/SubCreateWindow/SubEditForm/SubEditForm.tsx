@@ -10,7 +10,7 @@ import { useEffect } from 'react';
 import { SubEditData } from '../../../types/subscriptions';
 
 type SubEditFormProps = {
-  imageFile: File | null;
+  imageFile: File;
   coverPreview: string;
   clearImageState(): void;
   checkImage(
@@ -53,7 +53,7 @@ const SubEditForm = (props: SubEditFormProps) => {
     let editBody: SubEditData = {}
     if(data.subName) editBody.name = data.subName
     if(data.subDescription) editBody.description = data.subDescription
-    if (props.imageFile) editBody.image = props.imageFile
+    editBody.image = props.imageFile
     props.editSubscription(props.subId, editBody);
     props.closeWindow();
   };
@@ -97,7 +97,7 @@ const SubEditForm = (props: SubEditFormProps) => {
 
 let mapSateToProps = (state: StateType) => ({
   imageFile: state.image.imageFile,
-  coverPreview: state.image.coverPreview,
+  coverPreview: state.image.imagePreview,
 });
 
 export default connect(mapSateToProps, {

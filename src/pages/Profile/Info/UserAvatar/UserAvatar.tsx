@@ -1,10 +1,9 @@
 import { faCamera } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
-import { StateType } from '../../../../redux/redux-store';
 import classes from './UserAvatar.module.css';
 import { checkImage } from '../../../../redux/image-reducer';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import ConfirmUpdateAvatar from './ConfirmUpdateAvatar/ConfirmUpdateAvatar';
 
 type UserAvatarProps = {

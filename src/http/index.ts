@@ -2,7 +2,7 @@ import axios from "axios";
 
 const $api = axios.create({
   withCredentials: true,
-  baseURL: "http://31.148.203.10:25566/",
+  baseURL: "http://31.148.203.10:25566/api/v1/",
 });
 
 $api.interceptors.request.use((config) => {

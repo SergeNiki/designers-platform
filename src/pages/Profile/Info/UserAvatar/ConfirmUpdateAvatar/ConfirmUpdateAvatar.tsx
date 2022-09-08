@@ -14,7 +14,7 @@ type ConfirmUpdateAvatarProps = {
   closeWindow(): void;
 
   //from state
-  imageFile: File | null;
+  imageFile: File;
   newAvatar: string;
   updateUserAvatar(file: File): void;
   clearImageState(): void;
@@ -28,7 +28,7 @@ const ConfirmUpdateAvatar: React.FC<ConfirmUpdateAvatarProps> = (props) => {
   }, []);
 
   const updateAvatar = () => {
-    if (props.imageFile) props.updateUserAvatar(props.imageFile);
+    props.updateUserAvatar(props.imageFile);
     props.clearImageState();
     props.closeWindow();
   };
@@ -59,7 +59,7 @@ const ConfirmUpdateAvatar: React.FC<ConfirmUpdateAvatarProps> = (props) => {
 
 let mapSateToProps = (state: StateType) => ({
   imageFile: state.image.imageFile,
-  newAvatar: state.image.coverPreview,
+  newAvatar: state.image.imagePreview,
 });
 
 export default connect(mapSateToProps, {

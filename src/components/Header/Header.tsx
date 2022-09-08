@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import classes from './Header.module.css';
 import { toggleLoginTC, logout } from './../../redux/auth-reducer';
@@ -9,12 +9,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import Tooltips from '../Tooltips/Tooltips';
 import AddContextMenu from './AddContextMenu/AddContextMenu';
+import HeaderUserAvatar from './HeaderItems/HeaderUserAvatar';
 
 type HeaderProps = {
   isAuth: boolean;
   username: string | null;
   avatar: string | null;
-  avatarFromProfile: string;
   display_name: string | null;
   toggleLoginTC(): void;
   logout(): void;
@@ -22,12 +22,6 @@ type HeaderProps = {
 };
 
 const Header = (props: HeaderProps) => {
-  React.useEffect(() => {
-    if (props.isAuth) {
-      props.getAuthUserData();
-    }
-  }, [props.avatarFromProfile]);
-
   const toggleLogin = () => {
     props.toggleLoginTC();
   };
@@ -37,12 +31,7 @@ const Header = (props: HeaderProps) => {
   const [tooltipText, setTooltipText] = useState<string>('');
   const [coordsButtonData, setCoordsButtonData] = useState<DOMRect>();
 
-  const openUserContextMenu = (event: React.MouseEvent<HTMLDivElement>) => {
-    const coords = event.currentTarget.getBoundingClientRect();
-    setCoordsButtonData(coords);
-    setIsUserMenuActive(!isUserMenuActive);
-    setIsAddMenuActive(false)
-  };
+
   const openAddContextMenu = (
     event: React.MouseEvent<HTMLDivElement>
   ): void => {
@@ -51,6 +40,12 @@ const Header = (props: HeaderProps) => {
     setIsAddMenuActive(!isAddMenuActive);
     setIsUserMenuActive(false)
     setTooltipText('');
+  };
+  const openUserContextMenu = (event: React.MouseEvent<HTMLDivElement>) => {
+    const coords = event.currentTarget.getBoundingClientRect();
+    setCoordsButtonData(coords);
+    setIsUserMenuActive(!isUserMenuActive)
+    setIsAddMenuActive(false)
   };
 
   const showTooltip = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -69,26 +64,22 @@ const Header = (props: HeaderProps) => {
           <div className={classes.header_items}>
             <div
               className={classes.add_btn}
-              datatype="добавить"
+              datatype='добавить'
               onClick={openAddContextMenu}
-              onMouseOver={showTooltip}
-              onMouseOut={hideTooltip}
-            >
+              onMouseEnter={showTooltip}
+              onMouseLeave={hideTooltip}>
               <FontAwesomeIcon icon={faSquarePlus} />
               {tooltipText && !isAddMenuActive && (
                 <Tooltips
-                  orientation="vertical"
+                  orientation='vertical'
                   styles={{
                     top: '56px',
-                  }}
-                >
+                  }}>
                   создать
                 </Tooltips>
               )}
             </div>
-            <div onClick={openUserContextMenu} className={classes.avatar}>
-              {props.avatar && <img src={props.avatar} alt="" />}
-            </div>
+            <HeaderUserAvatar avatar={props.avatar} openUserContextMenu={openUserContextMenu}/>
           </div>
         ) : (
           <div className={classes.login} onClick={toggleLogin}>
@@ -120,7 +111,6 @@ let mapStateToProps = (state: StateType) => ({
   isAuth: state.auth.isAuth,
   username: state.auth.username,
   avatar: state.auth.avatar,
-  avatarFromProfile: state.profilePage.avatar,
   display_name: state.auth.display_name,
 });
 

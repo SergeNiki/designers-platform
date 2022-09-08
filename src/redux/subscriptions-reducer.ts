@@ -59,6 +59,7 @@ const subscriptionsReducer = (
   }
 };
 
+// Action Creators
 export const setSubscriptionsAC = (
   payload: GetSubscriptionsResponse
 ): ActionGetSubscriptions => ({
@@ -94,6 +95,7 @@ export const setStatusMessage = (message: string): ActionSetStatusMessage => ({
   message,
 });
 
+// Thunk Creators
 export const getSubscriptions = (userId: number): ThunkSubType => {
   return async (dispatch) => {
     dispatch(toggleIsFetching(true));

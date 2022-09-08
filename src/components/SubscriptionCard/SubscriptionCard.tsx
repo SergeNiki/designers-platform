@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { SubData } from '../../types/subscriptions';
 import ConfirmWindow from '../ConfirmWindow/ConfirmWindow';
 import ModalWindow from '../ModalWindow/ModalWindow';
@@ -13,7 +13,7 @@ type SubscriptionCardProps = SubData & {
   subOrUnsub(subId: number, type: 'sub' | 'unsub'): void;
 };
 
-const SubscriptionCard = (props: SubscriptionCardProps) => {
+const SubscriptionCard: React.FC<SubscriptionCardProps> = memo((props) => {
   const [isEditWindow, setIsEditWindow] = useState<boolean>(false);
   const [isTextWrap, setIsTextWrap] = useState<boolean>(false);
   const [isConfirmDeletion, setIsConfirmDeletion] = useState<boolean>(false);
@@ -86,8 +86,9 @@ const SubscriptionCard = (props: SubscriptionCardProps) => {
           </div>
         </div>
 
-        <div></div>
-        <div className={classes.sub_description}>{props.description}</div>
+        <div className={classes.description_wrap}>
+          <div className={classes.sub_description}>{props.description}</div>
+        </div>
         <SubButtons
           isOwner={props.isOwner}
           isFetching={props.isFetching}
@@ -102,6 +103,6 @@ const SubscriptionCard = (props: SubscriptionCardProps) => {
       </div>
     </>
   );
-};
+})
 
 export default SubscriptionCard;

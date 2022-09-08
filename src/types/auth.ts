@@ -1,5 +1,5 @@
-import { ThunkAction } from "redux-thunk";
-import { StateType } from "../redux/redux-store";
+import { ThunkAction } from 'redux-thunk';
+import { StateType } from '../redux/redux-store';
 
 //Auth State
 export interface IAuthState {
@@ -12,26 +12,39 @@ export interface IAuthState {
 }
 
 //Dispatch Type
-export type ThunkType = ThunkAction<Promise<void>, StateType, unknown, ActionsAuth>
+export type ThunkType = ThunkAction<
+  Promise<void>,
+  StateType,
+  unknown,
+  ActionsAuth
+>;
 
 // Auth Actions
 export enum ActionsType {
-  TOGGLE_IS_PROCESS_LOGIN = "auth/TOGGLE_IS_PROCESS_LOGIN",
-  SET_USER_DATA = "auth/SET_USER_DATA",
-  CLEAR_AUTH_STATE = "auth/CLEAR_AUTH_STATE"
+  TOGGLE_IS_PROCESS_LOGIN = 'auth/TOGGLE_IS_PROCESS_LOGIN',
+  SET_USER_DATA = 'auth/SET_USER_DATA',
+  UPDATE_USER_AVATAR = 'auth/UPDATE_USER_AVATAR',
+  CLEAR_AUTH_STATE = 'auth/CLEAR_AUTH_STATE',
 }
 export type ActionToggleIsProcessLogin = {
   type: ActionsType.TOGGLE_IS_PROCESS_LOGIN;
-}
+};
 export type ActionSetUserData = {
   type: ActionsType.SET_USER_DATA;
-  payload: IAuthState;
-}
+  payload: IAuthMeResponse;
+};
+export type ActionUpdateUserAvatar = {
+  type: ActionsType.UPDATE_USER_AVATAR;
+  avatar: string;
+};
 export type ActionClearAuthState = {
-  type: ActionsType.CLEAR_AUTH_STATE
-}
-export type ActionsAuth = ActionSetUserData | ActionToggleIsProcessLogin | ActionClearAuthState;
-
+  type: ActionsType.CLEAR_AUTH_STATE;
+};
+export type ActionsAuth =
+  | ActionSetUserData
+  | ActionToggleIsProcessLogin
+  | ActionClearAuthState
+  | ActionUpdateUserAvatar;
 
 //Telegram Data
 export interface ITelegramUser {
@@ -43,7 +56,6 @@ export interface ITelegramUser {
   username: string;
   photo_url?: string;
 }
-
 
 //Axios Response
 export interface IAuthLoginResponse {
