@@ -1,0 +1,39 @@
+#post_description {
+    resize: none;
+    height: 100px;
+    font-size: 18px;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-top: 5px;
+}
+
+.form {
+    max-width: 520px;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto 10px;
+}
+
+.description_wrap {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0;
+}
+
+.description_wrap label {
+    color: var(--dark-text-color);
+    margin-left: 15px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.btn_wrap {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.error_message {
+    color: red;
+    font-size: 12px;
+}
