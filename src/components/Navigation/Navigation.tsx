@@ -1,7 +1,5 @@
-import React, { MouseEvent, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { memo, useMemo } from 'react';
 import classes from './Navigation.module.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faAddressBook,
   faHouseChimney,
@@ -13,7 +11,7 @@ import {
 import { connect } from 'react-redux';
 import { toggleLoginTC } from './../../redux/auth-reducer';
 import { StateType } from '../../redux/redux-store';
-import Tooltips from '../Tooltips/Tooltips';
+import NavElement from './NavElement';
 
 type NavigationProps = {
   user_id: number | null;
@@ -21,75 +19,79 @@ type NavigationProps = {
   toggleLoginTC(): void;
 };
 
+export type NavDatatype =
+  | 'главная'
+  | 'подписки'
+  | 'профиль'
+  | 'сообщения'
+  | 'понравившееся';
+export type NavElementDataType = {
+  path: string;
+  datatype: NavDatatype;
+  icon: IconDefinition;
+};
+
+const navElementsData: Array<NavElementDataType> = [
+  {
+    path: '/main',
+    datatype: 'главная',
+    icon: faHouseChimney,
+  },
+  {
+    path: '/subscriptions',
+    datatype: 'подписки',
+    icon: faAddressBook,
+  },
+  {
+    path: `/profile/id`,
+    datatype: 'профиль',
+    icon: faUser,
+  },
+  {
+    path: '/messages',
+    datatype: 'сообщения',
+    icon: faComments,
+  },
+  {
+    path: '/likes',
+    datatype: 'понравившееся',
+    icon: faThumbsUp,
+  },
+];
+
 const Navigation: React.FC<NavigationProps> = (props) => {
-  const [tooltipText, setTooltipText] = useState<string>('');
-
-  const navElementsData: Array<{
-    path: string;
-    datatype: string;
-    icon: IconDefinition;
-  }> = [
-    {
-      path: '/main',
-      datatype: 'главная',
-      icon: faHouseChimney,
-    },
-    {
-      path: '/subscriptions',
-      datatype: 'подписки',
-      icon: faAddressBook,
-    },
-    {
-      path: `/profile/id${props.user_id}`,
-      datatype: 'профиль',
-      icon: faUser,
-    },
-    {
-      path: '/messages',
-      datatype: 'сообщения',
-      icon: faComments,
-    },
-    {
-      path: '/likes',
-      datatype: 'понравившееся',
-      icon: faThumbsUp,
-    },
-  ];
-
-  const showTooltip = (event: React.MouseEvent<HTMLAnchorElement>) => {
-    let text = String(event.currentTarget.getAttribute('datatype'));
-    setTooltipText(text);
+  const callLoginWindow = (datatype: NavDatatype) => {
+    if (!props.isAuth && datatype !== 'главная') {
+      return (event: React.MouseEvent<HTMLAnchorElement>) => {
+        event.preventDefault();
+        props.toggleLoginTC();
+      };
+    }
+    return () => {};
   };
-  const hideTooltip = (event: React.MouseEvent<HTMLAnchorElement>) => {
-    setTooltipText('');
-  };
-  const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
-    setTooltipText('');
-  };
-
   const navElements = navElementsData.map((element) => {
+    if (element.datatype == 'профиль') {
+      return (
+        <NavElement
+          key={element.datatype}
+          callLoginWindow={callLoginWindow(element.datatype)}
+          element={{ ...element, path: `${element.path}${props.user_id}` }}
+        />
+      );
+    }
     return (
-      <NavLink key={element.datatype}
-        to={element.path}
-        datatype={element.datatype}
-        onMouseOver={showTooltip}
-        onMouseOut={hideTooltip}
-        onClick={handleClick}
-      >
-        <FontAwesomeIcon icon={element.icon} />
-        {tooltipText == element.datatype && (
-          <Tooltips orientation="horizontal">{tooltipText}</Tooltips>
-        )}
-      </NavLink>
+      <NavElement
+        key={element.datatype}
+        callLoginWindow={callLoginWindow(element.datatype)}
+        element={element}
+      />
     );
   });
 
   return (
     <nav>
       <div className={classes.nav_wrap}>
-        <div className={classes.nav_list}>
-          {navElements}
-        </div>
+        <div className={classes.nav_list}>{navElements}</div>
       </div>
     </nav>
   );

@@ -20,7 +20,8 @@
     background: var(--hover-main-color);
 }
 
-@media (max-width: 425px) {
+@media (max-width: 425px)
+or (max-height: 350px) {
     .nav_wrap {
         width: 100%;
         display: flex;
