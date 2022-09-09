@@ -30,7 +30,7 @@ const LevelsSubscriptions: React.FC<LevelsSubscriptionsProps> = (props) => {
   return (
     <div className={classes.levels_wrap}>
       <label htmlFor={classes.levels_sub}>
-        Укажите уровень доступа данного поста
+        Доступ к посту: 
       </label>
       <select id={classes.levels_sub} name='level' onChange={chooseLevelSub} >
         {levelsSub}

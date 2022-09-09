@@ -27,19 +27,19 @@ export default class PostService {
     );
   }
   static async likePost(id: number): Promise<AxiosResponse<LikePostData>> {
-    return $api.post<LikePostData>(`posts/${id}/like`);
+    return $api.post<LikePostData>(`posts/${id}/like/`);
   }
   static async unlikePost(id: number): Promise<AxiosResponse<LikePostData>> {
-    return $api.delete<LikePostData>(`posts/${id}/like`);
+    return $api.delete<LikePostData>(`posts/${id}/like/`);
   }
   static async publishPost(
     id: number,
     publicationTime?: Date
   ): Promise<AxiosResponse<PublishPostData>> {
     return publicationTime
-      ? $api.post<PublishPostData>(`posts/${id}/publish`, {
+      ? $api.post<PublishPostData>(`posts/${id}/publish/`, {
           publication_at: publicationTime,
         })
-      : $api.post<PublishPostData>(`posts/${id}/publish`);
+      : $api.post<PublishPostData>(`posts/${id}/publish/`);
   }
 }
