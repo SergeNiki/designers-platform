@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import classes from './DatetimeOfPublication.module.css';
+import classes from './DateTimeOfPublication.module.css';
 
 type DatetimeOfPublicationProps = {
   errorMessage: string;
