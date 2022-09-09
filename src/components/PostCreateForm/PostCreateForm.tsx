@@ -13,7 +13,7 @@ import { SubData } from '../../types/subscriptions';
 import ImagePreviews from './ImagePreviews/ImagePreviews';
 import LevelsSubscriptions from './LevelsSubscriptions/LevelsSubscriptions';
 import { UpdatePostRequest } from '../../types/posts';
-import DatetimeOfPublication from './DatetimeOfPublication/DateTimeOfPublication';
+import DatetimeOfPublication from './DatetimeOfPublication/DatetimeOfPublication';
 import Button from '../Button/Button';
 
 type PostCreateFormProps = {
