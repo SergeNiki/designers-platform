@@ -13,7 +13,7 @@ import { SubData } from '../../types/subscriptions';
 import ImagePreviews from './ImagePreviews/ImagePreviews';
 import LevelsSubscriptions from './LevelsSubscriptions/LevelsSubscriptions';
 import { UpdatePostRequest } from '../../types/posts';
-import DateTimeOfPublication from './DateTimeOfPublication/DateTimeOfPublication';
+import DatetimeOfPublication from './DatetimeOfPublication/DatetimeOfPublication';
 import Button from '../Button/Button';
 
 type PostCreateFormProps = {
@@ -25,9 +25,24 @@ type PostCreateFormProps = {
   publishPost(postId: number, publicationTime?: Date): void;
   getSubscriptions(userId: number): void;
   clearState(): void;
+
+  closeWindow(): void;
 };
 
 const PostCreateForm: React.FC<PostCreateFormProps> = (props) => {
+  // States for discription
+  const [descriptionText, setDescriptionText] = useState<string>('');
+  const [descriptionError, setDescriptionError] = useState<string>('');
+  const [isDescriptionValid, setIsDescriptionValid] = useState<boolean>(true);
+  // State for files
+  const [isFilesValid, setIsFilesValid] = useState<boolean>(false);
+  // States for date and time
+  const [isDatetimeValid, setIsDatetimeValid] = useState<boolean>(true);
+  const [datetimeError, setDatetimeError] = useState<string>('');
+  const [selectedDatetime, setSelectedDatetime] = useState<Date>();
+
+  const [isPublishNow, setIsPublishNow] = useState<boolean>(true);
+
   useEffect(() => {
     props.createPost();
     props.getSubscriptions(props.userId);
@@ -37,30 +52,52 @@ const PostCreateForm: React.FC<PostCreateFormProps> = (props) => {
     };
   }, []);
 
-  const [descriptionText, setDescriptionText] = useState<string>('')
-  const [isDescriptionValid, setIsDescriptionValid] = useState<boolean>(true);
-  const [descriptionError, setDescriptionError] = useState<string>('')
-  const [isFilesValid, setIsFilesValid] = useState<boolean>(false);
+  const checkSelectedDatetime = (selectedDatetime: Date): boolean => {
+    let currDate = new Date();
+    let date = currDate.toLocaleString();
+    let today = date.slice(0, date.indexOf(','));
+    let currHours = currDate.getHours();
+    let currMinutes = currDate.getMinutes();
+    let errorText = `Дата публикации поста не может быть раньше, чем ${today} в ${currHours}:${currMinutes}`;
+    if (selectedDatetime < currDate) {
+      setIsDatetimeValid(false);
+      setDatetimeError(errorText);
+      return false;
+    } else {
+      setIsDatetimeValid(true);
+      setDatetimeError('');
+      setSelectedDatetime(selectedDatetime);
+      return true;
+    }
+  };
 
   const descriptionHendler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setDescriptionText(e.currentTarget.value)
+    setDescriptionText(e.currentTarget.value);
     if (e.currentTarget.value.length > 2000) {
-      setDescriptionError('Текст поста не может превышать 2000 символов!')
-      setIsDescriptionValid(false)
+      setDescriptionError('Текст поста не может превышать 2000 символов!');
+      setIsDescriptionValid(false);
     } else {
-      setDescriptionError('')
-      setIsDescriptionValid(true)
+      setDescriptionError('');
+      setIsDescriptionValid(true);
     }
-  }
+  };
 
   const updateDescription = (e: React.FocusEvent<HTMLTextAreaElement>) => {
     if (descriptionText && isDescriptionValid) {
-      props.updatePost(props.postId, {description: descriptionText})
+      props.updatePost(props.postId, { description: descriptionText });
     }
-  }
+  };
 
-  const onSubmit = () => {
-    //   props.publishPost()
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (isPublishNow) {
+      props.publishPost(props.postId);
+    } else {
+      if (checkSelectedDatetime(selectedDatetime!)) {
+        props.publishPost(props.postId, selectedDatetime);
+        props.closeWindow();
+      }
+    }
   };
 
   return (
@@ -83,7 +120,12 @@ const PostCreateForm: React.FC<PostCreateFormProps> = (props) => {
         subscriptions={props.subscriptions}
         updatePost={props.updatePost}
       />
-      <DateTimeOfPublication />
+      <DatetimeOfPublication
+        errorMessage={datetimeError}
+        setIsPublishNow={setIsPublishNow}
+        setIsValid={setIsDatetimeValid}
+        checkSelectedDatetime={checkSelectedDatetime}
+      />
       <div className={classes.btn_wrap}>
         <Button
           styles={{
@@ -91,9 +133,12 @@ const PostCreateForm: React.FC<PostCreateFormProps> = (props) => {
             width: '180px',
             height: '35px',
           }}
-          isDisabled={!isDescriptionValid || !isFilesValid}
-          hoverStyles={{ backgroundColor: 'var(--main-button-color)' }}
-          >
+          isDisabled={
+            !isDescriptionValid ||
+            !isFilesValid ||
+            (!isDatetimeValid && !isPublishNow)
+          }
+          hoverStyles={{ backgroundColor: 'var(--main-button-color)' }}>
           Опубликовать
         </Button>
       </div>

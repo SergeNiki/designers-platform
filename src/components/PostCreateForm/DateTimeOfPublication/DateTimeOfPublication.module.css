@@ -4,26 +4,47 @@
     display: flex;
 }
 
-.radio_inputs_wrap {
+.checkbox_input_wrap {
+    margin-left: 15px;
     flex-grow: 1;
     display: flex;
-    flex-direction: column;
 }
 
-.radio_inputs_wrap label {
+.label_checkbox,
+#checkbox_input {
+    cursor: pointer;
+}
+
+.label_checkbox {
     color: var(--dark-text-color);
     font-size: 18px;
     font-weight: bold;
-    margin: 5px 0;
-}
-
-.radio_inputs_wrap input {
-    margin-right: 5px;
+    margin: 5px 10px;
 }
 
 .datetime_wrap {
     flex-grow: 1;
     display: flex;
+    column-gap: 10px;
+    row-gap: 10px;
     justify-content: center;
     align-items: center;
+}
+
+.datetime_wrap input {
+    padding: 0 10px;
+    height: 100%;
+    max-height: 30px;
+}
+
+.error_message {
+    margin: 0 0 10px 15px;
+    color: red;
+    font-size: 12px;
+}
+
+@media (max-width: 425px) {
+    .datetime_block {
+        flex-wrap: wrap;
+    }
 }
