@@ -92,6 +92,7 @@ const PostCreateForm: React.FC<PostCreateFormProps> = (props) => {
     e.preventDefault();
     if (isPublishNow) {
       props.publishPost(props.postId);
+      props.closeWindow();
     } else {
       if (checkSelectedDatetime(selectedDatetime!)) {
         props.publishPost(props.postId, selectedDatetime);

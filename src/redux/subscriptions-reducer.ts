@@ -144,7 +144,7 @@ export const deleteSubscription = (subId: number): ThunkSubType => {
       const response = await SubscriptionsService.deleteSubscription(subId);
       dispatch(deleteSubscriptionsAC(subId));
       dispatch(toggleIsFetching(false));
-      dispatch(addPopup('Подписка была удалена', false));
+      dispatch(addPopup('Подписка была удалена', true));
     } catch (error) {
       dispatch(addPopup('Что-то пошло не так(', false))
     }
@@ -164,7 +164,7 @@ export const subscribeOrUnsubscribe = (
       if (type == 'sub')
         dispatch(addPopup('Подписка успешно оформлена!', true));
       else if (type == 'unsub')
-        dispatch(addPopup('Подписка была отменена!', false));
+        dispatch(addPopup('Подписка была отменена!', true));
     } catch (error) {
       dispatch(addPopup('Что-то пошло не так(', false))
     }
