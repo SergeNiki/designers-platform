@@ -29,7 +29,7 @@ const PopupItem = (props: PopupItemProps) => {
       className={classes.popup_menu}
       style={{
         opacity: opacity,
-        backgroundColor: props.popupData.isSuccessful ? '#78E1AF' : '#ff342c',
+        color: props.popupData.isSuccessful ? 'white' : '#ff342c',
       }}
     >
       {props.popupData.contentMessage}

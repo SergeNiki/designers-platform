@@ -1,5 +1,5 @@
 .popup_menu {
-    color: #fff;
+    background-color: var(--main-color);
     padding: 15px;
     margin-top: 10px;
     display: flex;
