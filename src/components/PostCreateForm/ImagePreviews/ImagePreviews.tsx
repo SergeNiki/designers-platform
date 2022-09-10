@@ -1,10 +1,12 @@
 import { connect } from 'react-redux';
 import { StateType } from '../../../redux/redux-store';
-import { addImageFile } from '../../../redux/post-reducer';
+import { addImageFile, removeImageFile } from '../../../redux/post-reducer';
 import classes from './ImagePreviews.module.css';
 import { ImageFileData } from '../../../types/posts';
 import Button from '../../Button/Button';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 type ImagePreviewsProps = {
   postId: number;
@@ -13,6 +15,7 @@ type ImagePreviewsProps = {
   images: Array<ImageFileData>;
   isFetching: boolean;
   addImageFile(postId: number, imageFile: File): void;
+  removeImageFile(postId: number, imageId: number): void;
 };
 
 const ImagePreviews: React.FC<ImagePreviewsProps> = (props) => {
@@ -21,9 +24,20 @@ const ImagePreviews: React.FC<ImagePreviewsProps> = (props) => {
       props.setIsValid(false);
     } else props.setIsValid(true);
   }, [props.images]);
-  
+
   const previews = props.images.map((image) => {
-    return <img key={image.id} src={image.file} className={classes.preview} />;
+    return (
+      <div className={classes.preview_wrap}>
+        <div className={classes.close_btn}>
+          <FontAwesomeIcon
+            icon={faXmark}
+            style={{ height: '20px', width: '20px' }}
+            onClick={() => props.removeImageFile(props.postId, image.id)}
+          />
+        </div>
+        <img key={image.id} src={image.file} className={classes.preview} />
+      </div>
+    );
   });
 
   const uploadImage = (e: React.ChangeEvent<HTMLButtonElement>) => {
@@ -37,11 +51,9 @@ const ImagePreviews: React.FC<ImagePreviewsProps> = (props) => {
     for (let i = 0; i < files!.length; i++) {
       props.addImageFile(props.postId, files![i]);
     }
+    e.target.value = '';
   };
 
-  //   if (props.isFetching) {
-  //     return <p>Loading....</p>;
-  //   } else
   return (
     <div className={classes.image_previews}>
       <input
@@ -74,4 +86,5 @@ let mapSateToProps = (state: StateType) => ({
 
 export default connect(mapSateToProps, {
   addImageFile,
+  removeImageFile,
 })(ImagePreviews);

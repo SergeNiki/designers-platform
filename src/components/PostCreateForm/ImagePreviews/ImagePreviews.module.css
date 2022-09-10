@@ -1,13 +1,32 @@
 .preview {
     width: auto;
-    height: 100px;
+    height: 140px;
     border-radius: 5px;
     margin: 2px;
-    transition: all 0.5s;
 }
 
-.preview:hover {
-    transform: scale(1.5);
+.preview_wrap {
+    position: relative;
+}
+
+.close_btn {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    top: 5px;
+    right: 5px;
+    color: rgb(155, 155, 155);
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.close_btn:hover {
+    color:rgb(255, 81, 81);
+    background-color: rgba(0, 0, 0, 0.658);
 }
 
 .previews_wrap {
