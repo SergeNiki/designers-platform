@@ -1,4 +1,3 @@
-import { number } from 'yup';
 import PostService from '../services/PostService';
 import {
   CreateOrUpdatePost,
@@ -12,6 +11,7 @@ import {
   ToggleIsFetching,
   PostThunk,
   UpdatePostRequest,
+  RemoveFileFromPost,
 } from '../types/posts';
 import { addPopup } from './popup-reducer';
 
@@ -38,6 +38,15 @@ const postReducer = (
       return { ...state, publication_at: action.publication_at };
     case PostActionTypes.TOGGLE_IS_FETCHING:
       return { ...state, isFetching: !state.isFetching };
+    case PostActionTypes.REMOVE_IMAGE_FILE:
+      return {
+        ...state,
+        content: state.content.filter((image) => {
+          if (image.id !== action.imageId) {
+            return image;
+          }
+        }),
+      };
     case PostActionTypes.CLEARE_STATE:
       return initialState;
     default:
@@ -60,10 +69,14 @@ const setPublicationTime = (publication_at: Date): SetPublicationTime => ({
 });
 const toggleIsFetching = (isFetching: boolean): ToggleIsFetching => ({
   type: PostActionTypes.TOGGLE_IS_FETCHING,
-  isFetching
+  isFetching,
 });
 export const clearState = (): ClearPostState => ({
   type: PostActionTypes.CLEARE_STATE,
+});
+export const removeFileFromPost = (imageId: number): RemoveFileFromPost => ({
+  type: PostActionTypes.REMOVE_IMAGE_FILE,
+  imageId,
 });
 
 // Thunk Creators
@@ -79,17 +92,11 @@ export const createPost = (): PostThunk => {
     }
   };
 };
-export const updatePost = (
-  id: number,
-  data: UpdatePostRequest
-): PostThunk => {
+export const updatePost = (id: number, data: UpdatePostRequest): PostThunk => {
   return async (dispatch) => {
     dispatch(toggleIsFetching(true));
     try {
-      const response = await PostService.updatePost(
-        id,
-        data
-      );
+      const response = await PostService.updatePost(id, data);
       dispatch(createOrUpdatePost(response.data));
       dispatch(toggleIsFetching(false));
     } catch (error) {
@@ -99,43 +106,60 @@ export const updatePost = (
 };
 export const addImageFile = (id: number, imageFile: File): PostThunk => {
   return async (dispatch) => {
-    dispatch(toggleIsFetching(true))
+    dispatch(toggleIsFetching(true));
     try {
-      const response = await PostService.addFileToPost(id, imageFile)
+      const response = await PostService.addFileToPost(id, imageFile);
       dispatch(createOrUpdatePost(response.data));
-      dispatch(toggleIsFetching(false))
+      dispatch(toggleIsFetching(false));
     } catch (error) {
       dispatch(addPopup('Что-то пошло не так(', false));
     }
-  }
-}
+  };
+};
+export const removeImageFile = (postId: number, imageId: number): PostThunk => {
+  return async (dispatch) => {
+    dispatch(toggleIsFetching(true));
+    try {
+      const response = await PostService.removeFileFromPost(postId, imageId);
+      dispatch(removeFileFromPost(imageId));
+      dispatch(toggleIsFetching(false));
+    } catch (error) {
+      dispatch(addPopup('Что-то пошло не так(', false));
+    }
+  };
+};
 export const toggleLikePost = (id: number, isLiked: boolean): PostThunk => {
   return async (dispatch) => {
     dispatch(toggleIsFetching(true));
     try {
       if (isLiked) {
         var response = await PostService.unlikePost(id);
+        dispatch(addPopup('Лайк отменён', true));
       } else {
         var response = await PostService.likePost(id);
+        dispatch(addPopup('Лайк поставлен', true));
       }
       dispatch(toggleLike(response.data.is_liked));
-      dispatch(toggleIsFetching(false))
+      dispatch(toggleIsFetching(false));
     } catch (error) {
       dispatch(addPopup('Что-то пошло не так(', false));
     }
   };
 };
 export const publishPost = (id: number, publicationTime?: Date): PostThunk => {
-    return async (dispatch) => {
-        dispatch(toggleIsFetching(true))
-        try {
-            const response = await PostService.publishPost(id, publicationTime)
-            dispatch(setPublicationTime(response.data.publication_at))
-            dispatch(toggleIsFetching(false))
-        } catch (error) {
-            dispatch(addPopup('Что-то пошло не так(', false));
-        }
+  return async (dispatch) => {
+    dispatch(toggleIsFetching(true));
+    try {
+      const response = await PostService.publishPost(id, publicationTime);
+      dispatch(setPublicationTime(response.data.publication_at));
+      dispatch(toggleIsFetching(false));
+      publicationTime
+        ? dispatch(addPopup('Пост ждёт своей публикации!', true))
+        : dispatch(addPopup('Пост опубликован!', true));
+    } catch (error) {
+      dispatch(addPopup('Что-то пошло не так(', false));
     }
-}
+  };
+};
 
 export default postReducer;

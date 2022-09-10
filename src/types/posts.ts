@@ -35,6 +35,7 @@ export enum PostActionTypes {
   PUBLISH_POST = 'post/PUBLISH_POST',
   TOGGLE_IS_FETCHING = 'post/TOGGLE_IS_FETCHING',
   CLEARE_STATE = 'post/CLEARE_STATE',
+  REMOVE_IMAGE_FILE = 'post/REMOVE_IMAGE_FILE'
 }
 export type CreateOrUpdatePost = {
   type: PostActionTypes.CREATE_POST;
@@ -55,12 +56,17 @@ export type ToggleIsFetching = {
 export type ClearPostState = {
   type: PostActionTypes.CLEARE_STATE;
 };
+export type RemoveFileFromPost = {
+  type: PostActionTypes.REMOVE_IMAGE_FILE;
+  imageId: number
+}
 export type PostActions =
   | CreateOrUpdatePost
   | ToggleLikePost
   | SetPublicationTime
   | ClearPostState
-  | ToggleIsFetching;
+  | ToggleIsFetching
+  | RemoveFileFromPost;
 
 // Thunk
 export type PostThunk = ThunkAction<
