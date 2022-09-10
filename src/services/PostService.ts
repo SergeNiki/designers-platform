@@ -26,6 +26,14 @@ export default class PostService {
       }
     );
   }
+  static async removeFileFromPost(
+    postId: number,
+    fileId: number
+  ): Promise<AxiosResponse<UpdatePostData>> {
+    return $api.delete<UpdatePostData>(
+      `posts/${postId}/file/${fileId}/`,
+    );
+  }
   static async likePost(id: number): Promise<AxiosResponse<LikePostData>> {
     return $api.post<LikePostData>(`posts/${id}/like/`);
   }
