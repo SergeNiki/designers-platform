@@ -46,38 +46,44 @@ export enum SubsActionTypes {
   DELETE_SUBSCRIPTION = 'subscriptions/DELETE_SUBSCRIPTION',
   TOGGLE_IS_FETCHING = 'subscriptions/TOGGLE_IS_FETCHING',
   SET_STATUS_MESSAGE = 'subscriptions/SET_STATUS_MESSAGE',
+  SET_SUBSCRIPTION_DATA = 'subscriptions/SET_SUBSCRIPTION_DATA'
 }
-export type ActionGetSubscriptions = {
+export type SetSubscriptions = {
   type: SubsActionTypes.SET_SUBSCRIPTIONS;
   payload: GetSubscriptionsResponse;
 };
-export type ActionСreatingSubscription = {
+export type СreatingSubscription = {
   type: SubsActionTypes.CREATING_SUBSCRIPTION;
   payload: SubData;
 };
-export type ActionEditSubscription = {
+export type EditSubscription = {
   type: SubsActionTypes.EDIT_SUBSCRIPTION;
   payload: SubData;
 };
-export type ActionDeleteSubscription = {
+export type DeleteSubscription = {
   type: SubsActionTypes.DELETE_SUBSCRIPTION;
   id: number;
 };
-export type ActionToggleIsFetching = {
+export type ToggleIsFetching = {
   type: SubsActionTypes.TOGGLE_IS_FETCHING;
   isFetching: boolean;
 };
-export type ActionSetStatusMessage = {
+export type SetStatusMessage = {
   type: SubsActionTypes.SET_STATUS_MESSAGE;
   message: string;
 };
+export type SetSubscriptionData = {
+  type: SubsActionTypes.SET_SUBSCRIPTION_DATA;
+  payload: SubData;
+};
 export type ActionsSubscriptions =
-  | ActionGetSubscriptions
-  | ActionСreatingSubscription
-  | ActionEditSubscription
-  | ActionDeleteSubscription
-  | ActionToggleIsFetching
-  | ActionSetStatusMessage;
+  | SetSubscriptions
+  | СreatingSubscription
+  | EditSubscription
+  | DeleteSubscription
+  | ToggleIsFetching
+  | SetStatusMessage
+  | SetSubscriptionData;
 
 // Subscriptions Response
 export type GetSubscriptionsResponse = Omit<ISubscriptionsState, 'is_fetching'>;
