@@ -25,7 +25,7 @@ const Profile: React.FC<ProfileProps> = (props) => {
   let contentTypeComponent = () => {
     switch (contentType) {
       case "посты":
-        return <ProfilePosts/>
+        return <ProfilePosts isOwner={props.isOwner} ownerUserId={props.ownerUserId} />
       case "альбомы":
         return <Albums/>
       case "виды подписок":
