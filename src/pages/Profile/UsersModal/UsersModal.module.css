@@ -17,12 +17,14 @@
 .show_more_btn_wrap button {
     margin: 10px 0;
     width: 170px;
+    position: relative;
+    top: 0;
     font-size: 16px;
     height: 30px;
     border: none;
     border-radius: 5px;
     box-shadow: 0 3px 2px rgb(168, 168, 168);
-    background-color: #6DEFC0;
+    background-color: var(--main-button-color);
     cursor: pointer;
     transition: all 0.2s;
 }

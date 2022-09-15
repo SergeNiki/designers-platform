@@ -7,11 +7,13 @@ import {
   ActionToggleFollow,
   ActionToggleIsFetching,
   ActionUpdateFollowingInProgress,
+  FollowUsersRequest,
   IUsersState,
   ThunkType,
   UsersActionTypes,
   UsersResponse,
 } from '../types/users';
+import { addPopup } from './popup-reducer';
 
 let initialState: IUsersState = {
   count: 0,
@@ -22,7 +24,7 @@ let initialState: IUsersState = {
   isFetching: false,
   followingsInProgress: [],
 };
-
+// Reducer
 const usersReducer = (
   state = initialState,
   action: ActionsUsers
@@ -64,23 +66,21 @@ const usersReducer = (
   }
 };
 
+// Action Creators
 export const setUsers = (payload: UsersResponse): ActionSetUsersDataType => ({
   type: UsersActionTypes.SET_USERS_LIST,
   payload,
 });
-
 export const setIsFollowed = (userId: number): ActionToggleFollow => ({
   type: UsersActionTypes.SET_IS_FOLLOWED,
   userId,
 });
-
 export const toggleIsFetching = (
   isFetching: boolean
 ): ActionToggleIsFetching => ({
   type: UsersActionTypes.TOGGLE_IS_FETCHING,
   isFetching,
 });
-
 export const updateFollowingInProgress = (
   isFetching: boolean,
   userId: number
@@ -89,11 +89,11 @@ export const updateFollowingInProgress = (
   isFetching,
   userId,
 });
-
 export const clearState = (): ActionClearState => ({
   type: UsersActionTypes.CLEAR_STATE,
 });
 
+// Thunk Creators
 export const getUsersList = (count: number, page: number): ThunkType => {
   return async (dispatch) => {
     dispatch(toggleIsFetching(true));
@@ -101,40 +101,25 @@ export const getUsersList = (count: number, page: number): ThunkType => {
       const response = await UsersService.getUsers(count, page);
       dispatch(toggleIsFetching(false));
       dispatch(setUsers(response.data));
-    } catch (error) {}
+    } catch (error) {
+      dispatch(addPopup('Что-то пошло не так(', false));
+    }
   };
 };
-
-export const getFollowersList = (
-  user_id: number,
-  next: string | null,
-  count: number = 10
+export const getFollowUsersList = (
+  data: FollowUsersRequest
 ): ThunkType => {
   return async (dispatch) => {
     dispatch(toggleIsFetching(true));
     try {
-      const response = await UsersService.getFollowers(user_id, next, count);
+      const response = await UsersService.getFollowUsers(data);
       dispatch(toggleIsFetching(false));
       dispatch(setUsers(response.data));
-    } catch (error) {}
+    } catch (error) {
+      dispatch(addPopup('Что-то пошло не так(', false));
+    }
   };
 };
-
-export const getFollowingList = (
-  user_id: number,
-  next: string | null,
-  count: number = 10
-): ThunkType => {
-  return async (dispatch) => {
-    dispatch(toggleIsFetching(true));
-    try {
-      const response = await UsersService.getFollowing(user_id, next, count);
-      dispatch(toggleIsFetching(false));
-      dispatch(setUsers(response.data));
-    } catch (error) {}
-  };
-};
-
 export const toggleFollow = (
   user_id: number,
   request_for: RequestFollowType
@@ -146,7 +131,7 @@ export const toggleFollow = (
       dispatch(setIsFollowed(user_id));
       dispatch(updateFollowingInProgress(false, user_id));
     } catch (error) {
-      console.log(error);
+      dispatch(addPopup('Что-то пошло не так(', false));
     }
   };
 };

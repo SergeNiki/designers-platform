@@ -1,13 +1,12 @@
 import { connect } from 'react-redux';
 import {
   getUsersList,
-  getFollowersList,
-  getFollowingList,
+  getFollowUsersList,
   toggleFollow,
   clearState,
 } from '../../../redux/users-reducer';
 import { useEffect, useMemo } from 'react';
-import { UserDataType } from '../../../types/users';
+import { FollowUsersRequest, UserDataType } from '../../../types/users';
 import User from '../../../components/User/User';
 import classes from './UsersModal.module.css';
 import { RequestFollowType } from '../../../types/profile';
@@ -31,18 +30,18 @@ type UsersModalProps = {
   followingsInProgress: Array<number>;
   authUserId: number;
   getUsersList(count: number, page: number): void;
-  getFollowersList(id: number, next: string | null): void;
-  getFollowingList(id: number, next: string | null): void;
+  getFollowUsersList(data: FollowUsersRequest): void;
   toggleFollow(id: number, req: RequestFollowType): void;
   clearState(): void;
 };
 
 const UsersModal = (props: UsersModalProps) => {
   useEffect(() => {
-    if (props.usersModalFor == 'followers') {
-      props.getFollowersList(props.ownerUserId, null);
-    } else if (props.usersModalFor == 'following') {
-      props.getFollowingList(props.ownerUserId, null);
+    if (props.usersModalFor) {
+      props.getFollowUsersList({
+        id: props.ownerUserId,
+        requestFor: props.usersModalFor,
+      });
     }
   }, [props.usersModalFor]);
 
@@ -53,10 +52,12 @@ const UsersModal = (props: UsersModalProps) => {
   }, [props.usersModalFor]);
 
   const showMoreUsers = (): void => {
-    if (props.usersModalFor == 'followers') {
-      props.getFollowersList(props.ownerUserId, props.nextUsers);
-    } else if (props.usersModalFor == 'following') {
-      props.getFollowingList(props.ownerUserId, props.nextUsers);
+    if (props.usersModalFor) {
+      props.getFollowUsersList({
+        id: props.ownerUserId,
+        requestFor: props.usersModalFor,
+        next: props.nextUsers,
+      });
     }
   };
 
@@ -72,13 +73,18 @@ const UsersModal = (props: UsersModalProps) => {
     />
   ));
 
-  let header = <UsersModalMenu
-  usersModalFor={props.usersModalFor}
-  setUsersModalFor={props.setUsersModalFor}
-/>
+  let header = (
+    <UsersModalMenu
+      usersModalFor={props.usersModalFor}
+      setUsersModalFor={props.setUsersModalFor}
+    />
+  );
 
   return (
-    <ModalWindow closeWindow={() => props.setUsersModalFor(false)} header={header} styles={{width: '768px'}} >
+    <ModalWindow
+      closeWindow={() => props.setUsersModalFor(false)}
+      header={header}
+      styles={{ width: '768px' }}>
       <div className={classes.users_list_wrap}>
         <div className={classes.users_list}>{followersOrFollowing}</div>
         {typeof props.nextUsers == 'string' && (
@@ -103,8 +109,7 @@ let mapSateToProps = (state: StateType) => ({
 
 export default connect(mapSateToProps, {
   getUsersList,
-  getFollowersList,
-  getFollowingList,
+  getFollowUsersList,
   toggleFollow,
   clearState,
 })(UsersModal);
