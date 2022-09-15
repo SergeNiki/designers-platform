@@ -1,12 +1,12 @@
 import SubscriptionsService from '../services/SubscriptionsService';
 import {
-  ActionDeleteSubscription,
-  ActionEditSubscription,
-  ActionGetSubscriptions,
-  ActionSetStatusMessage,
+  DeleteSubscription,
+  EditSubscription,
+  SetSubscriptions,
+  SetStatusMessage,
   ActionsSubscriptions,
-  ActionToggleIsFetching,
-  ActionСreatingSubscription,
+  ToggleIsFetching,
+  СreatingSubscription,
   GetSubscriptionsResponse,
   ISubscriptionsState,
   SubCreateData,
@@ -14,6 +14,7 @@ import {
   SubEditData,
   SubsActionTypes,
   ThunkSubType,
+  SetSubscriptionData,
 } from '../types/subscriptions';
 import { addPopup } from './popup-reducer';
 
@@ -25,7 +26,7 @@ let initialState: ISubscriptionsState = {
   isFetching: false,
   statusMessage: '',
 };
-
+// Reducer
 const subscriptionsReducer = (
   state = initialState,
   action: ActionsSubscriptions
@@ -50,6 +51,8 @@ const subscriptionsReducer = (
         ...state,
         results: state.results.filter((sub: SubData) => sub.id !== action.id),
       };
+    case SubsActionTypes.SET_SUBSCRIPTION_DATA:
+      return { ...state, results: [action.payload] };
     case SubsActionTypes.TOGGLE_IS_FETCHING:
       return { ...state, isFetching: action.isFetching };
     case SubsActionTypes.SET_STATUS_MESSAGE:
@@ -60,39 +63,37 @@ const subscriptionsReducer = (
 };
 
 // Action Creators
-export const setSubscriptionsAC = (
+export const setSubscriptions = (
   payload: GetSubscriptionsResponse
-): ActionGetSubscriptions => ({
+): SetSubscriptions => ({
   type: SubsActionTypes.SET_SUBSCRIPTIONS,
   payload,
 });
-export const creatingSubscriptionsAC = (
+export const creatingSubscriptions = (
   payload: SubData
-): ActionСreatingSubscription => ({
+): СreatingSubscription => ({
   type: SubsActionTypes.CREATING_SUBSCRIPTION,
   payload,
 });
-export const editSubscriptionsAC = (
-  payload: SubData
-): ActionEditSubscription => ({
+export const editSubscriptionAC = (payload: SubData): EditSubscription => ({
   type: SubsActionTypes.EDIT_SUBSCRIPTION,
   payload,
 });
-export const deleteSubscriptionsAC = (
-  id: number
-): ActionDeleteSubscription => ({
+export const deleteSubscriptions = (id: number): DeleteSubscription => ({
   type: SubsActionTypes.DELETE_SUBSCRIPTION,
   id,
 });
-export const toggleIsFetching = (
-  isFetching: boolean
-): ActionToggleIsFetching => ({
+export const toggleIsFetching = (isFetching: boolean): ToggleIsFetching => ({
   type: SubsActionTypes.TOGGLE_IS_FETCHING,
   isFetching,
 });
-export const setStatusMessage = (message: string): ActionSetStatusMessage => ({
+export const setStatusMessage = (message: string): SetStatusMessage => ({
   type: SubsActionTypes.SET_STATUS_MESSAGE,
   message,
+});
+export const setSubscriptionData = (payload: SubData): SetSubscriptionData => ({
+  type: SubsActionTypes.SET_SUBSCRIPTION_DATA,
+  payload,
 });
 
 // Thunk Creators
@@ -101,10 +102,22 @@ export const getSubscriptions = (userId: number): ThunkSubType => {
     dispatch(toggleIsFetching(true));
     try {
       const response = await SubscriptionsService.getSubscriptions(userId);
-      dispatch(setSubscriptionsAC(response.data));
+      dispatch(setSubscriptions(response.data));
       dispatch(toggleIsFetching(false));
     } catch (error) {
-      dispatch(addPopup('Что-то пошло не так(', false))
+      dispatch(addPopup('Что-то пошло не так(', false));
+    }
+  };
+};
+export const getSubscriptionData = (postId: number): ThunkSubType => {
+  return async (dispatch) => {
+    dispatch(toggleIsFetching(true));
+    try {
+      const response = await SubscriptionsService.getSubscriptionData(postId);
+      dispatch(setSubscriptionData(response.data));
+      dispatch(toggleIsFetching(false));
+    } catch (error) {
+      dispatch(addPopup('Что-то пошло не так(', false));
     }
   };
 };
@@ -113,11 +126,11 @@ export const creatingSubscription = (data: SubCreateData): ThunkSubType => {
     dispatch(toggleIsFetching(true));
     try {
       const response = await SubscriptionsService.creatingSubscription(data);
-      dispatch(creatingSubscriptionsAC(response.data));
+      dispatch(creatingSubscriptions(response.data));
       dispatch(toggleIsFetching(false));
       dispatch(addPopup('Подписка успешно создана!', true));
     } catch (error) {
-      dispatch(addPopup('Что-то пошло не так(', false))
+      dispatch(addPopup('Что-то пошло не так(', false));
     }
   };
 };
@@ -129,11 +142,11 @@ export const editSubscription = (
     dispatch(toggleIsFetching(true));
     try {
       const response = await SubscriptionsService.editSubscription(subId, data);
-      dispatch(editSubscriptionsAC(response.data));
+      dispatch(editSubscriptionAC(response.data));
       dispatch(toggleIsFetching(false));
-      dispatch(addPopup('Подписка успешно отредактирована!', true))
+      dispatch(addPopup('Подписка успешно отредактирована!', true));
     } catch (error) {
-      dispatch(addPopup('Что-то пошло не так(', false))
+      dispatch(addPopup('Что-то пошло не так(', false));
     }
   };
 };
@@ -142,11 +155,11 @@ export const deleteSubscription = (subId: number): ThunkSubType => {
     dispatch(toggleIsFetching(true));
     try {
       const response = await SubscriptionsService.deleteSubscription(subId);
-      dispatch(deleteSubscriptionsAC(subId));
+      dispatch(deleteSubscriptions(subId));
       dispatch(toggleIsFetching(false));
       dispatch(addPopup('Подписка была удалена', true));
     } catch (error) {
-      dispatch(addPopup('Что-то пошло не так(', false))
+      dispatch(addPopup('Что-то пошло не так(', false));
     }
   };
 };
@@ -166,7 +179,7 @@ export const subscribeOrUnsubscribe = (
       else if (type == 'unsub')
         dispatch(addPopup('Подписка была отменена!', true));
     } catch (error) {
-      dispatch(addPopup('Что-то пошло не так(', false))
+      dispatch(addPopup('Что-то пошло не так(', false));
     }
   };
 };
