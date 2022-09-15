@@ -6,13 +6,13 @@ import {
   updatePost,
   publishPost,
   clearState,
-} from '../../redux/post-reducer';
+} from '../../redux/postCreating-reducer';
 import { getSubscriptions } from '../../redux/subscriptions-reducer';
 import classes from './PostCreateForm.module.css';
 import { SubData } from '../../types/subscriptions';
 import ImagePreviews from './ImagePreviews/ImagePreviews';
 import LevelsSubscriptions from './LevelsSubscriptions/LevelsSubscriptions';
-import { UpdatePostRequest } from '../../types/posts';
+import { UpdatePostRequest } from '../../types/postCreating';
 import DatetimeOfPublication from './DatetimeOfPublication/DatetimeOfPublication';
 import Button from '../Button/Button';
 

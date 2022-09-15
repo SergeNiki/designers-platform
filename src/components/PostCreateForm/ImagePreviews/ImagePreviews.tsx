@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
 import { StateType } from '../../../redux/redux-store';
-import { addImageFile, removeImageFile } from '../../../redux/post-reducer';
+import { addImageFile, removeImageFile } from '../../../redux/postCreating-reducer';
 import classes from './ImagePreviews.module.css';
-import { ImageFileData } from '../../../types/posts';
+import { ImageFileData } from '../../../types/postCreating';
 import Button from '../../Button/Button';
 import React, { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
