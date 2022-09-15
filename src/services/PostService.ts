@@ -1,8 +1,16 @@
 import { AxiosResponse } from 'axios';
 import $api from '../http';
-import { UpdatePostData, LikePostData, PublishPostData, UpdatePostRequest } from '../types/posts';
+import {
+  UpdatePostData,
+  LikePostData,
+  PublishPostData,
+  UpdatePostRequest,
+} from '../types/postCreate';
+import { PostDataResponse } from '../types/postData';
+import { PostsListDataResponse, PostsStatus } from '../types/postsList';
 
 export default class PostService {
+  // Creating and updating post
   static async createPost(): Promise<AxiosResponse<UpdatePostData>> {
     return $api.post<UpdatePostData>('posts/');
   }
@@ -29,16 +37,8 @@ export default class PostService {
   static async removeFileFromPost(
     postId: number,
     fileId: number
-  ): Promise<AxiosResponse<UpdatePostData>> {
-    return $api.delete<UpdatePostData>(
-      `posts/${postId}/file/${fileId}/`,
-    );
-  }
-  static async likePost(id: number): Promise<AxiosResponse<LikePostData>> {
-    return $api.post<LikePostData>(`posts/${id}/like/`);
-  }
-  static async unlikePost(id: number): Promise<AxiosResponse<LikePostData>> {
-    return $api.delete<LikePostData>(`posts/${id}/like/`);
+  ): Promise<AxiosResponse<void>> {
+    return $api.delete<void>(`posts/${postId}/file/${fileId}/`);
   }
   static async publishPost(
     id: number,
@@ -49,5 +49,30 @@ export default class PostService {
           publication_at: publicationTime,
         })
       : $api.post<PublishPostData>(`posts/${id}/publish/`);
+  }
+
+  // Get a list of posts
+  static async getUserPosts(
+    id: number
+  ): Promise<AxiosResponse<PostsListDataResponse>> {
+    return $api.get<PostsListDataResponse>(`users/${id}/posts/`);
+  }
+  static async getAuthUserPosts(
+    status: PostsStatus
+  ): Promise<AxiosResponse<PostsListDataResponse>> {
+    return $api.get<PostsListDataResponse>(`users/me/posts/?status=${status}/`);
+  }
+
+  // Get post data and like/unlike post
+  static async getPostData(
+    id: number
+  ): Promise<AxiosResponse<PostDataResponse>> {
+    return $api.get<PostDataResponse>(`posts/${id}/`);
+  }
+  static async likePost(id: number): Promise<AxiosResponse<LikePostData>> {
+    return $api.post<LikePostData>(`posts/${id}/like/`);
+  }
+  static async unlikePost(id: number): Promise<AxiosResponse<LikePostData>> {
+    return $api.delete<LikePostData>(`posts/${id}/like/`);
   }
 }
