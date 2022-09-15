@@ -1,6 +1,6 @@
 import classes from './LevelsSubscriptions.module.css';
 import { SubData } from '../../../types/subscriptions';
-import { UpdatePostRequest } from '../../../types/postCreating';
+import { UpdatePostRequest } from '../../../types/postCreate';
 
 type LevelsSubscriptionsProps = {
     postId: number

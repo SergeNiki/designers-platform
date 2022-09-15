@@ -6,13 +6,13 @@ import {
   updatePost,
   publishPost,
   clearState,
-} from '../../redux/postCreating-reducer';
+} from '../../redux/postCreate-reducer';
 import { getSubscriptions } from '../../redux/subscriptions-reducer';
 import classes from './PostCreateForm.module.css';
 import { SubData } from '../../types/subscriptions';
 import ImagePreviews from './ImagePreviews/ImagePreviews';
 import LevelsSubscriptions from './LevelsSubscriptions/LevelsSubscriptions';
-import { UpdatePostRequest } from '../../types/postCreating';
+import { UpdatePostRequest } from '../../types/postCreate';
 import DatetimeOfPublication from './DatetimeOfPublication/DatetimeOfPublication';
 import Button from '../Button/Button';
 
@@ -149,7 +149,7 @@ const PostCreateForm: React.FC<PostCreateFormProps> = (props) => {
 
 let mapSateToProps = (state: StateType) => ({
   userId: state.auth.id,
-  postId: state.postData.id,
+  postId: state.postCreate.id,
   subscriptions: state.subscriptionsData.results,
 });
 

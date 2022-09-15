@@ -2,43 +2,41 @@ import PostService from '../services/PostService';
 import {
   CreateOrUpdatePost,
   UpdatePostData,
-  IPostDataState,
-  PostActions,
-  PostActionTypes,
-  ClearPostState,
+  IPostCreateDataState,
+  PostCreatingActions,
+  PostCreatingActionTypes,
+  ClearPostCreatingState,
   SetPublicationTime,
-  ToggleLikePost,
   ToggleIsFetching,
-  PostThunk,
+  PostCreatingThunk,
   UpdatePostRequest,
   RemoveFileFromPost,
-} from '../types/posts';
+} from '../types/postCreate';
+import { PostsStatus } from '../types/postsList';
 import { addPopup } from './popup-reducer';
 
-let initialState: IPostDataState = {
+let initialState: IPostCreateDataState = {
   id: 0,
   description: '',
   content: [],
   level_subscription: 0,
   publication_at: null,
+  status: PostsStatus.PUBLISHED,
   isFetching: false,
-  is_liked: false,
 };
 // Reducer
-const postReducer = (
+const postCreateReducer = (
   state = initialState,
-  action: PostActions
-): IPostDataState => {
+  action: PostCreatingActions
+): IPostCreateDataState => {
   switch (action.type) {
-    case PostActionTypes.CREATE_POST:
+    case PostCreatingActionTypes.CREATE_POST:
       return { ...state, ...action.payload };
-    case PostActionTypes.TOGGLE_LIKE_POST:
-      return { ...state, is_liked: action.is_liked };
-    case PostActionTypes.PUBLISH_POST:
+    case PostCreatingActionTypes.PUBLISH_POST:
       return { ...state, publication_at: action.publication_at };
-    case PostActionTypes.TOGGLE_IS_FETCHING:
-      return { ...state, isFetching: !state.isFetching };
-    case PostActionTypes.REMOVE_IMAGE_FILE:
+    case PostCreatingActionTypes.TOGGLE_IS_FETCHING:
+      return { ...state, isFetching: action.isFetching };
+    case PostCreatingActionTypes.REMOVE_IMAGE_FILE:
       return {
         ...state,
         content: state.content.filter((image) => {
@@ -47,7 +45,7 @@ const postReducer = (
           }
         }),
       };
-    case PostActionTypes.CLEARE_STATE:
+    case PostCreatingActionTypes.CLEAR_STATE:
       return initialState;
     default:
       return state;
@@ -56,31 +54,27 @@ const postReducer = (
 
 // Action Creators
 const createOrUpdatePost = (payload: UpdatePostData): CreateOrUpdatePost => ({
-  type: PostActionTypes.CREATE_POST,
+  type: PostCreatingActionTypes.CREATE_POST,
   payload,
 });
-const toggleLike = (is_liked: boolean): ToggleLikePost => ({
-  type: PostActionTypes.TOGGLE_LIKE_POST,
-  is_liked,
-});
 const setPublicationTime = (publication_at: Date): SetPublicationTime => ({
-  type: PostActionTypes.PUBLISH_POST,
+  type: PostCreatingActionTypes.PUBLISH_POST,
   publication_at,
 });
 const toggleIsFetching = (isFetching: boolean): ToggleIsFetching => ({
-  type: PostActionTypes.TOGGLE_IS_FETCHING,
+  type: PostCreatingActionTypes.TOGGLE_IS_FETCHING,
   isFetching,
 });
-export const clearState = (): ClearPostState => ({
-  type: PostActionTypes.CLEARE_STATE,
+export const clearState = (): ClearPostCreatingState => ({
+  type: PostCreatingActionTypes.CLEAR_STATE,
 });
 export const removeFileFromPost = (imageId: number): RemoveFileFromPost => ({
-  type: PostActionTypes.REMOVE_IMAGE_FILE,
+  type: PostCreatingActionTypes.REMOVE_IMAGE_FILE,
   imageId,
 });
 
 // Thunk Creators
-export const createPost = (): PostThunk => {
+export const createPost = (): PostCreatingThunk => {
   return async (dispatch) => {
     dispatch(toggleIsFetching(true));
     try {
@@ -92,7 +86,7 @@ export const createPost = (): PostThunk => {
     }
   };
 };
-export const updatePost = (id: number, data: UpdatePostRequest): PostThunk => {
+export const updatePost = (id: number, data: UpdatePostRequest): PostCreatingThunk => {
   return async (dispatch) => {
     dispatch(toggleIsFetching(true));
     try {
@@ -104,7 +98,7 @@ export const updatePost = (id: number, data: UpdatePostRequest): PostThunk => {
     }
   };
 };
-export const addImageFile = (id: number, imageFile: File): PostThunk => {
+export const addImageFile = (id: number, imageFile: File): PostCreatingThunk => {
   return async (dispatch) => {
     dispatch(toggleIsFetching(true));
     try {
@@ -116,7 +110,7 @@ export const addImageFile = (id: number, imageFile: File): PostThunk => {
     }
   };
 };
-export const removeImageFile = (postId: number, imageId: number): PostThunk => {
+export const removeImageFile = (postId: number, imageId: number): PostCreatingThunk => {
   return async (dispatch) => {
     dispatch(toggleIsFetching(true));
     try {
@@ -128,25 +122,7 @@ export const removeImageFile = (postId: number, imageId: number): PostThunk => {
     }
   };
 };
-export const toggleLikePost = (id: number, isLiked: boolean): PostThunk => {
-  return async (dispatch) => {
-    dispatch(toggleIsFetching(true));
-    try {
-      if (isLiked) {
-        var response = await PostService.unlikePost(id);
-        dispatch(addPopup('Лайк отменён', true));
-      } else {
-        var response = await PostService.likePost(id);
-        dispatch(addPopup('Лайк поставлен', true));
-      }
-      dispatch(toggleLike(response.data.is_liked));
-      dispatch(toggleIsFetching(false));
-    } catch (error) {
-      dispatch(addPopup('Что-то пошло не так(', false));
-    }
-  };
-};
-export const publishPost = (id: number, publicationTime?: Date): PostThunk => {
+export const publishPost = (id: number, publicationTime?: Date): PostCreatingThunk => {
   return async (dispatch) => {
     dispatch(toggleIsFetching(true));
     try {
@@ -162,4 +138,4 @@ export const publishPost = (id: number, publicationTime?: Date): PostThunk => {
   };
 };
 
-export default postReducer;
+export default postCreateReducer;

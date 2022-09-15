@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
 import { StateType } from '../../../redux/redux-store';
-import { addImageFile, removeImageFile } from '../../../redux/postCreating-reducer';
+import { addImageFile, removeImageFile } from '../../../redux/postCreate-reducer';
 import classes from './ImagePreviews.module.css';
-import { ImageFileData } from '../../../types/postCreating';
+import { ImageFileData } from '../../../types/postCreate';
 import Button from '../../Button/Button';
 import React, { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -80,8 +80,8 @@ const ImagePreviews: React.FC<ImagePreviewsProps> = (props) => {
 };
 
 let mapSateToProps = (state: StateType) => ({
-  images: state.postData.content,
-  isFetching: state.postData.isFetching,
+  images: state.postCreate.content,
+  isFetching: state.postCreate.isFetching,
 });
 
 export default connect(mapSateToProps, {
