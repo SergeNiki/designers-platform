@@ -1,5 +1,4 @@
 import PostService from '../services/PostService';
-import UsersService from '../services/UsersService';
 import {
   ClearPostDataState,
   IPostDataState,
@@ -9,12 +8,10 @@ import {
   PostDataThunk,
   SetPostData,
   ToggleIsFetching,
-  ToggleIsFollowed,
   ToggleLikePost,
   ToggleLikeResponse,
 } from '../types/postData';
 import { PostsStatus } from '../types/postsList';
-import { RequestFollowType } from '../types/profile';
 import { addPopup } from './popup-reducer';
 
 let initialState: IPostDataState = {
@@ -46,11 +43,6 @@ const postDataReducer = (state = initialState, action: PostDataActions) => {
       return { ...state, ...action.postStatistics };
     case PostDataActionTypes.TOGGLE_IS_FETCHING:
       return { ...state, isFetching: action.isFetching };
-    case PostDataActionTypes.TOGGLE_IS_FOLLOWED:
-      return {
-        ...state,
-        author: { ...state.author, is_followed: action.isFollowed },
-      };
     case PostDataActionTypes.CLEAR_STATE:
       return initialState;
     default:
@@ -73,10 +65,6 @@ const toggleIsFetching = (isFetching: boolean): ToggleIsFetching => ({
   type: PostDataActionTypes.TOGGLE_IS_FETCHING,
   isFetching,
 });
-const toggleIsFollowed = (isFollowed: boolean): ToggleIsFollowed => ({
-  type: PostDataActionTypes.TOGGLE_IS_FOLLOWED,
-  isFollowed,
-});
 export const clearPostDataState = (): ClearPostDataState => ({
   type: PostDataActionTypes.CLEAR_STATE,
 });
@@ -88,21 +76,6 @@ export const getPostData = (id: number): PostDataThunk => {
     try {
       const response = await PostService.getPostData(id);
       dispatch(setPostData(response.data));
-      dispatch(toggleIsFetching(false));
-    } catch (error) {
-      dispatch(addPopup('Что-то пошло не так(', false));
-    }
-  };
-};
-export const toggleFollow = (
-  user_id: number,
-  request_for: RequestFollowType
-): PostDataThunk => {
-  return async (dispatch) => {
-    dispatch(toggleIsFetching(true));
-    try {
-      const response = await UsersService.following(user_id, request_for);
-      dispatch(toggleIsFollowed(response.data.is_followed));
       dispatch(toggleIsFetching(false));
     } catch (error) {
       dispatch(addPopup('Что-то пошло не так(', false));
