@@ -65,5 +65,4 @@ export type PostCreatingThunk = ThunkAction<
 
 // Axios Response
 export type UpdatePostData = Omit<IPostCreateDataState, 'isFetching'>;
-export type LikePostData = { is_liked: boolean };
 export type PublishPostData = { publication_at: Date };

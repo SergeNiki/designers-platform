@@ -44,7 +44,7 @@
     border-top: 1px solid var(--main-button-color);
     overflow: scroll;
     word-break: normal;
-    white-space: pre-line;
+    white-space: break-spaces;
     transition: all 0.5s;
 }
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { connect } from 'react-redux';
 import classes from './Header.module.css';
 import { toggleLoginTC, logout } from './../../redux/auth-reducer';
@@ -31,21 +31,20 @@ const Header = (props: HeaderProps) => {
   const [tooltipText, setTooltipText] = useState<string>('');
   const [coordsButtonData, setCoordsButtonData] = useState<DOMRect>();
 
-
   const openAddContextMenu = (
     event: React.MouseEvent<HTMLDivElement>
   ): void => {
     const coords = event.currentTarget.getBoundingClientRect();
     setCoordsButtonData(coords);
     setIsAddMenuActive(!isAddMenuActive);
-    setIsUserMenuActive(false)
+    setIsUserMenuActive(false);
     setTooltipText('');
   };
   const openUserContextMenu = (event: React.MouseEvent<HTMLDivElement>) => {
     const coords = event.currentTarget.getBoundingClientRect();
     setCoordsButtonData(coords);
-    setIsUserMenuActive(!isUserMenuActive)
-    setIsAddMenuActive(false)
+    setIsUserMenuActive(!isUserMenuActive);
+    setIsAddMenuActive(false);
   };
 
   const showTooltip = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -59,7 +58,7 @@ const Header = (props: HeaderProps) => {
   return (
     <header>
       <div className={classes.header_wrap}>
-        <h1>FLOW OF ART</h1>
+        <h1>ARTIFACT</h1>
         {props.isAuth ? (
           <div className={classes.header_items}>
             <div
@@ -79,7 +78,10 @@ const Header = (props: HeaderProps) => {
                 </Tooltips>
               )}
             </div>
-            <HeaderUserAvatar avatar={props.avatar} openUserContextMenu={openUserContextMenu}/>
+            <HeaderUserAvatar
+              avatar={props.avatar}
+              openUserContextMenu={openUserContextMenu}
+            />
           </div>
         ) : (
           <div className={classes.login} onClick={toggleLogin}>

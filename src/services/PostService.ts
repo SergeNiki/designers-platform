@@ -2,11 +2,10 @@ import { AxiosResponse } from 'axios';
 import $api from '../http';
 import {
   UpdatePostData,
-  LikePostData,
   PublishPostData,
   UpdatePostRequest,
 } from '../types/postCreate';
-import { PostDataResponse } from '../types/postData';
+import { PostDataResponse, ToggleLikeResponse } from '../types/postData';
 import { PostsListDataResponse, PostsStatus } from '../types/postsList';
 
 export default class PostService {
@@ -69,10 +68,10 @@ export default class PostService {
   ): Promise<AxiosResponse<PostDataResponse>> {
     return $api.get<PostDataResponse>(`posts/${id}/`);
   }
-  static async likePost(id: number): Promise<AxiosResponse<LikePostData>> {
-    return $api.post<LikePostData>(`posts/${id}/like/`);
+  static async likePost(id: number): Promise<AxiosResponse<ToggleLikeResponse>> {
+    return $api.post<ToggleLikeResponse>(`posts/${id}/like/`);
   }
-  static async unlikePost(id: number): Promise<AxiosResponse<LikePostData>> {
-    return $api.delete<LikePostData>(`posts/${id}/like/`);
+  static async unlikePost(id: number): Promise<AxiosResponse<ToggleLikeResponse>> {
+    return $api.delete<ToggleLikeResponse>(`posts/${id}/like/`);
   }
 }
