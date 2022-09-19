@@ -15,10 +15,6 @@ type UsersMainProps = {
   isAuth: boolean;
 
   users: Array<UserDataType>;
-  usresOnPageCount: number;
-  totalCount: number;
-  isFetching: boolean;
-  nextUsers: string | null;
   followingsInProgress: Array<number>;
   authUserId: number;
   getUsersList(count: number, page: number): void;
@@ -28,12 +24,12 @@ type UsersMainProps = {
 
 const UsersMain = (props: UsersMainProps) => {
   useEffect(() => {
-    props.getUsersList(10, 1)
+    props.getUsersList(10, 1);
 
     return () => {
-        props.clearState()
-    }
-  }, [props.isAuth]);
+      props.clearState();
+    };
+  }, []);
 
   const users = props.users.map((user) => (
     <User
@@ -52,10 +48,6 @@ const UsersMain = (props: UsersMainProps) => {
 
 let mapSateToProps = (state: StateType) => ({
   users: state.usersData.users,
-  usresOnPageCount: state.usersData.usresOnPageCount,
-  totalCount: state.usersData.count,
-  isFetching: state.usersData.isFetching,
-  nextUsers: state.usersData.next,
   followingsInProgress: state.usersData.followingsInProgress,
   authUserId: state.auth.id,
   isAuth: state.auth.isAuth,
