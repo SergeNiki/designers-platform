@@ -5,6 +5,7 @@ import authReducer from "./auth-reducer";
 import imageReducer from "./image-reducer";
 import popupMenuReducer from "./popup-reducer";
 import postCreateReducer from "./postCreate-reducer";
+import postDataReducer from "./postData-reducer";
 import postListsReducer from "./postLists-reducer";
 import profileReducer from "./profile-reducer";
 import subscriptionsReducer from "./subscriptions-reducer";
@@ -16,6 +17,7 @@ let reducers = combineReducers({
     appInitialized: appReduser,
     postCreate: postCreateReducer,
     postLists: postListsReducer,
+    postData: postDataReducer,
     usersData: usersReducer,
     subscriptionsData: subscriptionsReducer,
     popupMenu: popupMenuReducer,
