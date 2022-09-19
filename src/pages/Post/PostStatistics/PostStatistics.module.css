@@ -1,0 +1,20 @@
+.statistics {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+.statistics p {
+    margin-left: 10px;
+}
+.likes,
+.views {
+    font-size: 24px;
+    color: var(--dark-text-color);
+    display: flex;
+}
+.likes svg {
+    cursor: pointer;
+}
+.likes.liked {
+    color: red;
+}
