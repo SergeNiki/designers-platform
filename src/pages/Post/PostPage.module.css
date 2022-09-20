@@ -1,0 +1,48 @@
+.post_page {
+    width: 100%;
+    height: 100%;
+}
+
+.post_wrap {
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+}
+
+.post_info_wrap {
+    width: 400px;
+    height: 100%;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    display: grid;
+    grid-template-rows: 70px 1fr 50px;
+}
+
+.description_comments_block {
+    overflow: scroll;
+}
+.description_wrap {
+    background-color: white;
+    max-height: 100px;
+    border-radius: 15px;
+    margin-top: 15px;
+    padding: 10px;
+    overflow: hidden;
+    white-space: break-spaces;
+}
+.no_description {
+    color: rgba(0, 0, 0, 0.5);
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .post_wrap {
+        /* height: auto; */
+        height: auto;
+        flex-direction: column;
+    }
+    .post_info_wrap {
+        width: 100%;
+    }
+}
