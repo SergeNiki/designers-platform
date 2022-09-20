@@ -3,7 +3,6 @@ import { Navigate, useParams } from 'react-router-dom';
 
 interface WrapperProps {
   authUserId: number | null;
-  isAuth: boolean
 }
 
 export default function withRouterProfile<WP extends WrapperProps>(

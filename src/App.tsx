@@ -24,7 +24,9 @@ function App(props: AppProps) {
     props.initializeApp();
   }, []);
 
-  return (
+  if (!props.isInitialized) {
+    return <></>
+  } else return (
     <div className='App'>
       {props.isPopupActive && <Popup />}
       {props.isProcessLogin && <Login />}
